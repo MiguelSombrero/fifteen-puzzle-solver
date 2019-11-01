@@ -9,11 +9,15 @@ I choosed A* -algorithm to solve 15-puzzle because being optimized (heuristic) b
 - Heuristic 1: calculate tiles which are on wrong position
 - Heuristic 2: calculate sum of tiles manhattan distance between current and correct position
 
-## Time and space complexity
+## Time-complexity
 
-Implemented A* -algorithm is basically Dijkstras -algorithm with heuristics. Let us denote G = (V, E), where G is a game-tree, V is set of vertexes (game states) and E is set of edges (childrens of current game state). Dijkstras algorithm ...
+Implemented A* -algorithm is basically Dijkstras -algorithm with heuristics. Let us denote G = (V, E), where G is a game-tree, V is set of vertices (game states) and E is set of edges (possible state transitions between game states). Dijkstra's algorithm loops trough game states, visiting every game state only once - taking O(V) time. With every vertex, algorithm extracts minimum game state from priority queue - taking again O(V) time. With every vertex, algorithm also loops trough its neighbors. Since every vertex is processed only once, total number of neighbors to be examined is |E|. Therefore Dijkstra's algorithm without heuristics take O(V^2 + E) = O(V^2) time.
 
-Time complexity of A* -algorithm depends a lot of heuristic used. Both of the used heuristics loop once trough the game board so time-complexity for both of them is O(n^2), where n is width of the game board (in 15-puzzle: n=4).
+Time complexity of A* -algorithm depends a lot of heuristic used. Both of the used heuristics loop once trough the game board so time-complexity for both of them is O(n^2), where n is width of the game board (in 15-puzzle: n=4). This adds only minor coefficient to extracting minimum from priority queue, so the overall time-complexity for A* is O(V * n^2 * V + E) = O(n^2 * V^2 + E) = O(V^2).
+
+## Space-complexity
+
+Algorithm keeps track for game states to visit and this can hold maximum of V states, since every state is visited only once. Algorithm also keeps track of visited game states, which can hold again maximum of V states. Other operations take O(1) time, so the overall space-complexity is O(V + V) = O(V).
 
 ## Data structures
 
@@ -23,7 +27,7 @@ Following data structures are needed for implementation of an A* -algorithm:
 - HashSet for keeping track visited game states
 - ArrayList for storing game states following current state
 
-Also Array is needed for storing state of each game.
+Also basic Array is needed for storing state of each game.
 
 ## Sources
 
