@@ -20,7 +20,7 @@ This is a laboratory work for University of Helsinki course Data structures and 
 
 - [Implementation](https://github.com/MiguelSombrero/fifteen-puzzle-solver/blob/master/documentation/implementation.md)
 
-- [Testing](https://github.com/MiguelSombrero/fifteen-puzzle-solver/blob/master/documentation/testing.md)
+- [Tests](https://github.com/MiguelSombrero/fifteen-puzzle-solver/blob/master/documentation/tests.md)
 
 ## Commands
 
