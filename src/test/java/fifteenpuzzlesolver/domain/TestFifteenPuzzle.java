@@ -18,7 +18,6 @@ public class TestFifteenPuzzle {
      * Solvable or solved games
      */
     private FifteenPuzzle game0;
-    private FifteenPuzzle game1;
     private FifteenPuzzle game2;
     private FifteenPuzzle game3;
     private FifteenPuzzle game4;
@@ -26,22 +25,21 @@ public class TestFifteenPuzzle {
     private FifteenPuzzle game6;
     
     /**
-     * Un-solvable boards
+     * Un-solvable games
      */
     
+    private FifteenPuzzle game1;
+    private FifteenPuzzle game7;
+    private FifteenPuzzle game8;
+    private FifteenPuzzle game9;
     
     public TestFifteenPuzzle() {
+        // solvable boards
         int[] b0 = {
             1, 2, 3, 4,
             5, 6, 7, 8,
             9, 10, 11, 12,
             13, 14, 15, 0
-        };
-        int[] b1 = {
-            15, 2, 1, 12,
-            8, 5, 6, 11,
-            4, 9, 10, 7,
-            3, 14, 13, 0
         };
         int[] b2 = {
             1, 2, 3, 4,
@@ -74,13 +72,44 @@ public class TestFifteenPuzzle {
             13, 7, 14, 15
         };
         
+        // un-solvable boards
+        
+        int[] b1 = {
+            15, 2, 1, 12,
+            8, 5, 6, 11,
+            4, 9, 10, 7,
+            3, 14, 13, 0
+        };
+        int[] b7 = {
+            1, 4, 2, 3,
+            5, 6, 7, 8,
+            9, 10, 11, 12,
+            0, 14, 13, 15
+        };
+        int[] b8 = {
+            1, 2, 3, 4,
+            5, 6, 0, 8,
+            9, 10, 11, 12,
+            7, 13, 14, 15
+        };
+        int[] b9 = {
+            1, 3, 2, 4,
+            5, 6, 7, 8,
+            9, 10, 11, 0,
+            13, 14, 15, 12
+        };
+        
         this.game0 = new FifteenPuzzle(b0);
+        this.game2 = new FifteenPuzzle(b2);
+        this.game3 = new FifteenPuzzle(b3);
+        this.game4 = new FifteenPuzzle(b4);
+        this.game5 = new FifteenPuzzle(b5);
+        this.game6 = new FifteenPuzzle(b6);
+        
         this.game1 = new FifteenPuzzle(b1);
-        this.game2 = new FifteenPuzzle(b2, 0, 11);
-        this.game3 = new FifteenPuzzle(b3, 0, 1);
-        this.game4 = new FifteenPuzzle(b4, 0, 12);
-        this.game5 = new FifteenPuzzle(b5, 0, 12);
-        this.game6 = new FifteenPuzzle(b6, 0, 6);
+        this.game7 = new FifteenPuzzle(b7);
+        this.game8 = new FifteenPuzzle(b8);
+        this.game9 = new FifteenPuzzle(b9);
         
     }
     
@@ -112,6 +141,9 @@ public class TestFifteenPuzzle {
         assertTrue(!game4.isSolved());
         assertTrue(!game5.isSolved());
         assertTrue(!game6.isSolved());
+        assertTrue(!game7.isSolved());
+        assertTrue(!game8.isSolved());
+        assertTrue(!game9.isSolved());
     }
     
     @Test
@@ -123,12 +155,14 @@ public class TestFifteenPuzzle {
         assertEquals(0, this.game4.inversions());
         assertEquals(2, this.game5.inversions());
         assertEquals(6, this.game6.inversions());
+        assertEquals(3, this.game7.inversions());
+        assertEquals(5, this.game8.inversions());
+        assertEquals(4, this.game9.inversions());
     }
     
     @Test
     public void isSolvable() {
         assertTrue(game0.isSolvable());
-        assertTrue(game1.isSolvable());
         assertTrue(game2.isSolvable());
         assertTrue(game3.isSolvable());
         assertTrue(game4.isSolvable());
@@ -138,7 +172,36 @@ public class TestFifteenPuzzle {
     
     @Test
     public void isNotSolvable() {
+        assertTrue(!game1.isSolvable());
+        assertTrue(!game7.isSolvable());
+        assertTrue(!game8.isSolvable());
+        assertTrue(!game9.isSolvable());
+    }
+    
+    @Test
+    public void equals() {
+        int[] b = {
+            15, 2, 1, 12,
+            8, 5, 6, 11,
+            4, 9, 10, 7,
+            3, 14, 13, 0
+        };
         
+        FifteenPuzzle puzzle = new FifteenPuzzle(b);
+        assertTrue(puzzle.equals(game1));
+    }
+    
+    @Test
+    public void notEquals() {
+        int[] b = {
+            15, 2, 10, 12,
+            8, 5, 6, 11,
+            4, 9, 1, 7,
+            3, 14, 13, 0
+        };
+        
+        FifteenPuzzle puzzle = new FifteenPuzzle(b);
+        assertTrue(!puzzle.equals(game1));
     }
     
 }

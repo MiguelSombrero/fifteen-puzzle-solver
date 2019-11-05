@@ -13,13 +13,22 @@ public class FifteenPuzzle implements Puzzle {
     public FifteenPuzzle(int[] state) {
         this.state = state;
         this.moves = 0;
-        this.emptyIndex = 15;
+        this.emptyIndex = findEmpty(state);
     }
     
-    public FifteenPuzzle(int[] state, int moves, int emptyIndex) {
+    public FifteenPuzzle(int[] state, int moves) {
         this.state = state;
         this.moves = moves;
-        this.emptyIndex = emptyIndex;
+        this.emptyIndex = findEmpty(state);
+    }
+    
+    public int findEmpty(int[] state) {
+        for (int i = 0; i < state.length; i++) {
+            if (state[i] == 0) {
+                return i;
+            }
+        }
+        return 0;
     }
 
     @Override
@@ -37,12 +46,12 @@ public class FifteenPuzzle implements Puzzle {
         return this.emptyIndex;
     }
     
-    public Puzzle move(int index) {
+    public FifteenPuzzle move(int index) {
         int[] newState = this.state.clone();
         newState[this.emptyIndex] = newState[this.emptyIndex + index];
         newState[this.emptyIndex + index] = 0;
         
-        return new FifteenPuzzle(newState, this.moves + 1, this.emptyIndex + index);
+        return new FifteenPuzzle(newState, this.moves + 1);
     }
     
     @Override
@@ -85,7 +94,7 @@ public class FifteenPuzzle implements Puzzle {
             return true;
         }
         
-        if (((this.state.length - this.emptyIndex) % 4) % 2 == 1) {
+        if (((this.state.length - this.emptyIndex - 1) / 4) % 2 == 1) {
             if (inversions() % 2 == 1) {
                 return true;
             }
