@@ -24,6 +24,7 @@ public class TextUI {
     public void printOptions() {
         System.out.println("OPTIONS");
         System.out.println("e - Generate easy puzzle");
+        System.out.println("h - Generate hard puzzle");
         System.out.println("m - Solve puzzle with manhattan heuristics");
         System.out.println("p - Solve puzzle with position heuristics");
         System.out.println("x - Exit");
@@ -62,6 +63,11 @@ public class TextUI {
                 System.out.println("GENERATED PUZZLE:");
                 printPuzzle(puzzle);
                 
+            } else if (c.equals("h")) {
+                puzzle = generator.generateHardPuzzle();
+                System.out.println("GENERATED PUZZLE:");
+                printPuzzle(puzzle);
+                
             } else if (c.equals("m")) {
                 if (puzzle == null) {
                     System.out.println("No puzzle to solve - try to generate one!");
@@ -85,37 +91,6 @@ public class TextUI {
                 System.out.println("Wrong command!");
             }
         }
-        
-        
-        
-        // should be solvable
-        int[] b1 = {
-            15, 1, 2, 12,
-            8, 5, 6, 11,
-            4, 9, 10, 7,
-            3, 14, 13, 0
-        };
-        
-        // should be solvable
-        int[] b2 = {
-            1, 2, 3, 4,
-            5, 6, 7, 8,
-            9, 10, 11, 12,
-            14, 15, 13, 0
-        };
-        
-        // should be solvable
-        int[] b6 = {
-            1, 2, 3, 4,
-            5, 6, 0, 8,
-            9, 10, 11, 12,
-            13, 7, 14, 15
-        };
-        
-        //Puzzle puzzle = new FifteenPuzzle(b1);
-        //Puzzle puzzle = new FifteenPuzzle(b2);
-        //Puzzle puzzle = new FifteenPuzzle(b6, 0, 6);
-        
     }
     
 }

@@ -14,7 +14,7 @@ It seems that A* is not efficient enough for solving hard 15-puzzles, at least n
 
 ## Questions
 
-Need to invertigate if there is way to increase performance of A* -algorithm. "Linear collision" heuristic looks promising. 
+Need to investigate if there is way to increase performance of A* -algorithm. "Linear collision" heuristic looks promising. 
 
 I have found articles and texts about IDA* (iterative deepening A*) -algorithm, which supposed to be efficient enough for solving 15-puzzles. If I have time, I could try to implement that algorithm as well.
 
