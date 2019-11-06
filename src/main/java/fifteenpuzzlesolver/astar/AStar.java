@@ -13,11 +13,13 @@ public class AStar {
         
         queue.add(game);
         
-        while(!queue.isEmpty()) {
+        while (!queue.isEmpty()) {
             Puzzle currentState = (Puzzle) queue.poll();
             
 //            System.out.println("Game state: ");
 //            currentState.printBoard();
+            
+            System.out.println(currentState.toString());
             
             if (currentState.isSolved()) {
                 return currentState;

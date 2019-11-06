@@ -88,6 +88,12 @@ public class FifteenPuzzle implements Puzzle {
         return inversions;
     }
 
+    /**
+     * Method for checking that this puzzle is solvable. Algorithm is based on 
+     * https://www.geeksforgeeks.org/check-instance-15-puzzle-solvable/
+     * 
+     * @return True if puzzle can be solved. False if puzzle is unsolvable
+     */
     @Override
     public boolean isSolvable() {
         if (this.isSolved()) {
@@ -109,8 +115,8 @@ public class FifteenPuzzle implements Puzzle {
 
     @Override
     public boolean isSolved() {
-        for (int i = 0; i < this.state.length-1; i++) {
-            if (this.state[i] != i+1) {
+        for (int i = 0; i < this.state.length - 1; i++) {
+            if (this.state[i] != i + 1) {
                 return false;
             }
         }

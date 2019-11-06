@@ -5,14 +5,14 @@ import fifteenpuzzlesolver.domain.Puzzle;
 import java.util.Comparator;
 
 /**
- * Class to compare two Puzzles
+ * Class to compare two Puzzles with position-based heuristics.
  * 
  * @author miika
  */
 public class StateComparatorPosition implements Comparator<Puzzle> {
 
     /**
-     * Method for calculating heuristic value of the puzzle
+     * Method for calculating heuristic value of the puzzle.
      * 
      * @param p Puzzle which value is calculated
      * 
@@ -22,8 +22,8 @@ public class StateComparatorPosition implements Comparator<Puzzle> {
     public int heuristic(Puzzle p) {
         int value = 0;
         
-        for (int i = 0; i < p.state().length-1; i++) {
-            if (p.state()[i] != i+1) {
+        for (int i = 0; i < p.state().length; i++) {
+            if (p.state()[i] != 0 && p.state()[i] != i + 1) {
                 value++;
             }
         }

@@ -2,7 +2,6 @@
 package fifteenpuzzlesolver.ui;
 
 import fifteenpuzzlesolver.astar.AStar;
-import fifteenpuzzlesolver.domain.FifteenPuzzle;
 import fifteenpuzzlesolver.domain.Puzzle;
 import fifteenpuzzlesolver.astar.StateComparatorManhattan;
 import fifteenpuzzlesolver.astar.StateComparatorPosition;
@@ -24,7 +23,7 @@ public class TextUI {
     
     public void printOptions() {
         System.out.println("OPTIONS");
-        System.out.println("g - Generate puzzle");
+        System.out.println("e - Generate easy puzzle");
         System.out.println("m - Solve puzzle with manhattan heuristics");
         System.out.println("p - Solve puzzle with position heuristics");
         System.out.println("x - Exit");
@@ -58,12 +57,15 @@ public class TextUI {
             printOptions();
             String c = reader.nextLine();
             
-            if (c.equals("g")) {
-                puzzle = generator.generatePuzzle();
+            if (c.equals("e")) {
+                puzzle = generator.generateEasyPuzzle();
+                System.out.println("GENERATED PUZZLE:");
                 printPuzzle(puzzle);
+                
             } else if (c.equals("m")) {
                 if (puzzle == null) {
                     System.out.println("No puzzle to solve - try to generate one!");
+                    continue;
                 }
                 StateComparatorManhattan manhattan = new StateComparatorManhattan();
                 solve(puzzle, manhattan);
@@ -71,6 +73,7 @@ public class TextUI {
             } else if (c.equals("p")) {
                 if (puzzle == null) {
                     System.out.println("No puzzle to solve - try to generate one!");
+                    continue;
                 }
                 StateComparatorPosition position = new StateComparatorPosition();
                 solve(puzzle, position);

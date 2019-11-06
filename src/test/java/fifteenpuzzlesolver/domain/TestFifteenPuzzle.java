@@ -1,10 +1,8 @@
 
 package fifteenpuzzlesolver.domain;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import fifteenpuzzlesolver.utils.TestUtils;
+import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -13,6 +11,8 @@ import static org.junit.Assert.*;
  * @author miika
  */
 public class TestFifteenPuzzle {
+    
+    private TestUtils utils;
     
     /**
      * Solvable or solved games
@@ -34,87 +34,21 @@ public class TestFifteenPuzzle {
     private FifteenPuzzle game9;
     
     public TestFifteenPuzzle() {
-        // solvable boards
-        int[] b0 = {
-            1, 2, 3, 4,
-            5, 6, 7, 8,
-            9, 10, 11, 12,
-            13, 14, 15, 0
-        };
-        int[] b2 = {
-            1, 2, 3, 4,
-            5, 6, 7, 8,
-            9, 10, 11, 0,
-            13, 14, 15, 12
-        };
-        int[] b3 = {
-            1, 0, 2, 3,
-            4, 6, 5, 7,
-            8, 9, 10, 11,
-            12, 13, 14, 15
-        };
-        int[] b4 = {
-            1, 2, 3, 4,
-            5, 6, 7, 8,
-            9, 10, 11, 12,
-            0, 13, 14, 15
-        };
-        int[] b5 = {
-            1, 4, 2, 3,
-            5, 6, 7, 8,
-            9, 10, 11, 12,
-            0, 13, 14, 15
-        };
-        int[] b6 = {
-            1, 2, 3, 4,
-            5, 6, 0, 8,
-            9, 10, 11, 12,
-            13, 7, 14, 15
-        };
+        this.utils = new TestUtils();
+        List<int[]> boards = this.utils.boardList();
         
-        // un-solvable boards
+        this.game0 = new FifteenPuzzle(boards.get(0));
+        this.game2 = new FifteenPuzzle(boards.get(2));
+        this.game3 = new FifteenPuzzle(boards.get(3));
+        this.game4 = new FifteenPuzzle(boards.get(4));
+        this.game5 = new FifteenPuzzle(boards.get(5));
+        this.game6 = new FifteenPuzzle(boards.get(6));
         
-        int[] b1 = {
-            15, 2, 1, 12,
-            8, 5, 6, 11,
-            4, 9, 10, 7,
-            3, 14, 13, 0
-        };
-        int[] b7 = {
-            1, 4, 2, 3,
-            5, 6, 7, 8,
-            9, 10, 11, 12,
-            0, 14, 13, 15
-        };
-        int[] b8 = {
-            1, 2, 3, 4,
-            5, 6, 0, 8,
-            9, 10, 11, 12,
-            7, 13, 14, 15
-        };
-        int[] b9 = {
-            1, 3, 2, 4,
-            5, 6, 7, 8,
-            9, 10, 11, 0,
-            13, 14, 15, 12
-        };
+        this.game1 = new FifteenPuzzle(boards.get(1));
+        this.game7 = new FifteenPuzzle(boards.get(7));
+        this.game8 = new FifteenPuzzle(boards.get(8));
+        this.game9 = new FifteenPuzzle(boards.get(9));
         
-        this.game0 = new FifteenPuzzle(b0);
-        this.game2 = new FifteenPuzzle(b2);
-        this.game3 = new FifteenPuzzle(b3);
-        this.game4 = new FifteenPuzzle(b4);
-        this.game5 = new FifteenPuzzle(b5);
-        this.game6 = new FifteenPuzzle(b6);
-        
-        this.game1 = new FifteenPuzzle(b1);
-        this.game7 = new FifteenPuzzle(b7);
-        this.game8 = new FifteenPuzzle(b8);
-        this.game9 = new FifteenPuzzle(b9);
-        
-    }
-    
-    @Before
-    public void setUp() {
     }
     
     @Test

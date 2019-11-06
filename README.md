@@ -8,6 +8,8 @@ This is a laboratory work for University of Helsinki course Data structures and 
 
 ## Weekly reports
 
+- [Weekly report #2](https://github.com/MiguelSombrero/fifteen-puzzle-solver/blob/master/documentation/weekly2.md)
+
 - [Weekly report #1](https://github.com/MiguelSombrero/fifteen-puzzle-solver/blob/master/documentation/weekly1.md)
 
 ## Documentation
@@ -24,6 +26,10 @@ This is a laboratory work for University of Helsinki course Data structures and 
 
 ## Commands
 
+Tests can be run
+
+    mvn test
+    
 Checkstyle
 
     mvn jxr:jxr checkstyle:checkstyle
