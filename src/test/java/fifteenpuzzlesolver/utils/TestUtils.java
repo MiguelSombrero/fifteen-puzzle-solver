@@ -83,6 +83,14 @@ public class TestUtils {
             3, 2, 1, 0
         };
         
+        // Illegal board
+        int[] b11 = {
+            15, 14, 13, 12,
+            11, 10, 9, 8,
+            7, 6, 5, 4,
+            3, 2, 1, 5
+        };
+        
         boards.add(b0);
         boards.add(b1);
         boards.add(b2);
@@ -94,6 +102,7 @@ public class TestUtils {
         boards.add(b8);
         boards.add(b9);
         boards.add(b10);
+        boards.add(b11);
         
         return boards;
     }

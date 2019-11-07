@@ -4,7 +4,7 @@ This is a laboratory work for University of Helsinki course Data structures and 
 
 ## Problem
 
-15-puzzle is popular board game every child has played (at least in 80s). Idea is to rearrange tiles in 4x4 board to correct position, moving one tile at a time. More info about 15-puzzle can be found from [Wikipedia, 15-puzzle](https://en.wikipedia.org/wiki/15_puzzle).
+15-puzzle is popular board game every child has played (at least in 80s). Idea is to rearrange tiles in 4x4 board to natural order, moving one tile at a time. More info about 15-puzzle can be found from [Wikipedia, 15-puzzle](https://en.wikipedia.org/wiki/15_puzzle).
 
 ## Weekly reports
 
@@ -26,7 +26,7 @@ This is a laboratory work for University of Helsinki course Data structures and 
 
 ## Commands
 
-Tests can be run
+Run tests
 
     mvn test
     

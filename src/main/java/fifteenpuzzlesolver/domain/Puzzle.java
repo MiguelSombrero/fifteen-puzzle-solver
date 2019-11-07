@@ -3,14 +3,17 @@ package fifteenpuzzlesolver.domain;
 
 import java.util.ArrayList;
 
+/**
+ * Interface for implementing n-puzzles.
+ * @author miika
+ */
 public interface Puzzle {
+    
     int moves();
-    int emptyIndex();
+    
     int[] state();
     
-    void printBoard();
-    
-    ArrayList<Puzzle> generateStates();
+    ArrayList<Puzzle> generateChildren();
     
     boolean isSolvable();
     

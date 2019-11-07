@@ -6,6 +6,10 @@ import fifteenpuzzlesolver.ui.TextUI;
 import fifteenpuzzlesolver.utils.PuzzleGenerator;
 import java.util.Scanner;
 
+/**
+ * Main class for starting the application.
+ * @author miika
+ */
 public class FifteenPuzzleSolver {
     public static void main(String[] args) {
         Scanner reader = new Scanner(System.in);

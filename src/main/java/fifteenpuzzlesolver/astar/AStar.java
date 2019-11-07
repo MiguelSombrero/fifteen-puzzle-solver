@@ -29,10 +29,6 @@ public class AStar {
         
         while (!queue.isEmpty()) {
             Puzzle currentState = (Puzzle) queue.poll();
-            
-//            System.out.println("Game state: ");
-//            currentState.printBoard();
-            
             // System.out.println(currentState.toString());
             
             if (currentState.isSolved()) {
@@ -45,7 +41,7 @@ public class AStar {
             
             visited.add(currentState);
             
-            for (Puzzle childState : currentState.generateStates()) {
+            for (Puzzle childState : currentState.generateChildren()) {
                 queue.add(childState);
             }
         }

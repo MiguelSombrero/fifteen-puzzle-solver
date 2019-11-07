@@ -9,18 +9,31 @@ import fifteenpuzzlesolver.utils.PuzzleGenerator;
 import java.util.Comparator;
 import java.util.Scanner;
 
+/**
+ * Text User Interface for the application.
+ * @author miika
+ */
 public class TextUI {
     
     private Scanner reader;
     private AStar astar;
     private PuzzleGenerator generator;
     
+    /**
+     * Constructor method.
+     * @param reader Scanner which reads user input
+     * @param astar AStar algorithm class for solving puzzles
+     * @param generator Utility class for generating solvable puzzles
+     */
     public TextUI(Scanner reader, AStar astar, PuzzleGenerator generator) {
         this.reader = reader;
         this.astar = astar;
         this.generator = generator;
     }
     
+    /**
+     * Method for printing game menu.
+     */
     public void printOptions() {
         System.out.println("OPTIONS");
         System.out.println("e - Generate easy puzzle");
@@ -30,27 +43,19 @@ public class TextUI {
         System.out.println("x - Exit");
     }
     
-    public void printPuzzle(Puzzle puzzle) {
-        for (int i = 0; i < puzzle.state().length; i++) {
-            System.out.print(puzzle.state()[i] + "\t");
-            
-            if ((i + 1) % 4 == 0) {
-                System.out.println("");
-            }
-        }
-        System.out.println("");
-    }
-    
     public void solve(Puzzle puzzle, Comparator heuristic) {
         long time1 = System.currentTimeMillis();
         Puzzle endState = astar.traverse(puzzle, heuristic);
         long time2 = System.currentTimeMillis();
         
-        printPuzzle(endState);
         System.out.println(endState.toString());
+        System.out.println("Moves taken: " + endState.moves());
         System.out.println("Time taken: " + (time2 - time1) / 1000 + " seconds");
     }
     
+    /**
+     * Initializes game and starts to listen user inputs.
+     */
     public void initialize() {
         Puzzle puzzle = null;
             
@@ -61,12 +66,12 @@ public class TextUI {
             if (c.equals("e")) {
                 puzzle = generator.generateEasyPuzzle();
                 System.out.println("GENERATED PUZZLE:");
-                printPuzzle(puzzle);
+                System.out.println(puzzle.toString());
                 
             } else if (c.equals("h")) {
                 puzzle = generator.generateHardPuzzle();
                 System.out.println("GENERATED PUZZLE:");
-                printPuzzle(puzzle);
+                System.out.println(puzzle.toString());
                 
             } else if (c.equals("m")) {
                 if (puzzle == null) {
@@ -92,5 +97,4 @@ public class TextUI {
             }
         }
     }
-    
 }

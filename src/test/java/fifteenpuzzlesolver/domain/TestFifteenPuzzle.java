@@ -2,6 +2,7 @@
 package fifteenpuzzlesolver.domain;
 
 import fifteenpuzzlesolver.utils.TestUtils;
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -13,6 +14,7 @@ import static org.junit.Assert.*;
 public class TestFifteenPuzzle {
     
     private TestUtils utils;
+    private List<int[]> boards;
     
     /**
      * Solvable or solved games
@@ -35,7 +37,7 @@ public class TestFifteenPuzzle {
     
     public TestFifteenPuzzle() {
         this.utils = new TestUtils();
-        List<int[]> boards = this.utils.boardList();
+        this.boards = this.utils.boardList();
         
         this.game0 = new FifteenPuzzle(boards.get(0));
         this.game2 = new FifteenPuzzle(boards.get(2));
@@ -59,7 +61,169 @@ public class TestFifteenPuzzle {
     
     @Test
     public void constructorTest2() {
-        // kesken
+       FifteenPuzzle puzzle = new FifteenPuzzle(this.boards.get(9), 10);
+       assertEquals(10, puzzle.moves());
+       assertEquals(11, puzzle.emptyIndex());
+    }
+    
+    @Test
+    public void findEmpty() {
+        assertEquals(15, this.game0.findEmpty());
+        assertEquals(11, this.game2.findEmpty());
+        assertEquals(1, this.game3.findEmpty());
+        assertEquals(12, this.game4.findEmpty());
+        assertEquals(6, this.game6.findEmpty());
+    }
+    
+    @Test
+    public void returnMinusWithIllegalBoard() {
+        assertEquals(-1, new FifteenPuzzle(boards.get(11)).findEmpty());
+    }
+    
+    @Test
+    public void createChildren() {
+        FifteenPuzzle child1 = this.game6.createChildren(1);
+        FifteenPuzzle child2 = this.game6.createChildren(-1);
+        FifteenPuzzle child3 = this.game6.createChildren(4);
+        FifteenPuzzle child4 = this.game6.createChildren(-4);
+        
+        assertEquals(this.game6.moves() + 1, child1.moves());
+        assertEquals(this.game6.moves() + 1, child2.moves());
+        assertEquals(this.game6.moves() + 1, child3.moves());
+        assertEquals(this.game6.moves() + 1, child4.moves());
+        
+        ArrayList<Puzzle> children = this.game6.generateChildren();
+        
+        assertTrue(child1.equals(children.get(0)));
+        assertTrue(child2.equals(children.get(1)));
+        assertTrue(child3.equals(children.get(2)));
+        assertTrue(child4.equals(children.get(3)));
+    }
+    
+    @Test
+    public void generateChildrenEmptyInRightDownCorner() {
+        int[] b1 = {
+            15, 2, 1, 12,
+            8, 5, 6, 11,
+            4, 9, 10, 7,
+            3, 14, 0, 13
+        };
+        int[] b2 = {
+            15, 2, 1, 12,
+            8, 5, 6, 11,
+            4, 9, 10, 0,
+            3, 14, 13, 7
+        };
+        
+        FifteenPuzzle child1 = new FifteenPuzzle(b1);
+        FifteenPuzzle child2 = new FifteenPuzzle(b2);
+        
+        ArrayList<Puzzle> children = this.game1.generateChildren();
+        
+        assertEquals(2, children.size());
+        assertTrue(child1.equals(children.get(0)));
+        assertTrue(child2.equals(children.get(1)));
+    }
+    
+    @Test
+    public void generateChildrenEmptyInUpCenter() {
+        int[] b1 = {
+            1, 2, 0, 3,
+            4, 6, 5, 7,
+            8, 9, 10, 11,
+            12, 13, 14, 15
+        };
+        int[] b2 = {
+            0, 1, 2, 3,
+            4, 6, 5, 7,
+            8, 9, 10, 11,
+            12, 13, 14, 15
+        };
+        int[] b3 = {
+            1, 6, 2, 3,
+            4, 0, 5, 7,
+            8, 9, 10, 11,
+            12, 13, 14, 15
+        };
+        
+        FifteenPuzzle child1 = new FifteenPuzzle(b1);
+        FifteenPuzzle child2 = new FifteenPuzzle(b2);
+        FifteenPuzzle child3 = new FifteenPuzzle(b3);
+        
+        ArrayList<Puzzle> children = this.game3.generateChildren();
+        
+        assertEquals(3, children.size());
+        assertTrue(child1.equals(children.get(0)));
+        assertTrue(child2.equals(children.get(1)));
+        assertTrue(child3.equals(children.get(2)));
+    }
+    
+    @Test
+    public void generateChildrenEmptyInCenter() {
+        int[] b1 = {
+            1, 2, 3, 4,
+            5, 6, 8, 0,
+            9, 10, 11, 12,
+            13, 7, 14, 15
+        };
+        int[] b2 = {
+            1, 2, 3, 4,
+            5, 0, 6, 8,
+            9, 10, 11, 12,
+            13, 7, 14, 15
+        };
+        int[] b3 = {
+            1, 2, 3, 4,
+            5, 6, 11, 8,
+            9, 10, 0, 12,
+            13, 7, 14, 15
+        };
+        int[] b4 = {
+            1, 2, 0, 4,
+            5, 6, 3, 8,
+            9, 10, 11, 12,
+            13, 7, 14, 15
+        };
+        
+        FifteenPuzzle child1 = new FifteenPuzzle(b1);
+        FifteenPuzzle child2 = new FifteenPuzzle(b2);
+        FifteenPuzzle child3 = new FifteenPuzzle(b3);
+        FifteenPuzzle child4 = new FifteenPuzzle(b4);
+        
+        ArrayList<Puzzle> children = this.game6.generateChildren();
+        
+        assertEquals(4, children.size());
+        assertTrue(child1.equals(children.get(0)));
+        assertTrue(child2.equals(children.get(1)));
+        assertTrue(child3.equals(children.get(2)));
+        assertTrue(child4.equals(children.get(3)));
+    }
+    
+    
+    @Test
+    public void inversions() {
+        assertEquals(0, this.game0.inversions());
+        assertEquals(45, this.game1.inversions());
+        assertEquals(3, this.game2.inversions());
+        assertEquals(1, this.game3.inversions());
+        assertEquals(0, this.game4.inversions());
+        assertEquals(2, this.game5.inversions());
+        assertEquals(6, this.game6.inversions());
+        assertEquals(3, this.game7.inversions());
+        assertEquals(5, this.game8.inversions());
+        assertEquals(4, this.game9.inversions());
+    }
+    
+    @Test
+    public void testToString() {
+        String puzzle = this.game1.toString();
+        String string =
+                  "15\t2\t1\t12\t\n"
+                + "8\t5\t6\t11\t\n"
+                + "4\t9\t10\t7\t\n"
+                + "3\t14\t13\t0\t\n";
+        
+        assertEquals(string, puzzle);
     }
     
     @Test
@@ -78,20 +242,6 @@ public class TestFifteenPuzzle {
         assertTrue(!game7.isSolved());
         assertTrue(!game8.isSolved());
         assertTrue(!game9.isSolved());
-    }
-    
-    @Test
-    public void inversions() {
-        assertEquals(0, this.game0.inversions());
-        assertEquals(45, this.game1.inversions());
-        assertEquals(3, this.game2.inversions());
-        assertEquals(1, this.game3.inversions());
-        assertEquals(0, this.game4.inversions());
-        assertEquals(2, this.game5.inversions());
-        assertEquals(6, this.game6.inversions());
-        assertEquals(3, this.game7.inversions());
-        assertEquals(5, this.game8.inversions());
-        assertEquals(4, this.game9.inversions());
     }
     
     @Test

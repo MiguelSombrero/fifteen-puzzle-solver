@@ -4,49 +4,88 @@ package fifteenpuzzlesolver.domain;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Class that implements Puzzle interface and provides methods for handling 15-puzzle.
+ * 
+ * @author miika
+ */
 public class FifteenPuzzle implements Puzzle {
     
     private int[] state;
     private int moves;
     private int emptyIndex;
     
+    /**
+     * Constructor method.
+     * 
+     * @param state Initial game state
+     */
     public FifteenPuzzle(int[] state) {
         this.state = state;
         this.moves = 0;
-        this.emptyIndex = findEmpty(state);
+        this.emptyIndex = findEmpty();
     }
     
+    /**
+     * Constructor method.
+     * 
+     * @param state Game state
+     * @param moves Moves from initial state to this state
+     */
     public FifteenPuzzle(int[] state, int moves) {
         this.state = state;
         this.moves = moves;
-        this.emptyIndex = findEmpty(state);
+        this.emptyIndex = findEmpty();
     }
     
-    public int findEmpty(int[] state) {
-        for (int i = 0; i < state.length; i++) {
-            if (state[i] == 0) {
+    /**
+     * Method which finds zero e.g. empty tile from game state
+     * 
+     * @return Index of empty tile
+     */
+    public int findEmpty() {
+        for (int i = 0; i < this.state.length; i++) {
+            if (this.state[i] == 0) {
                 return i;
             }
         }
-        return 0;
+        return -1;
     }
 
+    /**
+     * Method which returns moves from initial state to this state.
+     * @return Moves
+     */
     @Override
     public int moves() {
         return this.moves;
     }
     
+    /**
+     * Method which return this game state e.g. board of the game
+     * @return Game state
+     */
     @Override
     public int[] state() {
         return this.state;
     }
     
-    @Override
+    /**
+     * Method which returns empty tile of this board.
+     * @return Index of empty tile
+     */
     public int emptyIndex() {
         return this.emptyIndex;
     }
     
-    public FifteenPuzzle move(int index) {
+    /**
+     * Method which creates new 15-puzzle. Method moves empty tile according to given index
+     * and increments new puzzle moves by one
+     * 
+     * @param index Value of transition with empty tile
+     * @return New 15-puzzle
+     */
+    public FifteenPuzzle createChildren(int index) {
         int[] newState = this.state.clone();
         newState[this.emptyIndex] = newState[this.emptyIndex + index];
         newState[this.emptyIndex + index] = 0;
@@ -54,26 +93,38 @@ public class FifteenPuzzle implements Puzzle {
         return new FifteenPuzzle(newState, this.moves + 1);
     }
     
+    /**
+     * Method which generates list of all the possible childrens (transitions) from current
+     * game state.
+     * 
+     * @return List of puzzles derived from current puzzle
+     */
     @Override
-    public ArrayList<Puzzle> generateStates() {
-        ArrayList<Puzzle> states = new ArrayList<>();
+    public ArrayList<Puzzle> generateChildren() {
+        ArrayList<Puzzle> puzzles = new ArrayList<>();
         
         if (this.emptyIndex + 1 < this.state.length) {
-            states.add(move(1));
+            puzzles.add(createChildren(1));
         }
         if (this.emptyIndex - 1 >= 0) {
-            states.add(move(-1));
+            puzzles.add(createChildren(-1));
         }
         if (this.emptyIndex + 4 < this.state.length) {
-            states.add(move(4));
+            puzzles.add(createChildren(4));
         }
         if (this.emptyIndex - 4 >= 0) {
-            states.add(move(-4));
+            puzzles.add(createChildren(-4));
         }
         
-        return states;
+        return puzzles;
     }
     
+    /**
+     * Method for counting inversions of this game state. Inversions is used in isSolvable()
+     * method for deducting is this game possible to solve
+     * 
+     * @return Count for inversions of this game
+     */
     public int inversions() {
         int inversions = 0;
         
@@ -89,7 +140,8 @@ public class FifteenPuzzle implements Puzzle {
     }
 
     /**
-     * Method for checking that this puzzle is solvable. Algorithm is based on 
+     * Method for checking is this puzzle solvable. Algorithm is based on inversions
+     * and is explained here:
      * https://www.geeksforgeeks.org/check-instance-15-puzzle-solvable/
      * 
      * @return True if puzzle can be solved. False if puzzle is unsolvable
@@ -113,6 +165,12 @@ public class FifteenPuzzle implements Puzzle {
         return false;
     }
 
+    /**
+     * Method for checking is this puzzle solved. Puzzle is solved if its tiles are
+     * in natural order and empty tile is in index 15
+     * 
+     * @return True if puzzle is solved. False if it is not solved
+     */
     @Override
     public boolean isSolved() {
         for (int i = 0; i < this.state.length - 1; i++) {
@@ -123,21 +181,28 @@ public class FifteenPuzzle implements Puzzle {
         return true;
     }
 
+    /**
+     * Returns this puzzle printed as a game board.
+     * @return String of the game board
+     */
     public String toString() {
-        return "Moves: " + this.moves;
-    }
-    
-    public void printBoard() {
+        String puzzle = "";
+        
         for (int i = 0; i < this.state.length; i++) {
-            System.out.print(this.state[i] + "\t");
+            puzzle += this.state[i] + "\t";
             
             if ((i + 1) % 4 == 0) {
-                System.out.println("");
+                puzzle += "\n";
             }
         }
-        System.out.println("");
+        
+        return puzzle;
     }
-
+    
+    /**
+     * Method which generates hascode for this puzzle.
+     * @return Hashcode
+     */
     @Override
     public int hashCode() {
         int hash = 3;
@@ -145,6 +210,14 @@ public class FifteenPuzzle implements Puzzle {
         return hash;
     }
 
+    /**
+     * Method which checks if current puzzle equals e.g. is same as given in parameter.
+     * Two puzzles is considered to be equal, if all tiles of their game state is in
+     * same position
+     * 
+     * @param obj Puzzle to be compared to current
+     * @return True if puzzles equals. False if not
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
