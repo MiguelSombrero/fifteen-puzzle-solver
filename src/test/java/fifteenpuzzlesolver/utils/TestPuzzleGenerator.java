@@ -20,8 +20,8 @@ public class TestPuzzleGenerator {
     
     @Test
     public void generatePuzzleIsFifteenPuzzle() {
-        Puzzle easyPuzzle = generator.generateEasyPuzzle();
-        Puzzle hardPuzzle = generator.generateHardPuzzle();
+        Puzzle easyPuzzle = generator.generatePuzzle(2);
+        Puzzle hardPuzzle = generator.generatePuzzle(100);
         assertEquals(16, easyPuzzle.state().length);
         assertEquals(16, hardPuzzle.state().length);
     }
@@ -38,7 +38,8 @@ public class TestPuzzleGenerator {
     
     @Test
     public void puzzleIsSolvable() {
-        assertTrue(generator.generateEasyPuzzle().isSolvable());
-        assertTrue(generator.generateHardPuzzle().isSolvable());
+        assertTrue(generator.generatePuzzle(3).isSolvable());
+        assertTrue(generator.generatePuzzle(100).isSolvable());
+        assertTrue(generator.generatePuzzle(1000).isSolvable());
     }
 }

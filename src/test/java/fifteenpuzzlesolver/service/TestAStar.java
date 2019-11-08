@@ -1,5 +1,5 @@
 
-package fifteenpuzzlesolver.astar;
+package fifteenpuzzlesolver.service;
 
 import fifteenpuzzlesolver.domain.FifteenPuzzle;
 import fifteenpuzzlesolver.domain.Puzzle;

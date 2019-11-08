@@ -1,12 +1,8 @@
 
 package fifteenpuzzlesolver.ui;
 
-import fifteenpuzzlesolver.astar.AStar;
 import fifteenpuzzlesolver.domain.Puzzle;
-import fifteenpuzzlesolver.astar.StateComparatorManhattan;
-import fifteenpuzzlesolver.astar.StateComparatorPosition;
-import fifteenpuzzlesolver.utils.PuzzleGenerator;
-import java.util.Comparator;
+import fifteenpuzzlesolver.service.PuzzleService;
 import java.util.Scanner;
 
 /**
@@ -16,19 +12,16 @@ import java.util.Scanner;
 public class TextUI {
     
     private Scanner reader;
-    private AStar astar;
-    private PuzzleGenerator generator;
+    private PuzzleService service;
     
     /**
      * Constructor method.
      * @param reader Scanner which reads user input
-     * @param astar AStar algorithm class for solving puzzles
-     * @param generator Utility class for generating solvable puzzles
+     * @param service Class that provides methods for solving puzzles
      */
-    public TextUI(Scanner reader, AStar astar, PuzzleGenerator generator) {
+    public TextUI(Scanner reader, PuzzleService service) {
         this.reader = reader;
-        this.astar = astar;
-        this.generator = generator;
+        this.service = service;
     }
     
     /**
@@ -43,13 +36,11 @@ public class TextUI {
         System.out.println("x - Exit");
     }
     
-    public void solve(Puzzle puzzle, Comparator heuristic) {
-        long time1 = System.currentTimeMillis();
-        Puzzle endState = astar.traverse(puzzle, heuristic);
+    public void solve(long time1, Puzzle solved) {
         long time2 = System.currentTimeMillis();
-        
-        System.out.println(endState.toString());
-        System.out.println("Moves taken: " + endState.moves());
+                
+        System.out.println(solved.toString());
+        System.out.println("Moves taken: " + solved.moves());
         System.out.println("Time taken: " + (time2 - time1) / 1000 + " seconds");
     }
     
@@ -64,30 +55,22 @@ public class TextUI {
             String c = reader.nextLine();
             
             if (c.equals("e")) {
-                puzzle = generator.generateEasyPuzzle();
+                puzzle = this.service.generateEasyPuzzle();
                 System.out.println("GENERATED PUZZLE:");
                 System.out.println(puzzle.toString());
                 
             } else if (c.equals("h")) {
-                puzzle = generator.generateHardPuzzle();
+                puzzle = this.service.generateHardPuzzle();
                 System.out.println("GENERATED PUZZLE:");
                 System.out.println(puzzle.toString());
                 
-            } else if (c.equals("m")) {
-                if (puzzle == null) {
-                    System.out.println("No puzzle to solve - try to generate one!");
-                    continue;
-                }
-                StateComparatorManhattan manhattan = new StateComparatorManhattan();
-                solve(puzzle, manhattan);
+            } else if (c.equals("m") && puzzle != null) {
+                long time1 = System.currentTimeMillis();
+                solve(time1, this.service.solveWithManhattan(puzzle));
                 
-            } else if (c.equals("p")) {
-                if (puzzle == null) {
-                    System.out.println("No puzzle to solve - try to generate one!");
-                    continue;
-                }
-                StateComparatorPosition position = new StateComparatorPosition();
-                solve(puzzle, position);
+            } else if (c.equals("p") && puzzle != null) {
+                long time1 = System.currentTimeMillis();
+                solve(time1, this.service.solveWithPosition(puzzle));
                 
             } else if (c.equals("x")) {
                 break;

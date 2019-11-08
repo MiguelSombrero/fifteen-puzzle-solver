@@ -1,6 +1,7 @@
 
-package fifteenpuzzlesolver.astar;
+package fifteenpuzzlesolver.service;
 
+import fifteenpuzzlesolver.service.StateComparatorManhattan;
 import fifteenpuzzlesolver.domain.FifteenPuzzle;
 import fifteenpuzzlesolver.utils.TestUtils;
 import org.junit.Test;

@@ -13,22 +13,6 @@ import java.util.Random;
 public class PuzzleGenerator {
     
     /**
-     * Method for generating easy 15-puzzle. Puzzle have been suffled only two times
-     * @return 15-puzzle
-     */
-    public Puzzle generateEasyPuzzle() {
-        return generatePuzzle(2);
-    }
-    
-    /**
-     * Method for generating hard 15-puzzle. Puzzle have been suffled 100 times
-     * @return 15-puzzle
-     */
-    public Puzzle generateHardPuzzle() {
-        return generatePuzzle(100);
-    }
-    
-    /**
      * Method for generating puzzles. Puzzle gets harder when suffles increase
      * 
      * @param suffles Number of two random tiles that are switched
