@@ -51,18 +51,13 @@ public class PuzzleService {
     }
     
     /**
-     * Method for generating easy 15-puzzle. Puzzle have been shuffled 3 times
+     * Method for generating 15-puzzle. Puzzle gets harder when shuffles increase
+     * 
+     * @param shuffles Number of shuffles from solved puzzle state
      * @return 15-puzzle
      */
-    public Puzzle generateEasyPuzzle() {
-        return this.generator.generatePuzzle(3);
+    public Puzzle generatePuzzle(int shuffles) {
+        return this.generator.generatePuzzle(shuffles);
     }
     
-    /**
-     * Method for generating hard 15-puzzle. Puzzle have been shuffled 100 times
-     * @return 15-puzzle
-     */
-    public Puzzle generateHardPuzzle() {
-        return this.generator.generatePuzzle(100);
-    }
 }

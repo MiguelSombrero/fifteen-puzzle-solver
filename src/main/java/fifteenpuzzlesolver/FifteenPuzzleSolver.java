@@ -14,6 +14,11 @@ import java.util.Scanner;
  * @author miika
  */
 public class FifteenPuzzleSolver {
+    
+    /**
+     * Main method that starts the app.
+     * @param args Possible commandline arguments given to app
+     */
     public static void main(String[] args) {
         StateComparatorManhattan manhattan = new StateComparatorManhattan();
         StateComparatorPosition position = new StateComparatorPosition();

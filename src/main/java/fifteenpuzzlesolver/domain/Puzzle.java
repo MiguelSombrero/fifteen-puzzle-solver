@@ -1,7 +1,7 @@
 
 package fifteenpuzzlesolver.domain;
 
-import java.util.ArrayList;
+import fifteenpuzzlesolver.utils.ArrayList;
 
 /**
  * Interface for implementing n-puzzles.

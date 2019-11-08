@@ -1,9 +1,10 @@
 
 package fifteenpuzzlesolver.domain;
 
+import fifteenpuzzlesolver.utils.ArrayList;
 import fifteenpuzzlesolver.utils.TestUtils;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
+import org.junit.Assert;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -14,7 +15,7 @@ import static org.junit.Assert.*;
 public class TestFifteenPuzzle {
     
     private TestUtils utils;
-    private List<int[]> boards;
+    private ArrayList<int[]> boards;
     
     /**
      * Solvable or solved games
@@ -78,6 +79,12 @@ public class TestFifteenPuzzle {
     @Test
     public void returnMinusWithIllegalBoard() {
         assertEquals(-1, new FifteenPuzzle(boards.get(11)).findEmpty());
+    }
+    
+    @Test
+    public void copiesStateCorrectly() {
+        int[] s = this.boards.get(1);
+        assertArrayEquals(s, this.game1.copyState());
     }
     
     @Test

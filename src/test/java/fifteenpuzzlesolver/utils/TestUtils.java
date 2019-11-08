@@ -1,16 +1,14 @@
 
 package fifteenpuzzlesolver.utils;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
  * @author miika
  */
 public class TestUtils {
-    public List<int[]> boardList() {
-        List<int[]> boards = new ArrayList<>();
+    public ArrayList<int[]> boardList() {
+        ArrayList<int[]> boards = new ArrayList<>();
         
         // solvable boards
         int[] b0 = {

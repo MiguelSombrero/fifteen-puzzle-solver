@@ -2,6 +2,7 @@
 package fifteenpuzzlesolver.service;
 
 import fifteenpuzzlesolver.domain.Puzzle;
+import fifteenpuzzlesolver.utils.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.PriorityQueue;
@@ -41,8 +42,10 @@ public class AStar {
             
             visited.add(currentState);
             
-            for (Puzzle childState : currentState.generateChildren()) {
-                queue.add(childState);
+            ArrayList<Puzzle> children = currentState.generateChildren();
+            
+            for (int i = 0; i < children.size(); i++) {
+                queue.add(children.get(i));
             }
         }
         return null;

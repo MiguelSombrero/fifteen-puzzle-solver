@@ -7,6 +7,7 @@
 - Programmed game logic and both heuristics (manhattan & position based)
 - Unit testing for implemented classes
 - JavaDoc for implemented classes
+- Implemented ArrayList
 - First test coverage report
 
 ## Problems
@@ -21,5 +22,5 @@ I have found articles and texts about IDA* (iterative deepening A*) -algorithm, 
 
 ## Next Week
 
-- Implement at least one own data structure (ArrayList for example)
+- Implement new data structure (HashSet or/and PriorityQueue)
 - Try to improve A* -algorithmic performance

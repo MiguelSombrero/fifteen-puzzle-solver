@@ -29,8 +29,7 @@ public class TextUI {
      */
     public void printOptions() {
         System.out.println("OPTIONS");
-        System.out.println("e - Generate easy puzzle");
-        System.out.println("h - Generate hard puzzle");
+        System.out.println("g - Generate puzzle");
         System.out.println("m - Solve puzzle with manhattan heuristics");
         System.out.println("p - Solve puzzle with position heuristics");
         System.out.println("x - Exit");
@@ -52,15 +51,12 @@ public class TextUI {
             
         while (true) {
             printOptions();
-            String c = reader.nextLine();
+            String c = this.reader.nextLine();
             
-            if (c.equals("e")) {
-                puzzle = this.service.generateEasyPuzzle();
-                System.out.println("GENERATED PUZZLE:");
-                System.out.println(puzzle.toString());
-                
-            } else if (c.equals("h")) {
-                puzzle = this.service.generateHardPuzzle();
+            if (c.equals("g")) {
+                System.out.println("How many shuffles");
+                int s = Integer.valueOf(this.reader.nextLine());
+                puzzle = this.service.generatePuzzle(s);
                 System.out.println("GENERATED PUZZLE:");
                 System.out.println(puzzle.toString());
                 

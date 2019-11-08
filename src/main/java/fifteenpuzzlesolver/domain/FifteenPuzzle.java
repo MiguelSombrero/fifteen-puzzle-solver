@@ -1,7 +1,7 @@
 
 package fifteenpuzzlesolver.domain;
 
-import java.util.ArrayList;
+import fifteenpuzzlesolver.utils.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -79,6 +79,21 @@ public class FifteenPuzzle implements Puzzle {
     }
     
     /**
+     * Method which returns a copy of current game state.
+     * 
+     * @return Copy of current game state
+     */
+    public int[] copyState() {
+        int[] newState = new int[this.state.length];
+        
+        for (int i = 0; i < this.state.length; i++) {
+            newState[i] = this.state[i];
+        }
+        
+        return newState;
+    }
+    
+    /**
      * Method which creates new 15-puzzle. Method moves empty tile according to given index
      * and increments new puzzle moves by one
      * 
@@ -86,10 +101,9 @@ public class FifteenPuzzle implements Puzzle {
      * @return New 15-puzzle
      */
     public FifteenPuzzle createChildren(int index) {
-        int[] newState = this.state.clone();
+        int[] newState = copyState();
         newState[this.emptyIndex] = newState[this.emptyIndex + index];
         newState[this.emptyIndex + index] = 0;
-        
         return new FifteenPuzzle(newState, this.moves + 1);
     }
     

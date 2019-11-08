@@ -3,10 +3,10 @@ package fifteenpuzzlesolver.service;
 
 import fifteenpuzzlesolver.domain.FifteenPuzzle;
 import fifteenpuzzlesolver.domain.Puzzle;
+import fifteenpuzzlesolver.utils.ArrayList;
 import fifteenpuzzlesolver.utils.PuzzleGenerator;
 import fifteenpuzzlesolver.utils.TestUtils;
 import java.util.Arrays;
-import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
 public class TestPuzzleService {
     
     private PuzzleService service;
-    private List<int[]> boards;
+    private ArrayList<int[]> boards;
     
     public TestPuzzleService() {
         StateComparatorManhattan manhattan = new StateComparatorManhattan();
@@ -52,16 +52,16 @@ public class TestPuzzleService {
     
     @Test
     public void generatePuzzleIsFifteenPuzzle() {
-        Puzzle easyPuzzle = this.service.generateEasyPuzzle();
-        Puzzle hardPuzzle = this.service.generateHardPuzzle();
+        Puzzle easyPuzzle = this.service.generatePuzzle(2);
+        Puzzle hardPuzzle = this.service.generatePuzzle(100);
         assertEquals(16, easyPuzzle.state().length);
         assertEquals(16, hardPuzzle.state().length);
     }
     
     @Test
     public void generatePuzzleTilesSumUp() {
-        Puzzle easyPuzzle = this.service.generateEasyPuzzle();
-        Puzzle hardPuzzle = this.service.generateHardPuzzle();
+        Puzzle easyPuzzle = this.service.generatePuzzle(3);
+        Puzzle hardPuzzle = this.service.generatePuzzle(50);
         int easyValue = Arrays.stream(easyPuzzle.state()).sum();
         int hardValue = Arrays.stream(hardPuzzle.state()).sum();
         assertEquals(120, easyValue);
@@ -70,8 +70,8 @@ public class TestPuzzleService {
     
     @Test
     public void puzzleIsSolvable() {
-        assertTrue(this.service.generateEasyPuzzle().isSolvable());
-        assertTrue(this.service.generateHardPuzzle().isSolvable());
+        assertTrue(this.service.generatePuzzle(2).isSolvable());
+        assertTrue(this.service.generatePuzzle(1234).isSolvable());
     }
     
     
