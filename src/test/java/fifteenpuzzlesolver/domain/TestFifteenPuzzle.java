@@ -3,8 +3,6 @@ package fifteenpuzzlesolver.domain;
 
 import fifteenpuzzlesolver.utils.ArrayList;
 import fifteenpuzzlesolver.utils.TestUtils;
-import java.util.Arrays;
-import org.junit.Assert;
 import org.junit.Test;
 import static org.junit.Assert.*;
 

@@ -36,13 +36,22 @@ public class ArrayList<T> {
     /**
      * Method for adding element to an ArrayList.
      * 
-     * @param v Element to be added
+     * @param value Element to be added
      */
-    public void add(T v) {
+    public void add(T value) {
         if (this.values.length == this.index) {
             increment();
         }
-        this.values[this.index++] = v;
+        this.values[this.index++] = value;
+    }
+    
+    /**
+     * Replaces the element at the specified position in this list with the specified element.
+     * @param i index of the element to replace
+     * @param value value to be saved in index i
+     */
+    public void set(int i, T value) {
+        this.values[i] = value;
     }
     
     /**

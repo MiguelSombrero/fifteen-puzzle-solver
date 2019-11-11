@@ -3,8 +3,8 @@ package fifteenpuzzlesolver.service;
 
 import fifteenpuzzlesolver.domain.Puzzle;
 import fifteenpuzzlesolver.utils.ArrayList;
+import fifteenpuzzlesolver.utils.HashSet;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.PriorityQueue;
 
 /**
@@ -23,14 +23,13 @@ public class AStar {
      * @return Solved puzzle or null if it cannot be solved
      */
     public Puzzle traverse(Puzzle game, Comparator comparator) {
-        PriorityQueue queue = new PriorityQueue<>(comparator);
+        PriorityQueue<Puzzle> queue = new PriorityQueue<>(comparator);
         HashSet<Puzzle> visited = new HashSet<>();
         
         queue.add(game);
         
         while (!queue.isEmpty()) {
-            Puzzle currentState = (Puzzle) queue.poll();
-            // System.out.println(currentState.toString());
+            Puzzle currentState = queue.poll();
             
             if (currentState.isSolved()) {
                 return currentState;
@@ -41,11 +40,12 @@ public class AStar {
             }
             
             visited.add(currentState);
-            
             ArrayList<Puzzle> children = currentState.generateChildren();
             
             for (int i = 0; i < children.size(); i++) {
-                queue.add(children.get(i));
+                if (!visited.contains(children.get(i))) {
+                    queue.add(children.get(i));
+                }
             }
         }
         return null;

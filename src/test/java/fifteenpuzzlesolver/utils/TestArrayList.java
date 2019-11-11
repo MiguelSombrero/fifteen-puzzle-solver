@@ -61,6 +61,21 @@ public class TestArrayList {
     }
     
     @Test
+    public void canChangeValueOfTheElement() {
+        Puzzle puzzle1 = new FifteenPuzzle(this.boards.get(1));
+        Puzzle puzzle2 = new FifteenPuzzle(this.boards.get(2));
+        Puzzle puzzle3 = new FifteenPuzzle(this.boards.get(3));
+        
+        this.list.add(puzzle1);
+        this.list.add(puzzle2);
+        
+        this.list.set(1, puzzle3);
+        
+        assertEquals(puzzle1, this.list.get(0));
+        assertEquals(puzzle3, this.list.get(1));
+    }
+    
+    @Test
     public void listIncrementsItsSize() {
         for (int i = 0; i < 15; i++) {
             this.list.add(new FifteenPuzzle(this.boards.get(3)));

@@ -11,7 +11,14 @@ Day | Hours
 6.11. | 4
 7.11. | 4
 8.11. | 5
-Total | 28
+11.11. | 3
+Total | 31
+
+## Week 3
+
+Day | Hours | Explanation
+----|-------|------------
+11.11. | 3 | Implemented HashSet & tests for it
 
 ## Week 2
 
