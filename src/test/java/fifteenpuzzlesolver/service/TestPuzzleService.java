@@ -20,6 +20,7 @@ public class TestPuzzleService {
     private ArrayList<int[]> boards;
     
     public TestPuzzleService() {
+        StateComparatorLinearCollision linear = new StateComparatorLinearCollision();
         StateComparatorManhattan manhattan = new StateComparatorManhattan();
         StateComparatorPosition position = new StateComparatorPosition();
         PuzzleGenerator generator = new PuzzleGenerator();
@@ -27,7 +28,7 @@ public class TestPuzzleService {
         AStar astar = new AStar();
         
         this.boards = utils.boardList();
-        this.service = new PuzzleService(astar, generator, manhattan, position);
+        this.service = new PuzzleService(astar, generator, manhattan, position, linear);
     }
     
     @Test

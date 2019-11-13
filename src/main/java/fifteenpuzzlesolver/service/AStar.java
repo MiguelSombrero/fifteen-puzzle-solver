@@ -25,7 +25,6 @@ public class AStar {
     public Puzzle traverse(Puzzle game, Comparator comparator) {
         PriorityQueue<Puzzle> queue = new PriorityQueue<>(comparator);
         HashSet<Puzzle> visited = new HashSet<>();
-        
         queue.add(game);
         
         while (!queue.isEmpty()) {
@@ -43,6 +42,10 @@ public class AStar {
             ArrayList<Puzzle> children = currentState.generateChildren();
             
             for (int i = 0; i < children.size(); i++) {
+                if (children.get(i).isSolved()) {
+                    return children.get(i);
+                }
+                
                 if (!visited.contains(children.get(i))) {
                     queue.add(children.get(i));
                 }

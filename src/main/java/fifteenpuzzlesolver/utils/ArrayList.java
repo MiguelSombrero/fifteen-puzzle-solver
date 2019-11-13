@@ -19,12 +19,11 @@ public class ArrayList<T> {
     }
     
     /**
-     * Method which doubles current values array's size. Doubling the size of an
-     * array would be very inefficient with BIG arrays. Since we are dealing with 
-     * only very SMALL arrays in this assignment, it's OK.
+     * Method which multiplies current values array's size by 1.5.
      */
     private void increment() {
-        T[] newValues = (T[]) new Object[ this.values.length * 2 ];
+        int newSize = this.values.length + this.values.length / 2;
+        T[] newValues = (T[]) new Object[ newSize ];
         
         for (int i = 0; i < this.values.length; i++) {
             newValues[i] = this.values[i];

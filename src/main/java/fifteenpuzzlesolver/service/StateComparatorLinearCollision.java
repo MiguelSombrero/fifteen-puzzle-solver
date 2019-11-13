@@ -5,12 +5,11 @@ import fifteenpuzzlesolver.domain.Puzzle;
 import java.util.Comparator;
 
 /**
- * Class to compare two puzzles with A* and Manhattan heuristics.
- * 
+ * Class to compare two puzzles with A* and Linear Collision heuristics
  * @author miika
  */
-public class StateComparatorManhattan implements Comparator<Puzzle> {
-
+public class StateComparatorLinearCollision implements Comparator<Puzzle> {
+    
     /**
      * Method for counting Manhattan distance between tiles current and correct position.
      * 
@@ -27,11 +26,23 @@ public class StateComparatorManhattan implements Comparator<Puzzle> {
         return Math.abs(goalY - currentY) + Math.abs(goalX - currentX);
     }
     
+    public int countLinearCollision(Puzzle p, int i, int j) {
+        // ei toimi vielä täysin järkevästi: jos laatat ovat samalla rivillä,
+        // mutta se ei ole oikea rivi jommalle kummalle laatoista, ei törmäystä
+        // käytännössä pitäisi tapahtua. Nyt laskee senkin törmäykseksi.
+        
+        if (p.state()[j] < p.state()[i]) {
+            return 2;
+        }
+        return 0;
+    }
+    
     /**
-     * Method for counting sum of Manhattan distances between tiles of given puzzle.
+     * Method for counting sum of Manhattan distances between tiles of given puzzle and
+     * linear collision.
      * 
-     * @param p Puzzle which Manhattan distance is being calculated
-     * @return Sum of Manhattan distances between tiles of given puzzle
+     * @param p Puzzle which heuritics is being calculated
+     * @return Heuristic value of the puzzle
      */
     public int heuristic(Puzzle p) {
         int value = 0;
@@ -39,6 +50,12 @@ public class StateComparatorManhattan implements Comparator<Puzzle> {
         for (int i = 0; i < p.state().length; i++) {
             if (p.state()[i] != 0) {
                 value += countManhattanDistance(i, p.state()[i] - 1);
+            }
+            
+            for (int j = i; j < p.state().length; j++) {
+                if (i % 4 == j % 4 || i / 4 == j / 4) {
+                    value += countLinearCollision(p, i, j);
+                }
             }
         }
         

@@ -12,7 +12,7 @@ public class HashSet<V> {
     }
     
     private ArrayList<V> getListForKey(V value) {
-        int hash = Math.abs(value.hashCode() % this.values.length );
+        int hash = Math.abs(value.hashCode() % this.values.length);
         
         if (this.values[hash] == null) {
             this.values[hash] = new ArrayList<>();
@@ -33,7 +33,7 @@ public class HashSet<V> {
     private void copy(ArrayList<V>[] newList, int index) {
         for (int i = 0; i < this.values[index].size(); i++) {
             V value = this.values[index].get(i);
-            int hash = Math.abs( value.hashCode() % newList.length );
+            int hash = Math.abs(value.hashCode() % newList.length);
         
             if (newList[hash] == null) {
                 newList[hash] = new ArrayList<>();
