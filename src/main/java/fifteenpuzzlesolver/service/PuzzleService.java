@@ -120,13 +120,24 @@ public class PuzzleService {
     }
     
     /**
-     * Method for generating 15-puzzle. Puzzle gets harder when shuffles increase
+     * Method for generating random 15-puzzle. Puzzle (usually) gets harder when shuffles increase
      * 
      * @param shuffles Number of shuffles from solved puzzle state
      * @return 15-puzzle
      */
-    public Puzzle generatePuzzle(int shuffles) {
-        return this.generator.generatePuzzle(shuffles);
+    public Puzzle generateRandomPuzzle(int shuffles) {
+        return this.generator.generateRandomPuzzle(shuffles);
+    }
+    
+    /**
+     * Method for generating 15-puzzle. Puzzle gets harder when moves increase
+     * because it moves further away from solved state
+     * 
+     * @param moves Moves from solved state to random direction
+     * @return 15-puzzle
+     */
+    public Puzzle generatePuzzleByMoves(int moves) {
+        return this.generator.generatePuzzleByMoves(moves);
     }
     
 }

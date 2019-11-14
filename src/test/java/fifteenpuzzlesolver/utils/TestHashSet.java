@@ -81,12 +81,12 @@ public class TestHashSet {
     @Test
     public void setIncrementsItsSize() {
         for (int i = 0; i < 30; i++) {
-            this.set.add(this.generator.generatePuzzle(10));
+            this.set.add(this.generator.generateRandomPuzzle(10));
         }
         assertEquals(30, this.set.size());
         
         for (int i = 0; i < 30; i++) {
-            this.set.add(this.generator.generatePuzzle(10));
+            this.set.add(this.generator.generateRandomPuzzle(10));
         }
         assertEquals(60, this.set.size());
     }

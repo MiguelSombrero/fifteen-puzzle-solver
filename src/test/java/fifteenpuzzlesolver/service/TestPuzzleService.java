@@ -16,6 +16,12 @@ import static org.junit.Assert.*;
  */
 public class TestPuzzleService {
     
+    
+
+    // Still missing test for generatePuzzleByMoves!!
+    
+    
+    
     private PuzzleService service;
     private ArrayList<int[]> boards;
     
@@ -53,16 +59,16 @@ public class TestPuzzleService {
     
     @Test
     public void generatePuzzleIsFifteenPuzzle() {
-        Puzzle easyPuzzle = this.service.generatePuzzle(2);
-        Puzzle hardPuzzle = this.service.generatePuzzle(100);
+        Puzzle easyPuzzle = this.service.generateRandomPuzzle(2);
+        Puzzle hardPuzzle = this.service.generateRandomPuzzle(100);
         assertEquals(16, easyPuzzle.state().length);
         assertEquals(16, hardPuzzle.state().length);
     }
     
     @Test
     public void generatePuzzleTilesSumUp() {
-        Puzzle easyPuzzle = this.service.generatePuzzle(3);
-        Puzzle hardPuzzle = this.service.generatePuzzle(50);
+        Puzzle easyPuzzle = this.service.generateRandomPuzzle(3);
+        Puzzle hardPuzzle = this.service.generateRandomPuzzle(50);
         int easyValue = Arrays.stream(easyPuzzle.state()).sum();
         int hardValue = Arrays.stream(hardPuzzle.state()).sum();
         assertEquals(120, easyValue);
@@ -71,8 +77,8 @@ public class TestPuzzleService {
     
     @Test
     public void puzzleIsSolvable() {
-        assertTrue(this.service.generatePuzzle(2).isSolvable());
-        assertTrue(this.service.generatePuzzle(1234).isSolvable());
+        assertTrue(this.service.generateRandomPuzzle(2).isSolvable());
+        assertTrue(this.service.generateRandomPuzzle(1234).isSolvable());
     }
     
     

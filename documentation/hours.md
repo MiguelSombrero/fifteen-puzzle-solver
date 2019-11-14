@@ -13,8 +13,8 @@ Day | Hours
 8.11. | 5
 11.11. | 3
 13.11. | 3
-14.11. | 3
-Total | 37
+14.11. | 5
+Total | 39
 
 ## Week 3
 
@@ -22,7 +22,7 @@ Day | Hours | Explanation
 ----|-------|------------
 11.11. | 3 | Implemented HashSet & tests for it
 13.11. | 3 | Implemented new heuristic Linear collision
-14.11. | 3 | Tests for Linear collision comparator & javadocs
+14.11. | 5 | Tests for Linear collision comparator & javadocs, benchmarking
 
 ## Week 2
 
