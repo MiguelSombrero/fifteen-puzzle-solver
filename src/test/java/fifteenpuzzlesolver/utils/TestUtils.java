@@ -89,6 +89,14 @@ public class TestUtils {
             3, 2, 1, 5
         };
         
+        // board for testing column collisions
+        int[] b12 = {
+            9, 2, 15, 4,
+            5, 14, 7, 8,
+            1, 10, 11, 12,
+            13, 6, 3, 0
+        };
+        
         boards.add(b0);
         boards.add(b1);
         boards.add(b2);
@@ -101,6 +109,7 @@ public class TestUtils {
         boards.add(b9);
         boards.add(b10);
         boards.add(b11);
+        boards.add(b12);
         
         return boards;
     }

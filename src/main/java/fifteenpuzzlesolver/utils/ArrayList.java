@@ -2,7 +2,9 @@
 package fifteenpuzzlesolver.utils;
 
 /**
- * Class which mimics implementation of Java's ArrayList data structure.
+ * Class which mimics implementation of Java's ArrayList data structure. Implemented only those
+ * methods that are needed for this app
+ * 
  * @author miika
  */
 public class ArrayList<T> {
@@ -11,7 +13,7 @@ public class ArrayList<T> {
     private int index;
     
     /**
-     * Constructor class.
+     * Constructor class. Creates new array of objects with 10 slots for values
      */
     public ArrayList() {
         this.values = (T[]) new Object[10];

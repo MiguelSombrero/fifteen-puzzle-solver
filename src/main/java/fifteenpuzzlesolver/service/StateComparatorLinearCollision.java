@@ -5,7 +5,8 @@ import fifteenpuzzlesolver.domain.Puzzle;
 import java.util.Comparator;
 
 /**
- * Class to compare two puzzles with A* and Linear Collision heuristics
+ * Class to compare two puzzles with A* and Manhattan distance + Linear Collision heuristics.
+ * 
  * @author miika
  */
 public class StateComparatorLinearCollision implements Comparator<Puzzle> {
@@ -26,20 +27,50 @@ public class StateComparatorLinearCollision implements Comparator<Puzzle> {
         return Math.abs(goalY - currentY) + Math.abs(goalX - currentX);
     }
     
-    public int countLinearCollision(Puzzle p, int i, int j) {
-        // ei toimi vielä täysin järkevästi: jos laatat ovat samalla rivillä,
-        // mutta se ei ole oikea rivi jommalle kummalle laatoista, ei törmäystä
-        // käytännössä pitäisi tapahtua. Nyt laskee senkin törmäykseksi.
-        
-        if (p.state()[j] < p.state()[i]) {
+    /**
+     * Checks if a specific values (tiles) is in the same ROW.
+     * 
+     * @param i Index of tile no 1.
+     * @param j Index of tile no 2.
+     * @return True if values are in the same row, false otherwise
+     */
+    public boolean isInSameRow(int i, int j) {
+        return i / 4 == j / 4;
+    }
+    
+    /**
+     * Checks if a specific values (tiles) is in the same COLUMN.
+     * 
+     * @param i Index of tile no 1.
+     * @param j Index of tile no 2.
+     * @return True if values are in the same column, false otherwise
+     */
+    public boolean isInSameColumn(int i, int j) {
+        return i % 4 == j % 4;
+    }
+    
+    /**
+     * Checks if two tiles collide. They can collide by being in the same row
+     * or in the same column. If they collide, value of the game state is incremented by two
+     * 
+     * @param state Game state 
+     * @param i Index of tile no 1.
+     * @param j Index of tile no 2.
+     * @return Value added to the game state. Two if tiles collide, zero otherwise
+     */
+    public int countCollision(int[] state, int i, int j) {
+        if (state[j] < state[i] && isInSameRow(i, j) && isInSameRow(state[i] - 1, i) && isInSameRow(state[j] - 1, j)) {
+            return 2;
+        }
+        if (state[j] < state[i] && isInSameColumn(i, j) && isInSameColumn(state[i] - 1, i) && isInSameColumn(state[j] - 1, j)) {
             return 2;
         }
         return 0;
     }
     
     /**
-     * Method for counting sum of Manhattan distances between tiles of given puzzle and
-     * linear collision.
+     * Method for counting sum of Manhattan distances and linear collision
+     * between tiles of given puzzle.
      * 
      * @param p Puzzle which heuritics is being calculated
      * @return Heuristic value of the puzzle
@@ -53,8 +84,8 @@ public class StateComparatorLinearCollision implements Comparator<Puzzle> {
             }
             
             for (int j = i; j < p.state().length; j++) {
-                if (i % 4 == j % 4 || i / 4 == j / 4) {
-                    value += countLinearCollision(p, i, j);
+                if (p.state()[i] != 0 && p.state()[j] != 0) {
+                    value += countCollision(p.state(), i, j);
                 }
             }
         }
