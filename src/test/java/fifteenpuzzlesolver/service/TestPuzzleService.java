@@ -7,6 +7,7 @@ import fifteenpuzzlesolver.utils.ArrayList;
 import fifteenpuzzlesolver.utils.PuzzleGenerator;
 import fifteenpuzzlesolver.utils.TestUtils;
 import java.util.Arrays;
+import java.util.Random;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -17,8 +18,8 @@ import static org.junit.Assert.*;
 public class TestPuzzleService {
     
     
-
-    // Still missing test for generatePuzzleByMoves!!
+    
+    // Still missing test for generatePuzzleByMoves and more!!
     
     
     
@@ -29,7 +30,8 @@ public class TestPuzzleService {
         StateComparatorLinearCollision linear = new StateComparatorLinearCollision();
         StateComparatorManhattan manhattan = new StateComparatorManhattan();
         StateComparatorPosition position = new StateComparatorPosition();
-        PuzzleGenerator generator = new PuzzleGenerator();
+        Random random = new Random();
+        PuzzleGenerator generator = new PuzzleGenerator(random);
         TestUtils utils = new TestUtils();
         AStar astar = new AStar();
         
@@ -49,28 +51,28 @@ public class TestPuzzleService {
     
     @Test
     public void solveManhattanReturnsSolvedPuzzleIfSolvable() {
-        assertArrayEquals(this.boards.get(0), this.service.solveWithManhattan(new FifteenPuzzle(this.boards.get(2))).state());
+        assertArrayEquals(this.boards.get(0), this.service.solveWithManhattan(new FifteenPuzzle(this.boards.get(2))).getState());
     }
     
     @Test
     public void solvePositionReturnsSolvedPuzzleIfSolvable() {
-        assertArrayEquals(this.boards.get(0), this.service.solveWithPosition(new FifteenPuzzle(this.boards.get(2))).state());
+        assertArrayEquals(this.boards.get(0), this.service.solveWithPosition(new FifteenPuzzle(this.boards.get(2))).getState());
     }
     
     @Test
     public void generatePuzzleIsFifteenPuzzle() {
         Puzzle easyPuzzle = this.service.generateRandomPuzzle(2);
         Puzzle hardPuzzle = this.service.generateRandomPuzzle(100);
-        assertEquals(16, easyPuzzle.state().length);
-        assertEquals(16, hardPuzzle.state().length);
+        assertEquals(16, easyPuzzle.getState().length);
+        assertEquals(16, hardPuzzle.getState().length);
     }
     
     @Test
     public void generatePuzzleTilesSumUp() {
         Puzzle easyPuzzle = this.service.generateRandomPuzzle(3);
         Puzzle hardPuzzle = this.service.generateRandomPuzzle(50);
-        int easyValue = Arrays.stream(easyPuzzle.state()).sum();
-        int hardValue = Arrays.stream(hardPuzzle.state()).sum();
+        int easyValue = Arrays.stream(easyPuzzle.getState()).sum();
+        int hardValue = Arrays.stream(hardPuzzle.getState()).sum();
         assertEquals(120, easyValue);
         assertEquals(120, hardValue);
     }
@@ -80,6 +82,5 @@ public class TestPuzzleService {
         assertTrue(this.service.generateRandomPuzzle(2).isSolvable());
         assertTrue(this.service.generateRandomPuzzle(1234).isSolvable());
     }
-    
     
 }

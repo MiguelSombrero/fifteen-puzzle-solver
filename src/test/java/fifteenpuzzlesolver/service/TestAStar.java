@@ -52,10 +52,10 @@ public class TestAStar {
         Puzzle endStateManhattan4 = this.astar.traverse(this.puzzle4, manhattan);
         Puzzle endStatePosition4 = this.astar.traverse(this.puzzle4, position);
         
-        assertEquals(1, endStateManhattan2.moves());
-        assertEquals(1, endStatePosition2.moves());
-        assertEquals(3, endStateManhattan4.moves());
-        assertEquals(3, endStatePosition4.moves());
+        assertEquals(1, endStateManhattan2.getMoves());
+        assertEquals(1, endStatePosition2.getMoves());
+        assertEquals(3, endStateManhattan4.getMoves());
+        assertEquals(3, endStatePosition4.getMoves());
     }
     
 }

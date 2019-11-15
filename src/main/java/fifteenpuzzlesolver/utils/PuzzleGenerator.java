@@ -16,30 +16,33 @@ public class PuzzleGenerator {
     
     /**
      * Constructor class. Initializes new random generator
+     * 
+     * @param random Random generator
      */
-    public PuzzleGenerator() {
-        this.r = new Random();
+    public PuzzleGenerator(Random random) {
+        this.r = random;
     }
     
-    public Puzzle generateChildren(int moves, Puzzle currentPuzzle, HashSet<Puzzle> visited) {
-        if (moves == 0) {
-            return currentPuzzle;
-        }
-        visited.add(currentPuzzle);
+    private Puzzle generateChildren(Puzzle currentPuzzle, HashSet<Puzzle> visited) {
         ArrayList<Puzzle> children = currentPuzzle.generateChildren();
-        Puzzle child = null;
         
         while (true) {
             int index = r.nextInt(children.size());
             
             if (!visited.contains(children.get(index))) {
                 visited.add(children.get(index));
-                child = children.get(index);
-                break;
+                return children.get(index);
             }
         }
-        
-        return generateChildren(moves-1, child, visited);
+    }
+    
+    private Puzzle traverseGameTree(int moves, Puzzle currentPuzzle, HashSet<Puzzle> visited) {
+        if (moves == 0) {
+            return currentPuzzle;
+        }
+        visited.add(currentPuzzle);
+        Puzzle child = generateChildren(currentPuzzle, visited);
+        return traverseGameTree(moves-1, child, visited);
     }
     
     public Puzzle generatePuzzleByMoves(int moves) {
@@ -52,7 +55,7 @@ public class PuzzleGenerator {
         
         HashSet<Puzzle> visited = new HashSet<>();
         Puzzle initialPuzzle = new FifteenPuzzle(initialState);
-        return generateChildren(moves-1, initialPuzzle, visited);
+        return traverseGameTree(moves-1, initialPuzzle, visited);
     }
     
     /**

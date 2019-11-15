@@ -14,13 +14,13 @@ public interface Puzzle {
      * 
      * @return Moves
      */
-    int moves();
+    int getMoves();
     
     /**
      * Returns game state e.g. board of the game
      * @return Game state
      */
-    int[] state();
+    int[] getState();
     
     /**
      * Generates list of all the possible childrens (transitions) from current

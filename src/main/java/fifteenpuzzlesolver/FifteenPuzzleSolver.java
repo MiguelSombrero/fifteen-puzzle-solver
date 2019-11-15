@@ -8,6 +8,7 @@ import fifteenpuzzlesolver.service.StateComparatorManhattan;
 import fifteenpuzzlesolver.service.StateComparatorPosition;
 import fifteenpuzzlesolver.ui.TextUI;
 import fifteenpuzzlesolver.utils.PuzzleGenerator;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -24,7 +25,8 @@ public class FifteenPuzzleSolver {
         StateComparatorLinearCollision linear = new StateComparatorLinearCollision();
         StateComparatorManhattan manhattan = new StateComparatorManhattan();
         StateComparatorPosition position = new StateComparatorPosition();
-        PuzzleGenerator generator = new PuzzleGenerator();
+        Random random = new Random();
+        PuzzleGenerator generator = new PuzzleGenerator(random);
         Scanner reader = new Scanner(System.in);
         AStar astar = new AStar();
         

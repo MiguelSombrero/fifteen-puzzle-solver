@@ -3,6 +3,7 @@ package fifteenpuzzlesolver.ui;
 
 import fifteenpuzzlesolver.domain.Puzzle;
 import fifteenpuzzlesolver.service.PuzzleService;
+import fifteenpuzzlesolver.utils.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -29,6 +30,7 @@ public class TextUI {
      */
     public void printOptions() {
         System.out.println("OPTIONS");
+        System.out.println("0 - Generate multiple puzzles");
         System.out.println("1 - Generate random puzzle");
         System.out.println("2 - Generate puzzle by moves");
         System.out.println("3 - Solve puzzle with A* + manhattan");
@@ -38,6 +40,17 @@ public class TextUI {
         System.out.println("7 - Benchmark A* + position");
         System.out.println("8 - Benchmark A* + linear collision");
         System.out.println("x - Exit");
+    }
+    
+    /**
+     * Prints average solving time and moves for benchmark.
+     * 
+     * @param data Array consisting average solving time and moves
+     */
+    public void printBenchmark(long[] data) {
+        System.out.println("---------------------");
+        System.out.println("Average solving time: " + data[0] / 1000 + " seconds");
+        System.out.println("Average moves: " + data[1]);
     }
     
     /**
@@ -55,7 +68,7 @@ public class TextUI {
         
         System.out.println("-----------------");
         System.out.println(solved.toString());
-        System.out.println("Moves taken: " + solved.moves());
+        System.out.println("Moves taken: " + solved.getMoves());
         System.out.println("Time taken: " + (time2 - time1) / 1000 + " seconds");
         System.out.println("-----------------");
     }
@@ -65,12 +78,23 @@ public class TextUI {
      */
     public void initialize() {
         Puzzle puzzle = null;
-            
+        ArrayList<Puzzle> puzzles = null;
+        
         while (true) {
             printOptions();
             String c = this.reader.nextLine();
             
-            if (c.equals("1")) {
+            if (c.equals("0")) {
+                System.out.println("How many puzzles?");
+                int p = Integer.valueOf(this.reader.nextLine());
+                System.out.println("How many moves per puzzle?");
+                int m = Integer.valueOf(this.reader.nextLine());
+                puzzles = this.service.generateMultiplePuzzles(p, m);
+                System.out.println("-----------------");
+                System.out.println("GENERATED " + p + " PUZZLES");
+                System.out.println("-----------------");
+                
+            } else if (c.equals("1")) {
                 System.out.println("How many shuffles");
                 int s = Integer.valueOf(this.reader.nextLine());
                 puzzle = this.service.generateRandomPuzzle(s);
@@ -98,23 +122,14 @@ public class TextUI {
                 long time1 = System.currentTimeMillis();
                 solve(time1, this.service.solveWithLinearCollision(puzzle));
                 
-            } else if (c.equals("6") && puzzle != null) {
-                System.out.println("How many iterations?");
-                int i = Integer.valueOf(this.reader.nextLine());
-                long time = this.service.benchmarkAStarManhattan(puzzle, i);
-                System.out.println("Average solving time: " + time / 1000 + " seconds");
+            } else if (c.equals("6") && puzzles != null) {
+                printBenchmark(this.service.benchmarkAStarManhattan(puzzles));
                 
-            } else if (c.equals("7") && puzzle != null) {
-                System.out.println("How many iterations?");
-                int i = Integer.valueOf(this.reader.nextLine());
-                long time = this.service.benchmarkAStarPosition(puzzle, i);
-                System.out.println("Average solving time: " + time / 1000 + " seconds");
+            } else if (c.equals("7") && puzzles != null) {
+                printBenchmark(this.service.benchmarkAStarPosition(puzzles));
                 
-            } else if (c.equals("8") && puzzle != null) {
-                System.out.println("How many iterations?");
-                int i = Integer.valueOf(this.reader.nextLine());
-                long time = this.service.benchmarkAStarLinearCollision(puzzle, i);
-                System.out.println("Average solving time: " + time / 1000 + " seconds");
+            } else if (c.equals("8") && puzzles != null) {
+                printBenchmark(this.service.benchmarkAStarLinearCollision(puzzles));
                 
             } else if (c.equals("x")) {
                 break;

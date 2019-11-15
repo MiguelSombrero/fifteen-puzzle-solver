@@ -23,6 +23,9 @@ public class AStar {
      * @return Solved puzzle or null if it cannot be solved
      */
     public Puzzle traverse(Puzzle game, Comparator comparator) {
+        if (!game.isSolvable()) {
+            return null;
+        }
         PriorityQueue<Puzzle> queue = new PriorityQueue<>(comparator);
         HashSet<Puzzle> visited = new HashSet<>();
         queue.add(game);
@@ -34,7 +37,7 @@ public class AStar {
                 return currentState;
             }
             
-            if (visited.contains(currentState) || !currentState.isSolvable()) {
+            if (visited.contains(currentState)) {
                 continue;
             }
             

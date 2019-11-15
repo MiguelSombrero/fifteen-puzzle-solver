@@ -2,6 +2,7 @@
 package fifteenpuzzlesolver.service;
 
 import fifteenpuzzlesolver.domain.Puzzle;
+import fifteenpuzzlesolver.utils.ArrayList;
 import fifteenpuzzlesolver.utils.PuzzleGenerator;
 import java.util.Comparator;
 
@@ -65,58 +66,58 @@ public class PuzzleService {
     }
     
     /**
-     * Solves puzzle n times using A* and given heuristics. Used for calculating average
+     * Solves n puzzles using A* and given heuristics. Used for calculating average
      * solving time for specific puzzle
      * 
-     * @param puzzle Puzzle to solve
-     * @param iterations Times puzzle is solved
+     * @param puzzles Puzzles to solve for bencmarking
      * @param comparator Heuristics used in A* -algorithm
-     * @return Average solving time in milliseconds
+     * @return data consitig average solving time in milliseconds and average moves
      */
-    private long benchmark(Puzzle puzzle, int iterations, Comparator comparator) {
-        long overall = 0;
+    private long[] benchmark(ArrayList<Puzzle> puzzles, Comparator comparator) {
+        long data[] = new long[2];
         
-        for (int i = 0; i < iterations; i++) {
+        for (int i = 0; i < puzzles.size(); i++) {
             long time1 = System.currentTimeMillis();
-            this.astar.traverse(puzzle, comparator);
+            Puzzle solved = this.astar.traverse(puzzles.get(i), comparator);
             long time2 = System.currentTimeMillis();
-            overall += time2 - time1;
+            data[0] += time2 - time1;
+            data[1] += solved.getMoves();
         }
         
-        return overall / iterations;
+        data[0] = data[0] / puzzles.size();
+        data[1] = data[1] / puzzles.size();
+        
+        return data;
     }
     
     /**
      * Benchmarks puzzle n times using A* manhattan algorithm.
      * 
-     * @param puzzle Puzzle to Benchmark
-     * @param iterations Times puzzle is solved
-     * @return Average solving time in milliseconds
+     * @param puzzles Puzzles to solve for Benchmarking
+     * @return data consitig average solving time in milliseconds and average moves
      */
-    public long benchmarkAStarManhattan(Puzzle puzzle, int iterations) {
-        return benchmark(puzzle, iterations, this.manhattan);
+    public long[] benchmarkAStarManhattan(ArrayList<Puzzle> puzzles) {
+        return benchmark(puzzles, this.manhattan);
     }
     
     /**
      * Benchmarks puzzle n times using A* position algorithm.
      * 
-     * @param puzzle Puzzle to Benchmark
-     * @param iterations Times puzzle is solved
-     * @return Average solving time in milliseconds
+     * @param puzzles puzzles Puzzles to solve for Benchmarking
+     * @return data consitig average solving time in milliseconds and average moves
      */
-    public long benchmarkAStarPosition(Puzzle puzzle, int iterations) {
-        return benchmark(puzzle, iterations, this.position);
+    public long[] benchmarkAStarPosition(ArrayList<Puzzle> puzzles) {
+        return benchmark(puzzles, this.position);
     }
     
     /**
      * Benchmarks puzzle n times using A* linear collision algorithm.
      * 
-     * @param puzzle Puzzle to Benchmark
-     * @param iterations Times puzzle is solved
-     * @return Average solving time in milliseconds
+     * @param puzzles Puzzles to solve for Benchmarking
+     * @return data consitig average solving time in milliseconds and average moves
      */
-    public long benchmarkAStarLinearCollision(Puzzle puzzle, int iterations) {
-        return benchmark(puzzle, iterations, this.linear);
+    public long[] benchmarkAStarLinearCollision(ArrayList<Puzzle> puzzles) {
+        return benchmark(puzzles, this.linear);
     }
     
     /**
@@ -140,4 +141,23 @@ public class PuzzleService {
         return this.generator.generatePuzzleByMoves(moves);
     }
     
+    /**
+     * Generates list of puzzles.
+     * 
+     * @param puzzles Number of puzzles to generate
+     * @param moves Moves used for generating each puzzle
+     * @return List of generated puzzles
+     */
+    public ArrayList<Puzzle> generateMultiplePuzzles(int puzzles, int moves) {
+        ArrayList<Puzzle> p = new ArrayList<>();
+        
+        while(p.size() < puzzles) {
+            Puzzle puzzle = generatePuzzleByMoves(moves);
+            if (puzzle.isSolvable()) {
+                p.add(puzzle);
+            }
+        }
+        
+        return p;
+    }
 }

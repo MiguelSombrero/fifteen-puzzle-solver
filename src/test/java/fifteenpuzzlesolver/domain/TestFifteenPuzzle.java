@@ -54,14 +54,14 @@ public class TestFifteenPuzzle {
     
     @Test
     public void constructorTest1() {
-        assertEquals(0, this.game1.moves());
+        assertEquals(0, this.game1.getMoves());
         assertEquals(15, this.game1.emptyIndex());
     }
     
     @Test
     public void constructorTest2() {
        FifteenPuzzle puzzle = new FifteenPuzzle(this.boards.get(9), 10);
-       assertEquals(10, puzzle.moves());
+       assertEquals(10, puzzle.getMoves());
        assertEquals(11, puzzle.emptyIndex());
     }
     
@@ -92,10 +92,10 @@ public class TestFifteenPuzzle {
         FifteenPuzzle child3 = this.game6.createChildren(4);
         FifteenPuzzle child4 = this.game6.createChildren(-4);
         
-        assertEquals(this.game6.moves() + 1, child1.moves());
-        assertEquals(this.game6.moves() + 1, child2.moves());
-        assertEquals(this.game6.moves() + 1, child3.moves());
-        assertEquals(this.game6.moves() + 1, child4.moves());
+        assertEquals(this.game6.getMoves() + 1, child1.getMoves());
+        assertEquals(this.game6.getMoves() + 1, child2.getMoves());
+        assertEquals(this.game6.getMoves() + 1, child3.getMoves());
+        assertEquals(this.game6.getMoves() + 1, child4.getMoves());
         
         ArrayList<Puzzle> children = this.game6.generateChildren();
         
@@ -204,6 +204,29 @@ public class TestFifteenPuzzle {
         assertTrue(child4.equals(children.get(3)));
     }
     
+    @Test
+    public void isEvenRowFromTheBottom() {
+        assertTrue(this.game0.isEvenRowFromTheBottom(11));
+        assertTrue(this.game0.isEvenRowFromTheBottom(10));
+        assertTrue(this.game0.isEvenRowFromTheBottom(9));
+        assertTrue(this.game0.isEvenRowFromTheBottom(8));
+        assertTrue(this.game0.isEvenRowFromTheBottom(3));
+        assertTrue(this.game0.isEvenRowFromTheBottom(2));
+        assertTrue(this.game0.isEvenRowFromTheBottom(1));
+        assertTrue(this.game0.isEvenRowFromTheBottom(0));
+    }
+    
+    @Test
+    public void isOddRowFromTheBottom() {
+        assertTrue(!this.game0.isEvenRowFromTheBottom(15));
+        assertTrue(!this.game0.isEvenRowFromTheBottom(14));
+        assertTrue(!this.game0.isEvenRowFromTheBottom(13));
+        assertTrue(!this.game0.isEvenRowFromTheBottom(12));
+        assertTrue(!this.game0.isEvenRowFromTheBottom(7));
+        assertTrue(!this.game0.isEvenRowFromTheBottom(6));
+        assertTrue(!this.game0.isEvenRowFromTheBottom(5));
+        assertTrue(!this.game0.isEvenRowFromTheBottom(4));
+    }
     
     @Test
     public void inversions() {

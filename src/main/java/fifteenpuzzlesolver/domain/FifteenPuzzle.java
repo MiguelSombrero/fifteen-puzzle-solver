@@ -1,4 +1,4 @@
-
+    
 package fifteenpuzzlesolver.domain;
 
 import fifteenpuzzlesolver.utils.ArrayList;
@@ -57,7 +57,7 @@ public class FifteenPuzzle implements Puzzle {
      * @return Moves
      */
     @Override
-    public int moves() {
+    public int getMoves() {
         return this.moves;
     }
     
@@ -66,7 +66,7 @@ public class FifteenPuzzle implements Puzzle {
      * @return Game state
      */
     @Override
-    public int[] state() {
+    public int[] getState() {
         return this.state;
     }
     
@@ -142,8 +142,8 @@ public class FifteenPuzzle implements Puzzle {
     public int inversions() {
         int inversions = 0;
         
-        for (int i = 0; i < this.state.length; i++) {
-            for (int j = i; j < this.state.length; j++) {
+        for (int i = 0; i < this.state.length-1; i++) {
+            for (int j = i+1; j < this.state.length; j++) {
                 if (this.state[i] != 0 && this.state[j] != 0 && this.state[i] > this.state[j]) {
                     inversions++;
                 }
@@ -154,6 +154,16 @@ public class FifteenPuzzle implements Puzzle {
     }
 
     /**
+     * Checks whether given index is on even row or not, counting from the bottom.
+     * 
+     * @param i Index to check
+     * @return True if index is on even row, false otherwise
+     */
+    public boolean isEvenRowFromTheBottom(int i) {
+        return ((this.state.length - i - 1) / 4) % 2 == 1;
+    }
+    
+    /**
      * Method for checking is this puzzle solvable. Algorithm is based on inversions
      * and is explained here:
      * https://www.geeksforgeeks.org/check-instance-15-puzzle-solvable/
@@ -162,11 +172,7 @@ public class FifteenPuzzle implements Puzzle {
      */
     @Override
     public boolean isSolvable() {
-        if (this.isSolved()) {
-            return true;
-        }
-        
-        if (((this.state.length - this.emptyIndex - 1) / 4) % 2 == 1) {
+        if (isEvenRowFromTheBottom(this.emptyIndex)) {
             if (inversions() % 2 == 1) {
                 return true;
             }

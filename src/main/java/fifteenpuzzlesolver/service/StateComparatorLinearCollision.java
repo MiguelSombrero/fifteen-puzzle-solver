@@ -78,14 +78,14 @@ public class StateComparatorLinearCollision implements Comparator<Puzzle> {
     public int heuristic(Puzzle p) {
         int value = 0;
         
-        for (int i = 0; i < p.state().length; i++) {
-            if (p.state()[i] != 0) {
-                value += countManhattanDistance(i, p.state()[i] - 1);
+        for (int i = 0; i < p.getState().length; i++) {
+            if (p.getState()[i] != 0) {
+                value += countManhattanDistance(i, p.getState()[i] - 1);
             }
             
-            for (int j = i; j < p.state().length; j++) {
-                if (p.state()[i] != 0 && p.state()[j] != 0) {
-                    value += countCollision(p.state(), i, j);
+            for (int j = i; j < p.getState().length; j++) {
+                if (p.getState()[i] != 0 && p.getState()[j] != 0) {
+                    value += countCollision(p.getState(), i, j);
                 }
             }
         }
@@ -102,6 +102,6 @@ public class StateComparatorLinearCollision implements Comparator<Puzzle> {
      */
     @Override
     public int compare(Puzzle o1, Puzzle o2) {
-        return o1.moves() + heuristic(o1) - o2.moves() - heuristic(o2);
+        return o1.getMoves() + heuristic(o1) - o2.getMoves() - heuristic(o2);
     }
 }

@@ -3,6 +3,7 @@ package fifteenpuzzlesolver.utils;
 
 import fifteenpuzzlesolver.domain.FifteenPuzzle;
 import fifteenpuzzlesolver.domain.Puzzle;
+import java.util.Random;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -19,7 +20,8 @@ public class TestHashSet {
     
     public TestHashSet() {
         TestUtils utils = new TestUtils();
-        this.generator = new PuzzleGenerator();
+        Random random = new Random();
+        this.generator = new PuzzleGenerator(random);
         this.boards = utils.boardList();
     }
     
