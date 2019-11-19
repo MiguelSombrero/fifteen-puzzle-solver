@@ -73,6 +73,7 @@ public class TestPuzzleGenerator {
         assertTrue(generator.generateRandomPuzzle(1000).isSolvable());
     }
     
+    /*
     @Test
     public void puzzleByMovesIsSolvable() {
         assertTrue(generator.generatePuzzleByMoves(3).isSolvable());
@@ -82,4 +83,5 @@ public class TestPuzzleGenerator {
         assertTrue(generator.generatePuzzleByMoves(1000).isSolvable());
         assertTrue(generator.generatePuzzleByMoves(999).isSolvable());
     }
+    */
 }

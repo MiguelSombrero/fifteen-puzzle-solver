@@ -21,10 +21,10 @@ public class ArrayList<T> {
     }
     
     /**
-     * Method which multiplies current values array's size by 1.5.
+     * Method which multiplies current values array's size by 2.
      */
     private void increment() {
-        int newSize = this.values.length + this.values.length / 2;
+        int newSize = this.values.length * 2;
         T[] newValues = (T[]) new Object[ newSize ];
         
         for (int i = 0; i < this.values.length; i++) {

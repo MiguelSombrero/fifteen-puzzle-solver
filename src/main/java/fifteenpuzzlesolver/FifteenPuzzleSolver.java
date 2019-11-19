@@ -1,11 +1,11 @@
 
 package fifteenpuzzlesolver;
 
-import fifteenpuzzlesolver.service.AStar;
+import fifteenpuzzlesolver.domain.AStar;
 import fifteenpuzzlesolver.service.PuzzleService;
-import fifteenpuzzlesolver.service.StateComparatorLinearCollision;
-import fifteenpuzzlesolver.service.StateComparatorManhattan;
-import fifteenpuzzlesolver.service.StateComparatorPosition;
+import fifteenpuzzlesolver.domain.StateComparatorLinearCollision;
+import fifteenpuzzlesolver.domain.StateComparatorManhattan;
+import fifteenpuzzlesolver.domain.StateComparatorPosition;
 import fifteenpuzzlesolver.ui.TextUI;
 import fifteenpuzzlesolver.utils.PuzzleGenerator;
 import java.util.Random;

@@ -1,11 +1,10 @@
 
-package fifteenpuzzlesolver.service;
+package fifteenpuzzlesolver.domain;
 
-import fifteenpuzzlesolver.domain.Puzzle;
 import fifteenpuzzlesolver.utils.ArrayList;
 import fifteenpuzzlesolver.utils.HashSet;
+import fifteenpuzzlesolver.utils.PriorityQueue;
 import java.util.Comparator;
-import java.util.PriorityQueue;
 
 /**
  * Class that implements A* -algorithm.

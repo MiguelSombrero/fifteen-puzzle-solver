@@ -51,6 +51,7 @@ public class TextUI {
         System.out.println("---------------------");
         System.out.println("Average solving time: " + data[0] / 1000 + " seconds");
         System.out.println("Average moves: " + data[1]);
+        System.out.println("---------------------");
     }
     
     /**

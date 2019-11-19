@@ -15,7 +15,14 @@ Day | Hours
 13.11. | 3
 14.11. | 5
 15.11. | 3
-Total | 42
+19.11. | 5
+Total | 47
+
+## Week 4
+
+Day | Hours | Explanation
+----|-------|------------
+19.11. | 5 | Testing and documenting, PriorityQueue
 
 ## Week 3
 

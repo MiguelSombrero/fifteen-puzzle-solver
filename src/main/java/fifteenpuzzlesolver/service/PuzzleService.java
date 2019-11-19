@@ -1,13 +1,17 @@
 
 package fifteenpuzzlesolver.service;
 
+import fifteenpuzzlesolver.domain.StateComparatorManhattan;
+import fifteenpuzzlesolver.domain.StateComparatorPosition;
+import fifteenpuzzlesolver.domain.StateComparatorLinearCollision;
+import fifteenpuzzlesolver.domain.AStar;
 import fifteenpuzzlesolver.domain.Puzzle;
 import fifteenpuzzlesolver.utils.ArrayList;
 import fifteenpuzzlesolver.utils.PuzzleGenerator;
 import java.util.Comparator;
 
 /**
- * Class that provides services for solving and generating puzzles.
+ * Class which provides services for solving and generating puzzles.
  * @author miika
  */
 public class PuzzleService {
@@ -71,7 +75,7 @@ public class PuzzleService {
      * 
      * @param puzzles Puzzles to solve for bencmarking
      * @param comparator Heuristics used in A* -algorithm
-     * @return data consitig average solving time in milliseconds and average moves
+     * @return data consisting average solving time in milliseconds and average moves
      */
     private long[] benchmark(ArrayList<Puzzle> puzzles, Comparator comparator) {
         long data[] = new long[2];

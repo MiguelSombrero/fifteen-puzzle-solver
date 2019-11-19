@@ -1,5 +1,5 @@
 
-package fifteenpuzzlesolver.service;
+package fifteenpuzzlesolver.domain;
 
 import fifteenpuzzlesolver.domain.Puzzle;
 import java.util.Comparator;
