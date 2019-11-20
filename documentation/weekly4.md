@@ -5,6 +5,7 @@
 ## Synopsis
 
 - Implemented PriorityQueue data structure + tests
+- Started to implement IDA* algorithm
 - First benchmarkings
 - Updated test and implementation documents
 
@@ -18,6 +19,6 @@ Wondering what is the correct way to implement PriorityQueue, which takes Compar
 ## Next Week
 
 - Testing, implementation and user guide documentation
-- JavaDocs for PriorityQueue class
+- JavaDocs for PriorityQueue and IDA* classes
 - Peer review
-- Implement IDA* algorithm if you have time
+- Implement and test IDA* algorithm

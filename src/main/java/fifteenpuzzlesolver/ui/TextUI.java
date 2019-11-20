@@ -36,9 +36,10 @@ public class TextUI {
         System.out.println("3 - Solve puzzle with A* + manhattan");
         System.out.println("4 - Solve puzzle with A* + position");
         System.out.println("5 - Solve puzzle with A* + linear collision");
-        System.out.println("6 - Benchmark A* + manhattan");
-        System.out.println("7 - Benchmark A* + position");
-        System.out.println("8 - Benchmark A* + linear collision");
+        System.out.println("6 - Solve puzzle with IDA* + linear collision");
+        System.out.println("7 - Benchmark A* + manhattan");
+        System.out.println("8 - Benchmark A* + position");
+        System.out.println("9 - Benchmark A* + linear collision");
         System.out.println("x - Exit");
     }
     
@@ -49,7 +50,7 @@ public class TextUI {
      */
     public void printBenchmark(long[] data) {
         System.out.println("---------------------");
-        System.out.println("Average solving time: " + data[0] / 1000 + " seconds");
+        System.out.println("Average solving time: " + data[0] / 1000.0 + " seconds");
         System.out.println("Average moves: " + data[1]);
         System.out.println("---------------------");
     }
@@ -123,13 +124,16 @@ public class TextUI {
                 long time1 = System.currentTimeMillis();
                 solve(time1, this.service.solveWithLinearCollision(puzzle));
                 
-            } else if (c.equals("6") && puzzles != null) {
-                printBenchmark(this.service.benchmarkAStarManhattan(puzzles));
+            } else if (c.equals("6") && puzzle != null) {
+                System.out.println(this.service.solveWithIDAStarLinearCollision(puzzle));
                 
             } else if (c.equals("7") && puzzles != null) {
-                printBenchmark(this.service.benchmarkAStarPosition(puzzles));
+                printBenchmark(this.service.benchmarkAStarManhattan(puzzles));
                 
             } else if (c.equals("8") && puzzles != null) {
+                printBenchmark(this.service.benchmarkAStarPosition(puzzles));
+                
+            } else if (c.equals("9") && puzzles != null) {
                 printBenchmark(this.service.benchmarkAStarLinearCollision(puzzles));
                 
             } else if (c.equals("x")) {

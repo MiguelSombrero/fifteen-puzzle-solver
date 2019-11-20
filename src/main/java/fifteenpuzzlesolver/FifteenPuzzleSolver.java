@@ -2,6 +2,7 @@
 package fifteenpuzzlesolver;
 
 import fifteenpuzzlesolver.domain.AStar;
+import fifteenpuzzlesolver.domain.IDAStar;
 import fifteenpuzzlesolver.service.PuzzleService;
 import fifteenpuzzlesolver.domain.StateComparatorLinearCollision;
 import fifteenpuzzlesolver.domain.StateComparatorManhattan;
@@ -29,10 +30,12 @@ public class FifteenPuzzleSolver {
         PuzzleGenerator generator = new PuzzleGenerator(random);
         Scanner reader = new Scanner(System.in);
         AStar astar = new AStar();
+        IDAStar idaStar = new IDAStar(linear);
         
-        PuzzleService service = new PuzzleService(astar, generator, manhattan, position, linear);
+        PuzzleService service = new PuzzleService(astar, generator, manhattan, position, linear, idaStar);
         TextUI ui = new TextUI(reader, service);
         
         ui.initialize();
+        
     }
 }

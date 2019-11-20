@@ -5,6 +5,7 @@ import fifteenpuzzlesolver.domain.StateComparatorManhattan;
 import fifteenpuzzlesolver.domain.StateComparatorPosition;
 import fifteenpuzzlesolver.domain.StateComparatorLinearCollision;
 import fifteenpuzzlesolver.domain.AStar;
+import fifteenpuzzlesolver.domain.IDAStar;
 import fifteenpuzzlesolver.domain.Puzzle;
 import fifteenpuzzlesolver.utils.ArrayList;
 import fifteenpuzzlesolver.utils.PuzzleGenerator;
@@ -17,6 +18,7 @@ import java.util.Comparator;
 public class PuzzleService {
  
     private AStar astar;
+    private IDAStar idaStar;
     private PuzzleGenerator generator;
     private StateComparatorManhattan manhattan;
     private StateComparatorPosition position;
@@ -29,14 +31,16 @@ public class PuzzleService {
      * @param manhattan Comparator class that uses manhattan heuristics for comparing puzzles
      * @param position Comparator class that uses position based heuristics for comparing puzzles
      * @param linear Comparator class that uses linear collision heuristics for comparing puzzles
+     * @param idaStar Class that provides implementation of IDA* -algorithm
      */
     public PuzzleService(AStar astar, PuzzleGenerator generator, StateComparatorManhattan manhattan,
-            StateComparatorPosition position, StateComparatorLinearCollision linear) {
+            StateComparatorPosition position, StateComparatorLinearCollision linear, IDAStar idaStar) {
         this.astar = astar;
         this.generator = generator;
         this.manhattan = manhattan;
         this.position = position;
         this.linear = linear;
+        this.idaStar = idaStar;
     }
     
     /**
@@ -60,13 +64,23 @@ public class PuzzleService {
     }
     
     /**
-     * Method which solves puzzle using A* and position based heuristics.
+     * Method which solves puzzle using A* and linear collision heuristics.
      * 
      * @param puzzle Puzzle to solve
      * @return Solved puzzle if puzzle is solvable. Null otherwise
      */
     public Puzzle solveWithLinearCollision(Puzzle puzzle) {
         return this.astar.traverse(puzzle, this.linear);
+    }
+    
+    /**
+     * Method which solves puzzle using IDA* and linear collision heuristics.
+     * 
+     * @param puzzle Puzzle to solve
+     * @return Solved puzzle if puzzle is solvable. Null otherwise
+     */
+    public int solveWithIDAStarLinearCollision(Puzzle puzzle) {
+        return this.idaStar.idaStar(puzzle);
     }
     
     /**

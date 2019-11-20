@@ -1,6 +1,8 @@
 
 package fifteenpuzzlesolver.utils;
 
+import java.util.Arrays;
+
 /**
  * Class which mimics implementation of Java's ArrayList data structure. Implemented only those
  * methods that are needed for this app
@@ -24,8 +26,7 @@ public class ArrayList<T> {
      * Method which multiplies current values array's size by 2.
      */
     private void increment() {
-        int newSize = this.values.length * 2;
-        T[] newValues = (T[]) new Object[ newSize ];
+        T[] newValues = (T[]) new Object[this.values.length * 2];
         
         for (int i = 0; i < this.values.length; i++) {
             newValues[i] = this.values[i];
