@@ -14,21 +14,13 @@ import java.util.Comparator;
 public class AStar {
     
     /**
-     * Method for solving n-puzzle with A* -algorithm. Algorithm uses Dijkstra's
-     * breadth-first-method and uses heuristic which is passed as a comparator attribute.
+     * Method for traversing game tree using A* algorithm.
      * 
-     * @param game Puzzle to solve
-     * @param comparator Comparator class which compares game states together with heuristic
-     * @return Solved puzzle or null if it cannot be solved
+     * @param queue Puzzles in the queue not yet visited
+     * @param visited Visited puzzles
+     * @return Solved puzzle if solvable, null otherwise
      */
-    public Puzzle traverse(Puzzle game, Comparator comparator) {
-        if (!game.isSolvable()) {
-            return null;
-        }
-        PriorityQueue<Puzzle> queue = new PriorityQueue<>(comparator);
-        HashSet<Puzzle> visited = new HashSet<>();
-        queue.add(game);
-        
+    public Puzzle search(PriorityQueue<Puzzle> queue, HashSet<Puzzle> visited) {
         while (!queue.isEmpty()) {
             Puzzle currentState = queue.poll();
             
@@ -54,5 +46,23 @@ public class AStar {
             }
         }
         return null;
+    }
+    
+    /**
+     * Method for solving n-puzzle with A* -algorithm. Algorithm uses Dijkstra's
+     * breadth-first-method and uses heuristic which is passed as a comparator attribute.
+     * 
+     * @param game Puzzle to solve
+     * @param comparator Heuristics used to compare puzzles
+     * @return Solved puzzle if solvable, null otherwise
+     */
+    public Puzzle aStar(Puzzle game, Comparator comparator) {
+        if (!game.isSolvable()) {
+            return null;
+        }
+        PriorityQueue<Puzzle> queue = new PriorityQueue<>(comparator);
+        HashSet<Puzzle> visited = new HashSet<>();
+        queue.add(game);
+        return search(queue, visited);
     }
 }

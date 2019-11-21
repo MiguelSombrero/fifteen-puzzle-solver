@@ -21,6 +21,22 @@ public class TestPuzzleGenerator {
     }
     
     @Test
+    public void randomPuzzleMovesIsZero() {
+        Puzzle p1 = generator.generateRandomPuzzle(10);
+        Puzzle p2 = generator.generateRandomPuzzle(100);
+        assertEquals(0, p1.getMoves());
+        assertEquals(0, p2.getMoves());
+    }
+    
+    @Test
+    public void puzzleByMovesMovesIsZero() {
+        Puzzle p1 = generator.generatePuzzleByMoves(10);
+        Puzzle p2 = generator.generatePuzzleByMoves(100);
+        assertEquals(0, p1.getMoves());
+        assertEquals(0, p2.getMoves());
+    }
+    
+    @Test
     public void generateRandomPuzzleIsFifteenPuzzle() {
         Puzzle easyPuzzle = generator.generateRandomPuzzle(2);
         Puzzle hardPuzzle = generator.generateRandomPuzzle(100);
@@ -73,7 +89,6 @@ public class TestPuzzleGenerator {
         assertTrue(generator.generateRandomPuzzle(1000).isSolvable());
     }
     
-    /*
     @Test
     public void puzzleByMovesIsSolvable() {
         assertTrue(generator.generatePuzzleByMoves(3).isSolvable());
@@ -83,5 +98,4 @@ public class TestPuzzleGenerator {
         assertTrue(generator.generatePuzzleByMoves(1000).isSolvable());
         assertTrue(generator.generatePuzzleByMoves(999).isSolvable());
     }
-    */
 }

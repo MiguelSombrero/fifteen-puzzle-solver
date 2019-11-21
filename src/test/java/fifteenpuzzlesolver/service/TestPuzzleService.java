@@ -6,6 +6,7 @@ import fifteenpuzzlesolver.domain.StateComparatorManhattan;
 import fifteenpuzzlesolver.domain.StateComparatorLinearCollision;
 import fifteenpuzzlesolver.domain.AStar;
 import fifteenpuzzlesolver.domain.FifteenPuzzle;
+import fifteenpuzzlesolver.domain.IDAStar;
 import fifteenpuzzlesolver.domain.Puzzle;
 import fifteenpuzzlesolver.utils.ArrayList;
 import fifteenpuzzlesolver.utils.PuzzleGenerator;
@@ -32,9 +33,10 @@ public class TestPuzzleService {
         PuzzleGenerator generator = new PuzzleGenerator(random);
         TestUtils utils = new TestUtils();
         AStar astar = new AStar();
+        IDAStar idaStar = new IDAStar(linear);
         
         this.boards = utils.boardList();
-        this.service = new PuzzleService(astar, generator, manhattan, position, linear);
+        this.service = new PuzzleService(astar, generator, manhattan, position, linear, idaStar);
     }
     
     @Test
@@ -121,11 +123,8 @@ public class TestPuzzleService {
         assertTrue(this.service.generateRandomPuzzle(1234).isSolvable());
     }
     
-    /*
     @Test
     public void puzzleByMovesIsSolvable() {
-        // ei toimi vielä - miksi puzzlebymoves palauttaa ratkaisemattomia?
-        
         assertTrue(this.service.generatePuzzleByMoves(3).isSolvable());
         assertTrue(this.service.generatePuzzleByMoves(50).isSolvable());
         assertTrue(this.service.generatePuzzleByMoves(100).isSolvable());
@@ -133,7 +132,6 @@ public class TestPuzzleService {
         assertTrue(this.service.generatePuzzleByMoves(1000).isSolvable());
         assertTrue(this.service.generatePuzzleByMoves(999).isSolvable());
     }
-    */
     
     @Test
     public void generateMultiplePuzzlesGeneratesRightAmountOfPuzzles() {
@@ -151,6 +149,15 @@ public class TestPuzzleService {
         
         for (int i = 0; i < puzzles.size(); i++) {
             assertTrue(puzzles.get(i).isSolvable());
+        }
+    }
+    
+    @Test
+    public void generateMultiplePuzzlesMovesIsZero() {
+        ArrayList<Puzzle> puzzles = this.service.generateMultiplePuzzles(10, 10);
+        
+        for (int i = 0; i < puzzles.size(); i++) {
+            assertEquals(0, puzzles.get(i).getMoves());
         }
     }
 }

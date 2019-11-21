@@ -142,8 +142,8 @@ public class FifteenPuzzle implements Puzzle {
     public int inversions() {
         int inversions = 0;
         
-        for (int i = 0; i < this.state.length-1; i++) {
-            for (int j = i+1; j < this.state.length; j++) {
+        for (int i = 0; i < this.state.length - 1; i++) {
+            for (int j = i + 1; j < this.state.length; j++) {
                 if (this.state[i] != 0 && this.state[j] != 0 && this.state[i] > this.state[j]) {
                     inversions++;
                 }

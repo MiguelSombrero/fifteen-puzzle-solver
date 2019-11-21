@@ -2,7 +2,7 @@
 
 ## Test coverage
 
-Test coverage as of 15.11.2019:
+Test coverage as of 21.11.2019:
 
 ![Coverage](https://github.com/MiguelSombrero/fifteen-puzzle-solver/blob/master/documentation/test_coverage.png)
 
@@ -31,66 +31,56 @@ Package contains data structures and puzzle generator. Test coverage is 100%. Wi
 
 All performance tests are performed with the following idea:
 
-- Generate set of 20 random puzzles (with generatePuzzleByMoves method) with n moves
+- Generate set of 20 random puzzles (with generatePuzzleByMoves method) with n moves (n is rising 5, 10, 20, ...)
 - Solve each 20 puzzles set with all the heuristics
 - Calcutate average solving time and average moves for each set and each heuristic
+
+**Notice: after puzzles with 80 moves, benchmarking is done with 10 puzzles sets to save some time**
 
 Explanation of table column names:
 
 - Hardness = Number of moves used to generate puzzle
 - Time = Average time for solving 10 puzzles
 - Moves = Average of used moves for solving 10 puzzles
+- A* position = A* algorithm with position based heuristics
+- A* manhattan = A* algorithm with manhattan heuristics
+- A* collision = A* algorithm with manhattan + linear collision heuristics
+- IDA* collision = IDA* algorithm with manhattan + linear collision heuristics
 
-### Performance of A* with position based heuristics
+### Time
 
-Hardness | Time | Moves
-----|-------|------------
-5 | 0.000s | 8
-10 | 0.000s | 17
-20 | 0.014s | 37
-25 | 0.490 | 46
-30 | 8.466 | 54
-35 | - | "out of memory" 
+Hardness | A* position | A* manhattan | A* collision | IDA* collision
+---------|-------------|--------------|--------------|---------------
+5  | 0.000s | 0.000s | 0.000s | 0.000s
+10 | 0.000s | 0.000s | 0.000s | 0.001s
+20 | 0.011s | 0.003s | 0.014s | 0.517s
+25 | 0.322s | 0.006s | 0.021s | 0.390s
+30 | 4.404s | 0.037s | 0.059s | 1.107s
+35 | -      | 0.214s | 0.321s | 2.446s
+40 | -      | 0.286s | 0.442s | 4.423s
+50 | -      | 2.644s | 1.723s | 23.513s
+60 | -      | 1.483s | 1.313s | 19.659s
+70 | -      | -      | 3.193s | 65.332s
+80 | -      | -      | 3.391s | 275.171s
+90 | -      | -      | 20.918s | -
+100 | -     | -      | 9.265s | -
+130 | -     | -      | 48.413s | -
 
-### Performance of A* with manhattan heuristics
+### Moves
 
-Hardness | Time | Moves
-----|-------|------------
-5 | 0.000s | 8
-10 | 0.000s | 17
-20 | 0.002s | 37
-25 | 0.012s | 47
-30 | 0.102s | 54
-35 | 0.266s | 62
-40 | 0.179s | 69
-45 | 0.201s | 75
-50 | 3.939s | 82
-55 | 3.498s | 90
-60 | 1.345s | 93
-65 | 4.169s | 101
-70 | 3.373s | 105 
-75 | - | "out of memory"
-
-### Performance of A* with manhattan + linear collision heuristics
-
-Hardness | Time | Moves
-----|-------|------------
-5 | 0.000s | 8
-10 | 0.001s | 17
-20 | 0.003s | 37
-25 | 0.024s | 47
-30 | 0.162s | 56
-35 | 0.217s | 62
-40 | 0.546s | 70
-45 | 0.155s | 75
-50 | 1.231s | 82
-55 | 3.554s | 91
-60 | 1.234s | 93
-65 | 2.348s | 101
-70 | 2.755s | 105
-75 | 5.758s | 113
-80 | 3.343s | 116
-100 | 16.074s | 140
-120 | 25.628s | 162
-140 | 11.370s | 182
-180 | - | "out of memory"
+Hardness | A* position | A* manhattan | A* collision | IDA* collision
+---------|-------------|--------------|--------------|---------------
+5  | 4  | 4  | 4  | 4
+10 | 9  | 9  | 9  | 11
+20 | 17 | 19 | 19 | 22
+25 | 21 | 23 | 23 | 25
+30 | 24 | 26 | 27 | 27
+35 | -  | 29 | 30 | 31
+40 | -  | 31 | 31 | 32
+50 | -  | 34 | 35 | 36
+60 | -  | 37 | 37 | 38
+70 | -  | -  | 36 | 37
+80 | -  | -  | 35 | 36
+90 | -  | -  | 42 | -
+100 | - | -  | 41 | -
+130 | - | -  | 43 | -

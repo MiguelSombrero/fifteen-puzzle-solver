@@ -17,7 +17,8 @@ Day | Hours
 15.11. | 3
 19.11. | 7
 20.11. | 6
-Total | 55
+21.11. | 6
+Total | 61
 
 ## Week 4
 
@@ -25,6 +26,7 @@ Day | Hours | Explanation
 ----|-------|------------
 19.11. | 7 | Testing and documenting, PriorityQueue
 20.11. | 6 | Benchmarking and started IDA* implementation
+21.11. | 6 | IDA* and benchmarkings
 
 ## Week 3
 

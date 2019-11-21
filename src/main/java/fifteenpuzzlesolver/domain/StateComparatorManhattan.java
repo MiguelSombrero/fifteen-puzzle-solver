@@ -1,7 +1,6 @@
 
 package fifteenpuzzlesolver.domain;
 
-import fifteenpuzzlesolver.domain.Puzzle;
 import java.util.Comparator;
 
 /**
@@ -9,7 +8,7 @@ import java.util.Comparator;
  * 
  * @author miika
  */
-public class StateComparatorManhattan implements Comparator<Puzzle> {
+public class StateComparatorManhattan implements Comparator<Puzzle>,  HeuristicCalculator {
 
     /**
      * Method for counting Manhattan distance between tiles current and correct position.
@@ -33,6 +32,7 @@ public class StateComparatorManhattan implements Comparator<Puzzle> {
      * @param p Puzzle which Manhattan distance is being calculated
      * @return Sum of Manhattan distances between tiles of given puzzle
      */
+    @Override
     public int heuristic(Puzzle p) {
         int value = 0;
         

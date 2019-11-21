@@ -13,6 +13,7 @@ import java.util.Random;
 public class PuzzleGenerator {
     
     private Random r;
+    private int[] initialState;
     
     /**
      * Constructor class. Initializes new random generator
@@ -20,9 +21,22 @@ public class PuzzleGenerator {
      * @param random Random generator
      */
     public PuzzleGenerator(Random random) {
+        this.initialState = new int[]{
+            1, 2, 3, 4,
+            5, 6, 7, 8,
+            9, 10, 11, 12,
+            13, 14, 15, 0
+        };
         this.r = random;
     }
     
+    /**
+     * Generates one possible children for puzzle in so that it is not yet visited.
+     * 
+     * @param currentPuzzle Puzzle which child is generated
+     * @param visited List of visited puzzles (game states)
+     * @return Generated puzzle
+     */
     private Puzzle generateChildren(Puzzle currentPuzzle, HashSet<Puzzle> visited) {
         ArrayList<Puzzle> children = currentPuzzle.generateChildren();
         
@@ -31,31 +45,45 @@ public class PuzzleGenerator {
             
             if (!visited.contains(children.get(index))) {
                 visited.add(children.get(index));
-                return children.get(index);
+                return new FifteenPuzzle(children.get(index).getState());
             }
         }
     }
     
+    /**
+     * Traverses game tree recursively and backwards, finding puzzle that is not yet visited.
+     * 
+     * @param moves Number of moves still to traverse backwards
+     * @param currentPuzzle Current puzzle where to traverse backwards
+     * @param visited List of visited puzzles (game states)
+     * @return Generated puzzle
+     */
     private Puzzle traverseGameTree(int moves, Puzzle currentPuzzle, HashSet<Puzzle> visited) {
         if (moves == 0) {
             return currentPuzzle;
         }
         visited.add(currentPuzzle);
         Puzzle child = generateChildren(currentPuzzle, visited);
-        return traverseGameTree(moves-1, child, visited);
+        return traverseGameTree(moves - 1, child, visited);
     }
     
+    /**
+     * Return puzzle which has been found traversing game tree n moves backwards
+     * from solved state.
+     * 
+     * @param moves Number of moves to traverse backwards 
+     * @return Generated puzzle
+     */
     public Puzzle generatePuzzleByMoves(int moves) {
-        int[] initialState = {
-            1, 2, 3, 4,
-            5, 6, 7, 8,
-            9, 10, 11, 12,
-            13, 14, 15, 0
-        };
-        
-        HashSet<Puzzle> visited = new HashSet<>();
-        Puzzle initialPuzzle = new FifteenPuzzle(initialState);
-        return traverseGameTree(moves-1, initialPuzzle, visited);
+        while (true) {
+            HashSet<Puzzle> visited = new HashSet<>();
+            Puzzle initialPuzzle = new FifteenPuzzle(this.initialState);
+            Puzzle puzzle = traverseGameTree(moves - 1, initialPuzzle, visited);
+            
+            if (puzzle.isSolvable()) {
+                return puzzle;
+            }
+        }
     }
     
     /**

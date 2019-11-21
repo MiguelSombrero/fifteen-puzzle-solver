@@ -1,7 +1,6 @@
 
 package fifteenpuzzlesolver.domain;
 
-import fifteenpuzzlesolver.domain.Puzzle;
 import java.util.Comparator;
 
 /**
@@ -9,7 +8,7 @@ import java.util.Comparator;
  * 
  * @author miika
  */
-public class StateComparatorPosition implements Comparator<Puzzle> {
+public class StateComparatorPosition implements Comparator<Puzzle>,  HeuristicCalculator {
 
     /**
      * Method for calculating heuristic value of the puzzle.
@@ -19,6 +18,7 @@ public class StateComparatorPosition implements Comparator<Puzzle> {
      * @return Heuristic value of the puzzle. Value is same
      * as number of misplaced tiles on the puzzle
      */
+    @Override
     public int heuristic(Puzzle p) {
         int value = 0;
         

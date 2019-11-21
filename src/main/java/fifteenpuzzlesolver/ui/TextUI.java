@@ -33,13 +33,14 @@ public class TextUI {
         System.out.println("0 - Generate multiple puzzles");
         System.out.println("1 - Generate random puzzle");
         System.out.println("2 - Generate puzzle by moves");
-        System.out.println("3 - Solve puzzle with A* + manhattan");
-        System.out.println("4 - Solve puzzle with A* + position");
+        System.out.println("3 - Solve puzzle with A* + position");
+        System.out.println("4 - Solve puzzle with A* + manhattan");
         System.out.println("5 - Solve puzzle with A* + linear collision");
         System.out.println("6 - Solve puzzle with IDA* + linear collision");
-        System.out.println("7 - Benchmark A* + manhattan");
-        System.out.println("8 - Benchmark A* + position");
+        System.out.println("7 - Benchmark A* + position");
+        System.out.println("8 - Benchmark A* + manhattan");
         System.out.println("9 - Benchmark A* + linear collision");
+        System.out.println("10 - Benchmark IDA* + linear collision");
         System.out.println("x - Exit");
     }
     
@@ -114,27 +115,31 @@ public class TextUI {
                 
             } else if (c.equals("3") && puzzle != null) {
                 long time1 = System.currentTimeMillis();
-                solve(time1, this.service.solveWithManhattan(puzzle));
+                solve(time1, this.service.solveWithPosition(puzzle));
                 
             } else if (c.equals("4") && puzzle != null) {
                 long time1 = System.currentTimeMillis();
-                solve(time1, this.service.solveWithPosition(puzzle));
+                solve(time1, this.service.solveWithManhattan(puzzle));
                 
             } else if (c.equals("5") && puzzle != null) {
                 long time1 = System.currentTimeMillis();
                 solve(time1, this.service.solveWithLinearCollision(puzzle));
                 
             } else if (c.equals("6") && puzzle != null) {
-                System.out.println(this.service.solveWithIDAStarLinearCollision(puzzle));
+                long time1 = System.currentTimeMillis();
+                solve(time1, this.service.solveWithIDAStarLinearCollision(puzzle));
                 
             } else if (c.equals("7") && puzzles != null) {
-                printBenchmark(this.service.benchmarkAStarManhattan(puzzles));
+                printBenchmark(this.service.benchmarkAStarPosition(puzzles));
                 
             } else if (c.equals("8") && puzzles != null) {
-                printBenchmark(this.service.benchmarkAStarPosition(puzzles));
+                printBenchmark(this.service.benchmarkAStarManhattan(puzzles));
                 
             } else if (c.equals("9") && puzzles != null) {
                 printBenchmark(this.service.benchmarkAStarLinearCollision(puzzles));
+                
+            } else if (c.equals("10") && puzzles != null) {
+                printBenchmark(this.service.benchmarkIDAStarLinearCollision(puzzles));
                 
             } else if (c.equals("x")) {
                 break;

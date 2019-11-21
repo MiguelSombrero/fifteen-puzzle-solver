@@ -27,11 +27,11 @@ public class PuzzleService {
     /**
      * Constructor method.
      * @param astar Class that provides implementation of A* -algorithm
+     * @param idaStar Class that provides implementation of IDA* -algorithm
      * @param generator Utility class that provides methods for generating puzzles
      * @param manhattan Comparator class that uses manhattan heuristics for comparing puzzles
      * @param position Comparator class that uses position based heuristics for comparing puzzles
      * @param linear Comparator class that uses linear collision heuristics for comparing puzzles
-     * @param idaStar Class that provides implementation of IDA* -algorithm
      */
     public PuzzleService(AStar astar, PuzzleGenerator generator, StateComparatorManhattan manhattan,
             StateComparatorPosition position, StateComparatorLinearCollision linear, IDAStar idaStar) {
@@ -50,7 +50,7 @@ public class PuzzleService {
      * @return Solved puzzle if puzzle is solvable. Null otherwise
      */
     public Puzzle solveWithManhattan(Puzzle puzzle) {
-        return this.astar.traverse(puzzle, this.manhattan);
+        return this.astar.aStar(puzzle, this.manhattan);
     }
     
     /**
@@ -60,7 +60,7 @@ public class PuzzleService {
      * @return Solved puzzle if puzzle is solvable. Null otherwise
      */
     public Puzzle solveWithPosition(Puzzle puzzle) {
-        return this.astar.traverse(puzzle, this.position);
+        return this.astar.aStar(puzzle, this.position);
     }
     
     /**
@@ -70,7 +70,7 @@ public class PuzzleService {
      * @return Solved puzzle if puzzle is solvable. Null otherwise
      */
     public Puzzle solveWithLinearCollision(Puzzle puzzle) {
-        return this.astar.traverse(puzzle, this.linear);
+        return this.astar.aStar(puzzle, this.linear);
     }
     
     /**
@@ -79,7 +79,7 @@ public class PuzzleService {
      * @param puzzle Puzzle to solve
      * @return Solved puzzle if puzzle is solvable. Null otherwise
      */
-    public int solveWithIDAStarLinearCollision(Puzzle puzzle) {
+    public Puzzle solveWithIDAStarLinearCollision(Puzzle puzzle) {
         return this.idaStar.idaStar(puzzle);
     }
     
@@ -96,7 +96,36 @@ public class PuzzleService {
         
         for (int i = 0; i < puzzles.size(); i++) {
             long time1 = System.currentTimeMillis();
-            Puzzle solved = this.astar.traverse(puzzles.get(i), comparator);
+            Puzzle solved = this.astar.aStar(puzzles.get(i), comparator);
+            long time2 = System.currentTimeMillis();
+            data[0] += time2 - time1;
+            data[1] += solved.getMoves();
+        }
+        
+        data[0] = data[0] / puzzles.size();
+        data[1] = data[1] / puzzles.size();
+        
+        return data;
+    }
+    
+    
+    // REFACTOROI BENCHMARK METODIT! NYT HUONOA TOISTEISTA KOODIA
+    
+    
+    /**
+     * Solves n puzzles using IDA* and given heuristics. Used for calculating average
+     * solving time for specific puzzle
+     * 
+     * @param puzzles Puzzles to solve for bencmarking
+     * @param comparator Heuristics used in A* -algorithm
+     * @return data consisting average solving time in milliseconds and average moves
+     */
+    private long[] benchmarkIDA(ArrayList<Puzzle> puzzles) {
+        long data[] = new long[2];
+        
+        for (int i = 0; i < puzzles.size(); i++) {
+            long time1 = System.currentTimeMillis();
+            Puzzle solved = this.idaStar.idaStar(puzzles.get(i));
             long time2 = System.currentTimeMillis();
             data[0] += time2 - time1;
             data[1] += solved.getMoves();
@@ -112,7 +141,7 @@ public class PuzzleService {
      * Benchmarks puzzle n times using A* manhattan algorithm.
      * 
      * @param puzzles Puzzles to solve for Benchmarking
-     * @return data consitig average solving time in milliseconds and average moves
+     * @return data consisting average solving time in milliseconds and average moves
      */
     public long[] benchmarkAStarManhattan(ArrayList<Puzzle> puzzles) {
         return benchmark(puzzles, this.manhattan);
@@ -136,6 +165,16 @@ public class PuzzleService {
      */
     public long[] benchmarkAStarLinearCollision(ArrayList<Puzzle> puzzles) {
         return benchmark(puzzles, this.linear);
+    }
+    
+    /**
+     * Benchmarks puzzle n times using IDA* linear collision algorithm.
+     * 
+     * @param puzzles Puzzles to solve for Benchmarking
+     * @return data consisting average solving time in milliseconds and average moves
+     */
+    public long[] benchmarkIDAStarLinearCollision(ArrayList<Puzzle> puzzles) {
+        return benchmarkIDA(puzzles);
     }
     
     /**
@@ -169,11 +208,10 @@ public class PuzzleService {
     public ArrayList<Puzzle> generateMultiplePuzzles(int puzzles, int moves) {
         ArrayList<Puzzle> p = new ArrayList<>();
         
-        while(p.size() < puzzles) {
+        while (puzzles > 0) {
             Puzzle puzzle = generatePuzzleByMoves(moves);
-            if (puzzle.isSolvable()) {
-                p.add(puzzle);
-            }
+            p.add(puzzle);
+            puzzles--;
         }
         
         return p;

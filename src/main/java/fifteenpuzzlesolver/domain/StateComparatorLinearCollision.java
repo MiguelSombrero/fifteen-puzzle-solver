@@ -8,7 +8,7 @@ import java.util.Comparator;
  * 
  * @author miika
  */
-public class StateComparatorLinearCollision implements Comparator<Puzzle> {
+public class StateComparatorLinearCollision implements Comparator<Puzzle>, HeuristicCalculator {
     
     /**
      * Method for counting Manhattan distance between tiles current and correct position.
@@ -74,6 +74,7 @@ public class StateComparatorLinearCollision implements Comparator<Puzzle> {
      * @param p Puzzle which heuritics is being calculated
      * @return Heuristic value of the puzzle
      */
+    @Override
     public int heuristic(Puzzle p) {
         int value = 0;
         

@@ -2,74 +2,89 @@
 package fifteenpuzzlesolver.domain;
 
 import fifteenpuzzlesolver.utils.ArrayList;
-import java.util.PriorityQueue;
-
 
 /**
- *
+ * Class which implements IDA* algorithm for solving n-puzzles.
  * @author miika
  */
 public class IDAStar {
     
-    private StateComparatorLinearCollision comparator;
+    private HeuristicCalculator calculator;
     
-    public IDAStar(StateComparatorLinearCollision comparator) {
-        this.comparator = comparator;
+    /**
+     * Constructor method. Initializes comparator to use calculating heuristics
+     * 
+     * @param calculator HeuristicCalculator class which is used to compare puzzles
+     */
+    public IDAStar(HeuristicCalculator calculator) {
+        this.calculator = calculator;
     }
     
-    public int search(PriorityQueue<Puzzle> queue, int bound) {
-        Puzzle current = queue.peek();
-        int estimate = current.getMoves() + comparator.heuristic(current);
-        
-        if (estimate > bound) {
-            return estimate;
-        }
-        
-        if (current.isSolved()) {
-            return 0;
+    /**
+     * Cost function to calculate estimated distance between given puzzle
+     * and solved state.
+     * 
+     * @param puzzle Puzzle which distance to calculate
+     * @return Estimated distance from solved state
+     */
+    public int cost(Puzzle puzzle) {
+        return puzzle.getMoves() + calculator.heuristic(puzzle);
+    }
+    
+    /**
+     * Method for traversing game tree using IDA* algorithm.
+     * 
+     * @param current Puzzle that is in processing
+     * @param bound Maximum estimated cost that is used for pruning nodes
+     * @return Solved puzzle if solvable, null otherwise
+     */
+    public Puzzle search(Puzzle current, int bound) {
+        if (cost(current) > bound || current.isSolved()) {
+            return current;
         }
         
         int min = Integer.MAX_VALUE;
+        Puzzle best = null;
         ArrayList<Puzzle> children = current.generateChildren();
             
         for (int i = 0; i < children.size(); i++) {
-            if (!queue.contains(children.get(i))) {
+            Puzzle child = search(children.get(i), bound);
                 
-                queue.add(children.get(i));
-                int value = search(queue, bound);
+            if (child.isSolved()) {
+                return child;
+            }
                 
-                if (value == 0) {
-                    return 0;
-                }
-                
-                if (value < min) {
-                    min = value;
-                }
-                
-                queue.poll();
+            if (cost(child) < min) {
+                min = cost(child);
+                best = child;
             }
         }
         
-        return min;
+        return best;
     }
     
-    public int idaStar(Puzzle puzzle) {
-        int bound = comparator.heuristic(puzzle);
-        PriorityQueue<Puzzle> queue = new PriorityQueue<>(comparator);
-        queue.add(puzzle);
+    /**
+     * Method for solving n-puzzle with IDA* -algorithm. Algorithm uses iterative
+     * deapth-first-method and uses heuristics to pruning less promising nodes.
+     * 
+     * @param puzzle Puzzle to solve
+     * @return Solved puzzle if solvable, null otherwise
+     */
+    public Puzzle idaStar(Puzzle puzzle) {
+        if (!puzzle.isSolvable()) {
+            return null;
+        }
         
-        while(true) {
-            int value = search(queue, bound);
+        int bound = cost(puzzle);
+        
+        while (true) {
+            Puzzle current = search(puzzle, bound);
             
-            if (value == 0) {
-                return bound;
+            if (current.isSolved()) {
+                return current;
             }
-            if (value == Integer.MAX_VALUE) {
-                return Integer.MAX_VALUE;
-            }
-            bound = value;
             
-            System.out.println(bound);
+            bound = cost(current);
         }
     }
 }

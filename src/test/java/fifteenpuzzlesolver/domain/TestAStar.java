@@ -44,11 +44,11 @@ public class TestAStar {
     
     @Test
     public void aStarFindsOptimalPath() {
-        Puzzle endStateManhattan2 = this.astar.traverse(this.puzzle2, manhattan);
-        Puzzle endStatePosition2 = this.astar.traverse(this.puzzle2, position);
+        Puzzle endStateManhattan2 = this.astar.aStar(this.puzzle2, manhattan);
+        Puzzle endStatePosition2 = this.astar.aStar(this.puzzle2, position);
         
-        Puzzle endStateManhattan4 = this.astar.traverse(this.puzzle4, manhattan);
-        Puzzle endStatePosition4 = this.astar.traverse(this.puzzle4, position);
+        Puzzle endStateManhattan4 = this.astar.aStar(this.puzzle4, manhattan);
+        Puzzle endStatePosition4 = this.astar.aStar(this.puzzle4, position);
         
         assertEquals(1, endStateManhattan2.getMoves());
         assertEquals(1, endStatePosition2.getMoves());
