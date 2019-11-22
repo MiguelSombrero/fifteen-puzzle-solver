@@ -1,8 +1,6 @@
 
 package fifteenpuzzlesolver.utils;
 
-import java.util.Arrays;
-
 /**
  * Class which mimics implementation of Java's ArrayList data structure. Implemented only those
  * methods that are needed for this app

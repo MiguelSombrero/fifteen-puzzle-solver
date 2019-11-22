@@ -22,7 +22,6 @@ Wondering also what is the correct way to implement PriorityQueue, which takes C
 ## Next Week
 
 - Testing, implementation and user guide documentation
-- JavaDocs for PriorityQueue
 - Peer review
 - Tests for IDA* and A* algorithms
 - Optimization for IDA* if possible

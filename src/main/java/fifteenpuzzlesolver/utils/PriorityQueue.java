@@ -1,11 +1,12 @@
 
 package fifteenpuzzlesolver.utils;
 
-import java.util.Arrays;
 import java.util.Comparator;
 
 /**
- *
+ * Class which mimics implementation of Java's PriorityQueue data structure. Implemented only those
+ * methods that are needed for this app
+ * 
  * @author miika
  */
 public class PriorityQueue<T> {
@@ -14,6 +15,12 @@ public class PriorityQueue<T> {
     private int size;
     private Comparator comparator;
     
+    /**
+     * Constructor class. Initializes arrays of values, size and a given comparator
+     * for comparing elements
+     * 
+     * @param comparator Comparator for comparing elements in the queue
+     */
     public PriorityQueue(Comparator comparator) {
         this.values = (T[]) new Object[10];
         this.comparator = comparator;
@@ -33,18 +40,43 @@ public class PriorityQueue<T> {
         this.values = newValues;
     }
     
+    /**
+     * Returns index of left child of the given position.
+     * 
+     * @param i Index of element which left child's index is returned
+     * @return Index of left child
+     */
     private int leftChild(int i) {
         return 2 * i;
     }
     
+    /**
+     * Returns index of right child of the given position.
+     * 
+     * @param i Index of element which right child's index is returned
+     * @return Index of right child
+     */
     private int rightChild(int i) {
         return 2 * i + 1;
     }
     
+    /**
+     * Returns index of parent of the given position.
+     * 
+     * @param i Index of element which parent's index is returned
+     * @return Index of parent
+     */
     private int parent(int i) {
         return i / 2;
     }
     
+    /**
+     * Increases added value from leaf to root node as long as parent
+     * values are larger than it.
+     * 
+     * @param i Index of the current node
+     * @param value Value that is added to the queue
+     */
     private void increaseKey(int i, T value) {
         this.values[i] = value;
         
@@ -54,20 +86,37 @@ public class PriorityQueue<T> {
         }
     }
     
+    /**
+     * Adds element to the PriorityQueue.
+     * 
+     * @param value Element to be added
+     */
     public void add(T value) {
-        if (this.values.length == this.size+1) {
+        if (this.values.length == this.size + 1) {
             incrementSize();
         }
         this.size++;
         increaseKey(this.size, value);
     }
     
+    /**
+     * Changes values from indexes i and j.
+     * 
+     * @param i Index of element no 1
+     * @param j Index of element no 2
+     */
     private void exchange(int i, int j) {
         T temp = this.values[i];
         this.values[i] = this.values[j];
         this.values[j] = temp;
     }
     
+    /**
+     * Decrements value from top to bottom as long as the value is larger
+     * than it's left or right child.
+     * 
+     * @param i Index which value is decremented
+     */
     private void heapify(int i) {
         int left = leftChild(i);
         int right = rightChild(i);
@@ -85,6 +134,13 @@ public class PriorityQueue<T> {
         }
     }
     
+    /**
+     * Returns minimum value from a queue. After extracting minimum value
+     * from the queue, heapify() method makes sure that heap-condition
+     * is still valid
+     * 
+     * @return Minimum value
+     */
     public T poll() {
         if (this.size < 1) {
             throw new ArrayIndexOutOfBoundsException("Heap is empty - nothing to poll");
@@ -97,10 +153,20 @@ public class PriorityQueue<T> {
         return min;
     }
     
+    /**
+     * Returns size of the queue. e.g. number of elements
+     * 
+     * @return Number of elements in the queue
+     */
     public int size() {
         return this.size;
     }
     
+    /**
+     * Checks whether queue is empty.
+     * 
+     * @return True if queue is empty, false otherwise
+     */
     public boolean isEmpty() {
         return this.size == 0;
     }

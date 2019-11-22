@@ -20,7 +20,7 @@ Heuristics adds only minor coefficient to time-complexity since width of the gam
 
 ## Space-complexity
 
-Algorithm keeps track for game states to visit and this can hold maximum of V states, since every state is visited only once. Algorithm also keeps track of visited game states, which can hold again maximum of V states. Other operations take O(1) time, so the overall space-complexity is O(V + V) = O(V).
+Algorithm keeps track for game states to visit and this can hold maximum of V states, since every state is visited only once. Algorithm also keeps track of visited game states, which can hold again maximum of V states. Other operations takes O(1), space so the overall space-complexity is O(V + V) = O(V).
 
 ## Data structures
 
