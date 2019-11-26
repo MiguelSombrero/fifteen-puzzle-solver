@@ -19,7 +19,14 @@ Day | Hours
 20.11. | 6
 21.11. | 6
 22.11. | 2
-Total | 63
+26.11. | 5
+Total | 68
+
+## Week 5
+
+Day | Hours | Explanation
+----|-------|------------
+26.11. | 5 | Peer review, refactoring
 
 ## Week 4
 

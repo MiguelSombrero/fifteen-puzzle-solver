@@ -11,7 +11,19 @@ import java.util.Comparator;
  * 
  * @author miika
  */
-public class AStar {
+public class AStar implements PuzzleSolver {
+    
+    private Comparator comparator;
+    
+    /**
+     * Constructor class. Initializes comparator which is used to compare puzzles
+     * in PriorityQueue.
+     * 
+     * @param comparator Comparator class for comparing puzzles
+     */
+    public AStar(Comparator comparator) {
+        this.comparator = comparator;
+    }
     
     /**
      * Method for traversing game tree using A* algorithm.
@@ -53,14 +65,14 @@ public class AStar {
      * breadth-first-method and uses heuristic which is passed as a comparator attribute.
      * 
      * @param game Puzzle to solve
-     * @param comparator Heuristics used to compare puzzles
      * @return Solved puzzle if solvable, null otherwise
      */
-    public Puzzle aStar(Puzzle game, Comparator comparator) {
+    @Override
+    public Puzzle solve(Puzzle game) {
         if (!game.isSolvable()) {
             return null;
         }
-        PriorityQueue<Puzzle> queue = new PriorityQueue<>(comparator);
+        PriorityQueue<Puzzle> queue = new PriorityQueue<>(this.comparator);
         HashSet<Puzzle> visited = new HashSet<>();
         queue.add(game);
         return search(queue, visited);

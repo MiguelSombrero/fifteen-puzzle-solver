@@ -30,17 +30,21 @@ public class TextUI {
      */
     public void printOptions() {
         System.out.println("OPTIONS");
-        System.out.println("0 - Generate multiple puzzles");
-        System.out.println("1 - Generate random puzzle");
-        System.out.println("2 - Generate puzzle by moves");
-        System.out.println("3 - Solve puzzle with A* + position");
-        System.out.println("4 - Solve puzzle with A* + manhattan");
-        System.out.println("5 - Solve puzzle with A* + linear collision");
-        System.out.println("6 - Solve puzzle with IDA* + linear collision");
-        System.out.println("7 - Benchmark A* + position");
-        System.out.println("8 - Benchmark A* + manhattan");
-        System.out.println("9 - Benchmark A* + linear collision");
-        System.out.println("10 - Benchmark IDA* + linear collision");
+        System.out.println("p1 - Generate multiple puzzles");
+        System.out.println("p2 - Generate random puzzle");
+        System.out.println("p3 - Generate puzzle by moves");
+        System.out.println("s1 - Solve puzzle with A* + position");
+        System.out.println("s2 - Solve puzzle with A* + manhattan");
+        System.out.println("s3 - Solve puzzle with A* + linear collision");
+        System.out.println("s4 - Solve puzzle with IDA* + position");
+        System.out.println("s5 - Solve puzzle with IDA* + manhattan");
+        System.out.println("s6 - Solve puzzle with IDA* + linear collision");
+        System.out.println("b1 - Benchmark A* + position");
+        System.out.println("b2 - Benchmark A* + manhattan");
+        System.out.println("b3 - Benchmark A* + linear collision");
+        System.out.println("b4 - Benchmark IDA* + position");
+        System.out.println("b5 - Benchmark IDA* + manhattan");
+        System.out.println("b6 - Benchmark IDA* + linear collision");
         System.out.println("x - Exit");
     }
     
@@ -87,7 +91,17 @@ public class TextUI {
             printOptions();
             String c = this.reader.nextLine();
             
-            if (c.equals("0")) {
+            if (puzzle == null && c.charAt(0) == 's') {
+                System.out.println("Create puzzle first! [p2 or p3 command]");
+                continue;
+            }
+            
+            if (puzzles == null && c.charAt(0) == 'b') {
+                System.out.println("Create multiple puzzles first! [p1 command]");
+                continue;
+            }
+            
+            if (c.equals("p1")) {
                 System.out.println("How many puzzles?");
                 int p = Integer.valueOf(this.reader.nextLine());
                 System.out.println("How many moves per puzzle?");
@@ -97,7 +111,7 @@ public class TextUI {
                 System.out.println("GENERATED " + p + " PUZZLES");
                 System.out.println("-----------------");
                 
-            } else if (c.equals("1")) {
+            } else if (c.equals("p2")) {
                 System.out.println("How many shuffles");
                 int s = Integer.valueOf(this.reader.nextLine());
                 puzzle = this.service.generateRandomPuzzle(s);
@@ -105,7 +119,7 @@ public class TextUI {
                 System.out.println("GENERATED PUZZLE:");
                 System.out.println(puzzle.toString());
                 
-            } else if (c.equals("2")) {
+            } else if (c.equals("p3")) {
                 System.out.println("How many moves");
                 int m = Integer.valueOf(this.reader.nextLine());
                 puzzle = this.service.generatePuzzleByMoves(m);
@@ -113,32 +127,46 @@ public class TextUI {
                 System.out.println("GENERATED PUZZLE:");
                 System.out.println(puzzle.toString());
                 
-            } else if (c.equals("3") && puzzle != null) {
+            } else if (c.equals("s1")) {
                 long time1 = System.currentTimeMillis();
-                solve(time1, this.service.solveWithPosition(puzzle));
+                solve(time1, this.service.solveWithAPosition(puzzle));
                 
-            } else if (c.equals("4") && puzzle != null) {
+            } else if (c.equals("s2")) {
                 long time1 = System.currentTimeMillis();
-                solve(time1, this.service.solveWithManhattan(puzzle));
+                solve(time1, this.service.solveWithAManhattan(puzzle));
                 
-            } else if (c.equals("5") && puzzle != null) {
+            } else if (c.equals("s3")) {
                 long time1 = System.currentTimeMillis();
-                solve(time1, this.service.solveWithLinearCollision(puzzle));
+                solve(time1, this.service.solveWithALinearCollision(puzzle));
                 
-            } else if (c.equals("6") && puzzle != null) {
+            } else if (c.equals("s4")) {
                 long time1 = System.currentTimeMillis();
-                solve(time1, this.service.solveWithIDAStarLinearCollision(puzzle));
+                solve(time1, this.service.solveWithIDAPosition(puzzle));
                 
-            } else if (c.equals("7") && puzzles != null) {
+            } else if (c.equals("s5")) {
+                long time1 = System.currentTimeMillis();
+                solve(time1, this.service.solveWithIDAManhattan(puzzle));
+                
+            } else if (c.equals("s6")) {
+                long time1 = System.currentTimeMillis();
+                solve(time1, this.service.solveWithIDALinearCollision(puzzle));
+                
+            } else if (c.equals("b1")) {
                 printBenchmark(this.service.benchmarkAStarPosition(puzzles));
                 
-            } else if (c.equals("8") && puzzles != null) {
+            } else if (c.equals("b2")) {
                 printBenchmark(this.service.benchmarkAStarManhattan(puzzles));
                 
-            } else if (c.equals("9") && puzzles != null) {
+            } else if (c.equals("b3")) {
                 printBenchmark(this.service.benchmarkAStarLinearCollision(puzzles));
                 
-            } else if (c.equals("10") && puzzles != null) {
+            } else if (c.equals("b4")) {
+                printBenchmark(this.service.benchmarkIDAStarPosition(puzzles));
+                
+            } else if (c.equals("b5")) {
+                printBenchmark(this.service.benchmarkIDAStarManhattan(puzzles));
+                
+            } else if (c.equals("b6")) {
                 printBenchmark(this.service.benchmarkIDAStarLinearCollision(puzzles));
                 
             } else if (c.equals("x")) {

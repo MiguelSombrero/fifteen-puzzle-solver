@@ -15,9 +15,9 @@ import static org.junit.Assert.*;
 
 public class TestAStar {
     
-    private StateComparatorManhattan manhattan;
-    private StateComparatorPosition position;
-    private AStar astar;
+    private AStar astarPosition;
+    private AStar astarManhattan;
+    private AStar astarLinear;
     
     private FifteenPuzzle puzzle0;
     private FifteenPuzzle puzzle1;
@@ -28,9 +28,10 @@ public class TestAStar {
     private FifteenPuzzle puzzle6;
     
     public TestAStar() {
-        this.manhattan = new StateComparatorManhattan();
-        this.position = new StateComparatorPosition();
-        this.astar = new AStar();
+        this.astarPosition = new AStar(new StateComparatorPosition());
+        this.astarManhattan = new AStar(new StateComparatorManhattan());
+        this.astarLinear = new AStar(new StateComparatorLinearCollision());
+        
         TestUtils utils = new TestUtils();
         
         this.puzzle0 = new FifteenPuzzle(utils.boardList().get(0));
@@ -44,16 +45,10 @@ public class TestAStar {
     
     @Test
     public void aStarFindsOptimalPath() {
-        Puzzle endStateManhattan2 = this.astar.aStar(this.puzzle2, manhattan);
-        Puzzle endStatePosition2 = this.astar.aStar(this.puzzle2, position);
-        
-        Puzzle endStateManhattan4 = this.astar.aStar(this.puzzle4, manhattan);
-        Puzzle endStatePosition4 = this.astar.aStar(this.puzzle4, position);
-        
-        assertEquals(1, endStateManhattan2.getMoves());
-        assertEquals(1, endStatePosition2.getMoves());
-        assertEquals(3, endStateManhattan4.getMoves());
-        assertEquals(3, endStatePosition4.getMoves());
+        assertEquals(1, this.astarManhattan.solve(this.puzzle2).getMoves());
+        assertEquals(1, this.astarPosition.solve(this.puzzle2).getMoves());
+        assertEquals(3, this.astarManhattan.solve(this.puzzle4).getMoves());
+        assertEquals(3, this.astarPosition.solve(this.puzzle4).getMoves());
     }
     
 }

@@ -7,7 +7,7 @@ import fifteenpuzzlesolver.utils.ArrayList;
  * Class which implements IDA* algorithm for solving n-puzzles.
  * @author miika
  */
-public class IDAStar {
+public class IDAStar implements PuzzleSolver {
     
     private HeuristicCalculator calculator;
     
@@ -70,7 +70,8 @@ public class IDAStar {
      * @param puzzle Puzzle to solve
      * @return Solved puzzle if solvable, null otherwise
      */
-    public Puzzle idaStar(Puzzle puzzle) {
+    @Override
+    public Puzzle solve(Puzzle puzzle) {
         if (!puzzle.isSolvable()) {
             return null;
         }

@@ -29,44 +29,45 @@ public class TestPuzzleService {
         StateComparatorLinearCollision linear = new StateComparatorLinearCollision();
         StateComparatorManhattan manhattan = new StateComparatorManhattan();
         StateComparatorPosition position = new StateComparatorPosition();
+        
         Random random = new Random();
         PuzzleGenerator generator = new PuzzleGenerator(random);
         TestUtils utils = new TestUtils();
-        AStar astar = new AStar();
-        IDAStar idaStar = new IDAStar(linear);
         
         this.boards = utils.boardList();
-        this.service = new PuzzleService(astar, generator, manhattan, position, linear, idaStar);
+        
+        this.service = new PuzzleService(generator, new AStar(position), new AStar(manhattan),
+            new AStar(linear), new IDAStar(position), new IDAStar(manhattan), new IDAStar(linear));
     }
     
     @Test
     public void solveManhattanReturnsNullIfUnsolvable() {
-        assertEquals(null, this.service.solveWithManhattan(new FifteenPuzzle(this.boards.get(1))));
+        assertEquals(null, this.service.solveWithAManhattan(new FifteenPuzzle(this.boards.get(1))));
     }
     
     @Test
     public void solvePositionReturnsNullIfUnsolvable() {
-        assertEquals(null, this.service.solveWithPosition(new FifteenPuzzle(this.boards.get(1))));
+        assertEquals(null, this.service.solveWithAPosition(new FifteenPuzzle(this.boards.get(1))));
     }
     
     @Test
     public void solveLinearCollisionReturnsNullIfUnsolvable() {
-        assertEquals(null, this.service.solveWithLinearCollision(new FifteenPuzzle(this.boards.get(1))));
+        assertEquals(null, this.service.solveWithALinearCollision(new FifteenPuzzle(this.boards.get(1))));
     }
     
     @Test
     public void solveManhattanReturnsSolvedPuzzleIfSolvable() {
-        assertArrayEquals(this.boards.get(0), this.service.solveWithManhattan(new FifteenPuzzle(this.boards.get(2))).getState());
+        assertArrayEquals(this.boards.get(0), this.service.solveWithAManhattan(new FifteenPuzzle(this.boards.get(2))).getState());
     }
     
     @Test
     public void solvePositionReturnsSolvedPuzzleIfSolvable() {
-        assertArrayEquals(this.boards.get(0), this.service.solveWithPosition(new FifteenPuzzle(this.boards.get(2))).getState());
+        assertArrayEquals(this.boards.get(0), this.service.solveWithAPosition(new FifteenPuzzle(this.boards.get(2))).getState());
     }
     
     @Test
     public void solveLinearCollisionReturnsSolvedPuzzleIfSolvable() {
-        assertArrayEquals(this.boards.get(0), this.service.solveWithLinearCollision(new FifteenPuzzle(this.boards.get(2))).getState());
+        assertArrayEquals(this.boards.get(0), this.service.solveWithALinearCollision(new FifteenPuzzle(this.boards.get(2))).getState());
     }
     
     // tähän benchmark testejä
