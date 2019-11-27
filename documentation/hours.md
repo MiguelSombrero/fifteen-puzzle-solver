@@ -20,13 +20,15 @@ Day | Hours
 21.11. | 6
 22.11. | 2
 26.11. | 5
-Total | 68
+27.11. | 5
+Total | 73
 
 ## Week 5
 
 Day | Hours | Explanation
 ----|-------|------------
 26.11. | 5 | Peer review, refactoring
+27.11. | 5 | Optimization, some tests, documentation
 
 ## Week 4
 

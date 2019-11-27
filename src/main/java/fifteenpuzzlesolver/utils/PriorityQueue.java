@@ -135,7 +135,7 @@ public class PriorityQueue<T> {
     }
     
     /**
-     * Returns minimum value from a queue. After extracting minimum value
+     * Returns and removes minimum value from a queue. After extracting minimum value
      * from the queue, heapify() method makes sure that heap-condition
      * is still valid
      * 

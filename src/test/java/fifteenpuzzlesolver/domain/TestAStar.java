@@ -10,9 +10,6 @@ import static org.junit.Assert.*;
  * @author miika
  */
 
-
-// KESKEN KESKEN KESKEN
-
 public class TestAStar {
     
     private AStar astarPosition;
@@ -44,11 +41,22 @@ public class TestAStar {
     }
     
     @Test
+    public void sStarReturnsNullIfNotSolvable() {
+        assertEquals(null, this.astarPosition.solve(puzzle1));
+        assertEquals(null, this.astarManhattan.solve(puzzle1));
+        assertEquals(null, this.astarLinear.solve(puzzle1));
+    }
+    
+    @Test
     public void aStarFindsOptimalPath() {
+        // this test would need more complex puzzles to solve
         assertEquals(1, this.astarManhattan.solve(this.puzzle2).getMoves());
         assertEquals(1, this.astarPosition.solve(this.puzzle2).getMoves());
+        assertEquals(1, this.astarLinear.solve(this.puzzle2).getMoves());
+        
         assertEquals(3, this.astarManhattan.solve(this.puzzle4).getMoves());
         assertEquals(3, this.astarPosition.solve(this.puzzle4).getMoves());
+        assertEquals(3, this.astarLinear.solve(this.puzzle4).getMoves());
     }
     
 }

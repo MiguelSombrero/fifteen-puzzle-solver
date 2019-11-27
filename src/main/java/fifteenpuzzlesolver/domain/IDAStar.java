@@ -39,7 +39,7 @@ public class IDAStar implements PuzzleSolver {
      * @return Solved puzzle if solvable, null otherwise
      */
     public Puzzle search(Puzzle current, int bound) {
-        if (cost(current) > bound || current.isSolved()) {
+        if (cost(current) > bound || current.getMoves() > 80 || current.isSolved()) {
             return current;
         }
         

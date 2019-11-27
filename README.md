@@ -8,6 +8,8 @@ This is a laboratory work for University of Helsinki course Data structures and 
 
 ## Weekly reports
 
+- [Weekly report #5](https://github.com/MiguelSombrero/fifteen-puzzle-solver/blob/master/documentation/weekly5.md)
+
 - [Weekly report #4](https://github.com/MiguelSombrero/fifteen-puzzle-solver/blob/master/documentation/weekly4.md)
 
 - [Weekly report #3](https://github.com/MiguelSombrero/fifteen-puzzle-solver/blob/master/documentation/weekly3.md)

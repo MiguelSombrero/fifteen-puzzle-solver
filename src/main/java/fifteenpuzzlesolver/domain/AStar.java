@@ -33,29 +33,35 @@ public class AStar implements PuzzleSolver {
      * @return Solved puzzle if solvable, null otherwise
      */
     public Puzzle search(PriorityQueue<Puzzle> queue, HashSet<Puzzle> visited) {
-        while (!queue.isEmpty()) {
-            Puzzle currentState = queue.poll();
+        try {
+            while (!queue.isEmpty()) {
+                Puzzle currentState = queue.poll();
             
-            if (currentState.isSolved()) {
-                return currentState;
-            }
-            
-            if (visited.contains(currentState)) {
-                continue;
-            }
-            
-            visited.add(currentState);
-            ArrayList<Puzzle> children = currentState.generateChildren();
-            
-            for (int i = 0; i < children.size(); i++) {
-                if (children.get(i).isSolved()) {
-                    return children.get(i);
+                if (currentState.isSolved()) {
+                    return currentState;
                 }
+            
+                if (visited.contains(currentState)) {
+                    continue;
+                }
+            
+                visited.add(currentState);
+                ArrayList<Puzzle> children = currentState.generateChildren();
+            
+                for (int i = 0; i < children.size(); i++) {
+                    if (children.get(i).isSolved()) {
+                        return children.get(i);
+                    }
                 
-                if (!visited.contains(children.get(i))) {
-                    queue.add(children.get(i));
+                    if (!visited.contains(children.get(i))) {
+                        if (children.get(i).getMoves() <= 80) {
+                            queue.add(children.get(i));
+                        }
+                    }
                 }
             }
+        } catch (OutOfMemoryError e) {
+            System.out.println("Algorithm is too inefficient - " + e.getLocalizedMessage());
         }
         return null;
     }

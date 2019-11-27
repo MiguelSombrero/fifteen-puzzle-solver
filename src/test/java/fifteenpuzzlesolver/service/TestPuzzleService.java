@@ -7,7 +7,9 @@ import fifteenpuzzlesolver.domain.StateComparatorLinearCollision;
 import fifteenpuzzlesolver.domain.AStar;
 import fifteenpuzzlesolver.domain.FifteenPuzzle;
 import fifteenpuzzlesolver.domain.IDAStar;
+import fifteenpuzzlesolver.domain.MockPuzzleSolver;
 import fifteenpuzzlesolver.domain.Puzzle;
+import fifteenpuzzlesolver.domain.PuzzleSolver;
 import fifteenpuzzlesolver.utils.ArrayList;
 import fifteenpuzzlesolver.utils.PuzzleGenerator;
 import fifteenpuzzlesolver.utils.TestUtils;
@@ -16,6 +18,10 @@ import java.util.Random;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+// NOTICE: THIS CLASS USES MOCK PUZZLESOLVER WHICH SETS 1s TIMEOUT
+// FOR EVERY solve() REQUEST. THEREFORE RUNNING THESE TESTS MAY TAKE
+// SOME 30 SECONDS.
+
 /**
  *
  * @author miika
@@ -23,7 +29,9 @@ import static org.junit.Assert.*;
 public class TestPuzzleService {
     
     private PuzzleService service;
+    private PuzzleService mockedService;
     private ArrayList<int[]> boards;
+    private PuzzleSolver mockSolver;
     
     public TestPuzzleService() {
         StateComparatorLinearCollision linear = new StateComparatorLinearCollision();
@@ -35,42 +43,128 @@ public class TestPuzzleService {
         TestUtils utils = new TestUtils();
         
         this.boards = utils.boardList();
+        this.mockSolver = new MockPuzzleSolver();
+        
+        this.mockedService = new PuzzleService(generator, new MockPuzzleSolver(), new MockPuzzleSolver(),
+            new MockPuzzleSolver(), new MockPuzzleSolver(), new MockPuzzleSolver(), new MockPuzzleSolver());
         
         this.service = new PuzzleService(generator, new AStar(position), new AStar(manhattan),
             new AStar(linear), new IDAStar(position), new IDAStar(manhattan), new IDAStar(linear));
     }
     
     @Test
-    public void solveManhattanReturnsNullIfUnsolvable() {
-        assertEquals(null, this.service.solveWithAManhattan(new FifteenPuzzle(this.boards.get(1))));
-    }
-    
-    @Test
-    public void solvePositionReturnsNullIfUnsolvable() {
+    public void solveAReturnsNullIfUnsolvable() {
         assertEquals(null, this.service.solveWithAPosition(new FifteenPuzzle(this.boards.get(1))));
-    }
-    
-    @Test
-    public void solveLinearCollisionReturnsNullIfUnsolvable() {
+        assertEquals(null, this.service.solveWithAManhattan(new FifteenPuzzle(this.boards.get(1))));
         assertEquals(null, this.service.solveWithALinearCollision(new FifteenPuzzle(this.boards.get(1))));
     }
     
     @Test
-    public void solveManhattanReturnsSolvedPuzzleIfSolvable() {
+    public void solveIDAReturnsNullIfUnsolvable() {
+        assertEquals(null, this.service.solveWithIDAPosition(new FifteenPuzzle(this.boards.get(1))));
+        assertEquals(null, this.service.solveWithIDAManhattan(new FifteenPuzzle(this.boards.get(1))));
+        assertEquals(null, this.service.solveWithIDALinearCollision(new FifteenPuzzle(this.boards.get(1))));
+    }
+    
+    @Test
+    public void solveAReturnsSolvedPuzzleIfSolvable() {
         assertArrayEquals(this.boards.get(0), this.service.solveWithAManhattan(new FifteenPuzzle(this.boards.get(2))).getState());
+        assertArrayEquals(this.boards.get(0), this.service.solveWithAPosition(new FifteenPuzzle(this.boards.get(3))).getState());
+        assertArrayEquals(this.boards.get(0), this.service.solveWithALinearCollision(new FifteenPuzzle(this.boards.get(4))).getState());
     }
     
     @Test
-    public void solvePositionReturnsSolvedPuzzleIfSolvable() {
-        assertArrayEquals(this.boards.get(0), this.service.solveWithAPosition(new FifteenPuzzle(this.boards.get(2))).getState());
+    public void solveIDAReturnsSolvedPuzzleIfSolvable() {
+        assertArrayEquals(this.boards.get(0), this.service.solveWithIDAManhattan(new FifteenPuzzle(this.boards.get(2))).getState());
+        assertArrayEquals(this.boards.get(0), this.service.solveWithIDAPosition(new FifteenPuzzle(this.boards.get(3))).getState());
+        assertArrayEquals(this.boards.get(0), this.service.solveWithIDALinearCollision(new FifteenPuzzle(this.boards.get(4))).getState());
     }
     
     @Test
-    public void solveLinearCollisionReturnsSolvedPuzzleIfSolvable() {
-        assertArrayEquals(this.boards.get(0), this.service.solveWithALinearCollision(new FifteenPuzzle(this.boards.get(2))).getState());
+    public void benchmarkCalculatesAverageMovesRight() {
+        ArrayList<Puzzle> puzzles = new ArrayList<>();
+        puzzles.add(new FifteenPuzzle(this.boards.get(2), 12));
+        puzzles.add(new FifteenPuzzle(this.boards.get(3), 5));
+        puzzles.add(new FifteenPuzzle(this.boards.get(4), 2));
+        puzzles.add(new FifteenPuzzle(this.boards.get(5), 7));
+        
+        assertEquals(6, this.service.benchmark(puzzles, mockSolver)[1]);
     }
     
-    // tähän benchmark testejä
+    @Test
+    public void benchmarkCalculatesAverageTimeRight() {
+        ArrayList<Puzzle> puzzles = new ArrayList<>();
+        puzzles.add(new FifteenPuzzle(this.boards.get(2), 12));
+        puzzles.add(new FifteenPuzzle(this.boards.get(3), 5));
+        puzzles.add(new FifteenPuzzle(this.boards.get(4), 2));
+        puzzles.add(new FifteenPuzzle(this.boards.get(5), 7));
+        
+        assertEquals(1000.0, this.service.benchmark(puzzles, mockSolver)[0], 5.0);
+    }
+    
+    @Test
+    public void benchmarkAPositionReturnsRightValues() {
+        ArrayList<Puzzle> puzzles = new ArrayList<>();
+        puzzles.add(new FifteenPuzzle(this.boards.get(2), 2));
+        puzzles.add(new FifteenPuzzle(this.boards.get(3), 1));
+        
+        assertEquals(1, this.mockedService.benchmarkAStarPosition(puzzles)[1]);
+        assertEquals(1000.0, this.mockedService.benchmarkAStarPosition(puzzles)[0], 5.0);
+    }
+    
+    @Test
+    public void benchmarkAManhattanReturnsRightValues() {
+        ArrayList<Puzzle> puzzles = new ArrayList<>();
+        puzzles.add(new FifteenPuzzle(this.boards.get(2), 11));
+        puzzles.add(new FifteenPuzzle(this.boards.get(3), 1));
+        puzzles.add(new FifteenPuzzle(this.boards.get(4), 1));
+        
+        assertEquals(4, this.mockedService.benchmarkAStarManhattan(puzzles)[1]);
+        assertEquals(1000.0, this.mockedService.benchmarkAStarManhattan(puzzles)[0], 5.0);
+    }
+    
+    @Test
+    public void benchmarkALinearReturnsRightValues() {
+        ArrayList<Puzzle> puzzles = new ArrayList<>();
+        puzzles.add(new FifteenPuzzle(this.boards.get(2), 2));
+        puzzles.add(new FifteenPuzzle(this.boards.get(3), 2));
+        puzzles.add(new FifteenPuzzle(this.boards.get(4), 1));
+        
+        assertEquals(1, this.mockedService.benchmarkAStarLinearCollision(puzzles)[1]);
+        assertEquals(1000.0, this.mockedService.benchmarkAStarLinearCollision(puzzles)[0], 5.0);
+    }
+    
+    @Test
+    public void benchmarkIDAPositionReturnsRightValues() {
+        ArrayList<Puzzle> puzzles = new ArrayList<>();
+        puzzles.add(new FifteenPuzzle(this.boards.get(2), 123));
+        
+        assertEquals(123, this.mockedService.benchmarkIDAStarPosition(puzzles)[1]);
+        assertEquals(1000.0, this.mockedService.benchmarkIDAStarPosition(puzzles)[0], 5.0);
+    }
+    
+    @Test
+    public void benchmarkIDAManhattanReturnsRightValues() {
+        ArrayList<Puzzle> puzzles = new ArrayList<>();
+        puzzles.add(new FifteenPuzzle(this.boards.get(2), 11));
+        puzzles.add(new FifteenPuzzle(this.boards.get(3), 1));
+        puzzles.add(new FifteenPuzzle(this.boards.get(4), 15));
+        puzzles.add(new FifteenPuzzle(this.boards.get(4), 1));
+        
+        assertEquals(7, this.mockedService.benchmarkIDAStarManhattan(puzzles)[1]);
+        assertEquals(1000.0, this.mockedService.benchmarkIDAStarManhattan(puzzles)[0], 5.0);
+    }
+    
+    @Test
+    public void benchmarkIDALinearReturnsRightValues() {
+        ArrayList<Puzzle> puzzles = new ArrayList<>();
+        puzzles.add(new FifteenPuzzle(this.boards.get(2), 2));
+        puzzles.add(new FifteenPuzzle(this.boards.get(3), 2));
+        puzzles.add(new FifteenPuzzle(this.boards.get(4), 2));
+        
+        assertEquals(2, this.mockedService.benchmarkIDAStarLinearCollision(puzzles)[1]);
+        assertEquals(1000.0, this.mockedService.benchmarkIDAStarLinearCollision(puzzles)[0], 5.0);
+    }
     
     @Test
     public void generateRandomPuzzleIsFifteenPuzzle() {

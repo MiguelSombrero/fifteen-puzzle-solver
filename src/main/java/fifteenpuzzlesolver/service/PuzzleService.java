@@ -1,13 +1,10 @@
 
 package fifteenpuzzlesolver.service;
 
-import fifteenpuzzlesolver.domain.AStar;
-import fifteenpuzzlesolver.domain.IDAStar;
 import fifteenpuzzlesolver.domain.Puzzle;
 import fifteenpuzzlesolver.domain.PuzzleSolver;
 import fifteenpuzzlesolver.utils.ArrayList;
 import fifteenpuzzlesolver.utils.PuzzleGenerator;
-import java.util.Comparator;
 
 /**
  * Class which provides services for solving and generating puzzles.
@@ -15,13 +12,12 @@ import java.util.Comparator;
  */
 public class PuzzleService {
  
-    private AStar astarPosition;
-    private AStar astarManhattan;
-    private AStar astarLinear;
-    
-    private IDAStar idaStarPosition;
-    private IDAStar idaStarManhattan;
-    private IDAStar idaStarLinear;
+    private PuzzleSolver astarPosition;
+    private PuzzleSolver astarManhattan;
+    private PuzzleSolver astarLinear;
+    private PuzzleSolver idaStarPosition;
+    private PuzzleSolver idaStarManhattan;
+    private PuzzleSolver idaStarLinear;
     
     private PuzzleGenerator generator;
     
@@ -36,8 +32,9 @@ public class PuzzleService {
      * @param idaStarLinear IDA* -algorithm with manhattan + linear collision heuristic
      * @param generator Class for generating puzzles
      */
-    public PuzzleService(PuzzleGenerator generator, AStar astarPosition, AStar astarManhattan,
-            AStar astarLinear, IDAStar idaStarPosition, IDAStar idaStarManhattan, IDAStar idaStarLinear) {
+    public PuzzleService(PuzzleGenerator generator,
+            PuzzleSolver astarPosition, PuzzleSolver astarManhattan, PuzzleSolver astarLinear,
+            PuzzleSolver idaStarPosition, PuzzleSolver idaStarManhattan, PuzzleSolver idaStarLinear) {
         
         this.astarPosition = astarPosition;
         this.astarManhattan = astarManhattan;
@@ -116,7 +113,7 @@ public class PuzzleService {
      * @param solver Algorithm for solving puzzle
      * @return data consisting average solving time in milliseconds and average moves
      */
-    private long[] benchmark(ArrayList<Puzzle> puzzles, PuzzleSolver solver) {
+    public long[] benchmark(ArrayList<Puzzle> puzzles, PuzzleSolver solver) {
         long data[] = new long[2];
         
         for (int i = 0; i < puzzles.size(); i++) {
