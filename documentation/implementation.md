@@ -4,9 +4,9 @@ I implemented two different algorithms for solving 15-puzzles: A* and IDA* algor
 
 ## Project structure
 
-I divided application into four packages: *ui* for user interface, *service* for providing methods for solving and generating puzzles, *domain* for puzzles, puzzle solvers and heuristics and *utils* for data structures and puzzle generator. 
+I divided application into four (five if you count main package) packages: *ui* for user interface, *service* for providing methods for solving and generating puzzles, *domain* for puzzles, puzzle solvers and heuristics and *utils* for data structures and puzzle generator. 
 
-[structure](https://github.com/MiguelSombrero/fifteen-puzzle-solver/blob/master/documentation/pics/structure.jpg)
+![structure](https://github.com/MiguelSombrero/fifteen-puzzle-solver/blob/master/documentation/pics/structure.jpg)
 
 ## Time-Complexity
 

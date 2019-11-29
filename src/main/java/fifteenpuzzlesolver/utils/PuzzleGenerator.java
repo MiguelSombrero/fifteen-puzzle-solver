@@ -31,6 +31,21 @@ public class PuzzleGenerator {
     }
     
     /**
+     * generates puzzle that is known to have minimum of 80 moves solution.
+     * 
+     * @return Puzzle that can be solved minimum of 80 moves
+     */
+    public Puzzle generate80movesPuzzle() {
+        int[] puzzleFor80moves = new int[]{
+            0, 12, 9, 13,
+            15, 11, 10, 14,
+            3, 7, 2, 5,
+            4, 8, 6, 1
+        };
+        return new FifteenPuzzle(puzzleFor80moves);
+    }
+    
+    /**
      * Generates one possible children for puzzle in so that it is not yet visited.
      * 
      * @param currentPuzzle Puzzle which child is generated

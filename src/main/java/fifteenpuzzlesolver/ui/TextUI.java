@@ -30,6 +30,7 @@ public class TextUI {
      */
     public void printOptions() {
         System.out.println("OPTIONS");
+        System.out.println("p0 - Generate 80 moves puzzle");
         System.out.println("p1 - Generate multiple puzzles");
         System.out.println("p2 - Generate random puzzle");
         System.out.println("p3 - Generate puzzle by moves");
@@ -101,7 +102,14 @@ public class TextUI {
                 continue;
             }
             
-            if (c.equals("p1")) {
+            if (c.equals("p0")) {
+                puzzle = this.service.generate80movesPuzzle();
+                System.out.println("-----------------");
+                System.out.println("GENERATED PUZZLE:");
+                System.out.println(puzzle.toString());
+                System.out.println("-----------------");
+                
+            } else if (c.equals("p1")) {
                 System.out.println("How many puzzles?");
                 int p = Integer.valueOf(this.reader.nextLine());
                 System.out.println("How many moves per puzzle?");
@@ -118,6 +126,7 @@ public class TextUI {
                 System.out.println("-----------------");
                 System.out.println("GENERATED PUZZLE:");
                 System.out.println(puzzle.toString());
+                System.out.println("-----------------");
                 
             } else if (c.equals("p3")) {
                 System.out.println("How many moves");
@@ -126,6 +135,7 @@ public class TextUI {
                 System.out.println("-----------------");
                 System.out.println("GENERATED PUZZLE:");
                 System.out.println(puzzle.toString());
+                System.out.println("-----------------");
                 
             } else if (c.equals("s1")) {
                 long time1 = System.currentTimeMillis();

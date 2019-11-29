@@ -121,7 +121,7 @@ public class PuzzleService {
             Puzzle solved = solver.solve(puzzles.get(i));
             long time2 = System.currentTimeMillis();
             data[0] += time2 - time1;
-            data[1] += solved.getMoves();
+            data[1] += (solved != null) ? solved.getMoves() : 0;
         }
         
         data[0] = data[0] / puzzles.size();
@@ -189,6 +189,15 @@ public class PuzzleService {
      */
     public long[] benchmarkIDAStarLinearCollision(ArrayList<Puzzle> puzzles) {
         return benchmark(puzzles, this.idaStarLinear);
+    }
+    
+    /**
+     * Creates puzzle which shortest path to solution is 80 moves.
+     * 
+     * @return Puzzle with 80 moves to solution
+     */
+    public Puzzle generate80movesPuzzle() {
+        return this.generator.generate80movesPuzzle();
     }
     
     /**

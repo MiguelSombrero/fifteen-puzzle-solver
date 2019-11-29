@@ -21,7 +21,8 @@ Day | Hours
 22.11. | 2
 26.11. | 5
 27.11. | 5
-Total | 73
+29.11. | 3
+Total | 76
 
 ## Week 5
 
@@ -29,6 +30,7 @@ Day | Hours | Explanation
 ----|-------|------------
 26.11. | 5 | Peer review, refactoring
 27.11. | 5 | Optimization, some tests, documentation
+29.11. | 3 | Bencmarking and documentation
 
 ## Week 4
 
