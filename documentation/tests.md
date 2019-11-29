@@ -59,7 +59,7 @@ Explanation of table column names:
 ### Time
 
 Hardness | A* position | A* manhattan | A* collision | IDA* position | IDA* manhattan | IDA* collision
----------|-------------|--------------|--------------|---------------
+---------|-------------|--------------|--------------|---------------|----------------|---------------
 5 (n=50) | 0.000s | 0.000s | 0.000s | 0.000s | 0.000s | 0.000s
 10 (n=50) | 0.000s | 0.000s | 0.000s | 0.000s | 0.00s | 0.000s
 20 (n=50) | 0.011s | 0.002s | 0.007s | 0.068s | 0.036s | 0.048s
@@ -76,7 +76,7 @@ Hardness | A* position | A* manhattan | A* collision | IDA* position | IDA* manh
 ### Moves
 
 Hardness | A* position | A* manhattan | A* collision | IDA* position | IDA* manhattan | IDA* collision
----------|-------------|--------------|--------------|---------------
+---------|-------------|--------------|--------------|---------------|----------------|---------------
 5 (n=50) | 4  | 4  | 4  | 4 | 4 | 4
 10 (n=50) | 9  | 9  | 9  | 9 | 10 | 11
 20 (n=50) | 18 | 19 | 19 | 18 | 21 | 22
