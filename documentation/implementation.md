@@ -16,9 +16,9 @@ Time-complexity of A* algorithm was after all O(lgV*V), where V is the set of ga
 
 ### IDA* algorithm
 
-## Space-complexity
-
 UNDER CONSTRUCTION
+
+## Space-complexity
 
 ### A* algorithm
 
@@ -27,6 +27,12 @@ Space-compexity of the A* algorithm stayed O(V + V) = O(V) as stated in the desi
 ### IDA* algorithm
 
 IDA* algorithm doesn't keep track of the visited nodes nor the nodes to be visited. Space-complexity of the IDA* algorithm is linear in the length of the solution that it constructs (Iterative Deepening A*, Wikipedia). Since I limited (pruned) search tree to 80 moves (constant), IDA* algorithms space-complexity is O(1).
+
+## Possible improvements
+
+### Reliability
+
+PuzzleGenerator classes generateChildren() method loops sometimes for infinity. This is due of a situation, where current puzzles all chilren are yet to be visited. 
 
 ## Sources
 

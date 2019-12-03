@@ -2,6 +2,7 @@
 package fifteenpuzzlesolver.domain;
 
 import fifteenpuzzlesolver.utils.ArrayList;
+import fifteenpuzzlesolver.utils.Stack;
 
 /**
  * Class which implements IDA* algorithm for solving n-puzzles.
@@ -34,11 +35,13 @@ public class IDAStar implements PuzzleSolver {
     /**
      * Method for traversing game tree using IDA* algorithm.
      * 
-     * @param current Puzzle that is in processing
+     * @param path Current path e.g. game states algorithm has traversed
      * @param bound Maximum estimated cost that is used for pruning nodes
      * @return Solved puzzle if solvable, null otherwise
      */
-    public Puzzle search(Puzzle current, int bound) {
+    public Puzzle search(Stack<Puzzle> path, int bound) {
+        Puzzle current = path.peek();
+        
         if (cost(current) > bound || current.getMoves() > 80 || current.isSolved()) {
             return current;
         }
@@ -48,16 +51,25 @@ public class IDAStar implements PuzzleSolver {
         ArrayList<Puzzle> children = current.generateChildren();
             
         for (int i = 0; i < children.size(); i++) {
-            Puzzle child = search(children.get(i), bound);
-                
+            Puzzle child = children.get(i);
+            
             if (child.isSolved()) {
                 return child;
             }
                 
-            if (cost(child) < min) {
-                min = cost(child);
-                best = child;
+            if (!path.contains(child)) {
+                path.push(child);
+                
+                Puzzle child2 = search(path, bound);
+                
+                if (child2 != null && cost(child2) < min) {
+                    min = cost(child2);
+                    best = child2;
+                }
+                
+                path.pop();
             }
+            
         }
         
         return best;
@@ -76,10 +88,12 @@ public class IDAStar implements PuzzleSolver {
             return null;
         }
         
+        Stack<Puzzle> path = new Stack<>();
+        path.push(puzzle);
         int bound = cost(puzzle);
         
         while (true) {
-            Puzzle current = search(puzzle, bound);
+            Puzzle current = search(path, bound);
             
             if (current.isSolved()) {
                 return current;
