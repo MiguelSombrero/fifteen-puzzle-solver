@@ -38,11 +38,6 @@ Manual tests are run mostly to check that user interface works correctly. Also m
 
 ## Performance testing
 
-All performance tests are performed with the following idea:
-
-- Generate set of n random puzzles (with generatePuzzleByMoves method) with x moves (x is rising 5, 10, 20, ...)
-- Solve each n puzzles set with all the heuristics and calcutate average solving time and average moves for each set and each heuristic
-
 Explanation of table column names:
 
 - Hardness = Number of moves used to generate puzzle
@@ -71,8 +66,8 @@ Hardness | A* position | A* manhattan | A* collision | IDA* position | IDA* manh
 80 (n=40) | e | e | 7.714s | - | 6.768s | 3.595s
 90 (n=30) | e | e | 8.283s | - | 10.403s | 3.355s
 100 (n=30) | e | e | 14.361s | - | 18.744s | 5.478s
-120 (n=30) | e | e | 8.963s | - | 10.933s | 3.493s
-140 (n=20) | e | e | 17.103s | - | 10.199s | 4.890s
+120 (n=30) | e | e | e | - | 30.833s | 6.448s
+140 (n=30) | e | e | e | - | 89.947s | 26.715s
 160 (n=30) | e | e | 42.664s | - | 33.020s | 16.681s
 
 ### Moves
@@ -90,6 +85,18 @@ Hardness | A* position | A* manhattan | A* collision | IDA* position | IDA* manh
 80 (n=40) | e | e | 38 | - | 38 | 38
 90 (n=30) | e | e | 39 | - | 38 | 38
 100 (n=30) | e | e | 39 | - | 39 | 38
-120 (n=30) | e | e | 41 | - | 41 | 41
-140 (n=20) | e | e | 41 | - | 40 | 40
+120 (n=30) | e | e | e | - | 41 | 41
+140 (n=30) | e | e | e | - | 43 | 43
 160 (n=30) | e | e | 43 | - | 42 | 43
+
+### Analyzis of heuristics
+
+As performance tests clearly shows, position based heuristic is by far the worst. It performs as well as the other heuristics with easy puzzles (under 30 moves), but cripples completely with puzzles harder than that. I guess the number of tiles in wrong position cannot assort different game states well enough - there is simply too much draws.
+
+Manhattan heuristic is clear improvement to position based heuristic. It performs as well as liner collision heuristic - some cases even better - with semi-hard (under 70 moves) puzzles. When it goes harder puzzles than that, linear collision is starting to get a head.
+
+It seems - according to the tests - that linear collision heuristics overestimates the cost of reaching the solved state; in some cases, path found with linear collision heuristic has more moves than other heuristics. This might also explain why manhattan heuristic performs some cases better than linear collision - it needs to traverse shorter path to find goal.
+
+### Analyzis of algorithms
+
+A* is almost as fast as IDA* algorithm with easy and semi-hard puzzles. A* algorithms clear downside is its memory consumption; solving hard puzzles usually leads to OutOfMemory error, because Java's heap space runs out. A* alforithm saves all the game states it is about to visit in priority queue, even though some of the states are clearly ones that it never traverses.

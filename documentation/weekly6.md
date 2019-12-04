@@ -11,7 +11,7 @@
 
 ## Thoughts & Comments
 
-I finally found optimization for IDA* which increased its performance over A* algorithm. I started to keep track of visited nodes in current path. I don't know how I missed this first, since it's in the [Wikipedia](https://en.wikipedia.org/wiki/Iterative_deepening_A*) articles pseudocode.
+I finally found optimization for IDA* which increased its performance over A* algorithm. I started to keep track of visited nodes in current path. I don't know how I missed this first, even though it is clearly stated in the [Wikipedia](https://en.wikipedia.org/wiki/Iterative_deepening_A*) articles pseudocode.
 
 ## Next Week
 

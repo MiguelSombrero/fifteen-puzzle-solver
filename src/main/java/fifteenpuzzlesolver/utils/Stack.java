@@ -69,7 +69,11 @@ public class Stack<T> {
         return this.values[this.size--];
     }
     
-    
+    /**
+     * Returns but don't removetop element (added last) from the stack.
+     * 
+     * @return Top element of the stack
+     */
     public T peek() {
         if (isEmpty()) {
             throw new ArrayIndexOutOfBoundsException("Stack is empty - nothing to peek");

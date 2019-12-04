@@ -29,6 +29,7 @@
                 <configuration>
                     <excludes>
                         <exclude>fifteenpuzzlesolver/ui/*</exclude>
+                        <exclude>fifteenpuzzlesolver/FifteenPuzzleSolver.java</exclude>
                     </excludes>
                 </configuration> 
                 <executions>

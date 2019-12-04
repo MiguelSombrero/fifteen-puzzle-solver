@@ -30,9 +30,15 @@ IDA* algorithm doesn't keep track of the visited nodes nor the nodes to be visit
 
 ## Possible improvements
 
+### Optimization
+
+A* algorithm is using lots of memory by saving all the game states it is about to visit in priority queue. If you could prune game states with some heuristic before saving them, this might save a lot of memory and make A* perform faster with harder puzzles (and without memory error).
+
+Possibly some optimization could be made with linear collision heuristic. I haven't tested different methods for calculating linear collisions. 
+
 ### Reliability
 
-PuzzleGenerator classes generateChildren() method loops sometimes for infinity. This is due of a situation, where current puzzles all chilren are yet to be visited. 
+PuzzleGenerator classes generateChildren() method loops sometimes for infinity. This is due of a situation, where current puzzles all children are already visited, and algorithm tryes to find one that is not. This situation doesn't happen too often and therefore I haven't fixed it (yet). 
 
 ## Sources
 

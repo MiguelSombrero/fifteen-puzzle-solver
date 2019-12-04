@@ -23,13 +23,15 @@ Day | Hours
 27.11. | 5
 29.11. | 3
 3.12. | 7
-Total | 83
+4.12. | 4
+Total | 87
 
 ## Week 6
 
 Day | Hours | Explanation
 ----|-------|------------
 3.12. | 7 | Optimized IDA* and implemented Stack data structure
+4.12. | 4 | Peer review #2 and some performance tests
 
 ## Week 5
 
