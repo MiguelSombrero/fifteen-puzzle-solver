@@ -6,7 +6,7 @@ package fifteenpuzzlesolver.utils;
  * methods that are needed for this app
  * 
  * @author miika
- * @param <V> 
+ * @param <V> Generic value type of elements. Is specified when HashSet is created.
  */
 public class HashSet<V> {
     

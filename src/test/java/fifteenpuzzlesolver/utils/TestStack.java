@@ -134,8 +134,13 @@ public class TestStack {
     }
     
     @Test(expected = ArrayIndexOutOfBoundsException.class)
-    public void throwsIndexOutOfBoundsError() {
+    public void popThrowsIndexOutOfBoundsError() {
         this.stack.pop();
+    }
+    
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    public void peekThrowsIndexOutOfBoundsError() {
+        this.stack.peek();
     }
     
     @Test

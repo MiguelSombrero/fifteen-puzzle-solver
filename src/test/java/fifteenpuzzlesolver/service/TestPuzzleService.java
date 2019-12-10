@@ -99,7 +99,7 @@ public class TestPuzzleService {
         puzzles.add(new FifteenPuzzle(this.boards.get(4), 2));
         puzzles.add(new FifteenPuzzle(this.boards.get(5), 7));
         
-        assertEquals(1000.0, this.service.benchmark(puzzles, mockSolver)[0], 5.0);
+        assertEquals(1000.0, this.service.benchmark(puzzles, mockSolver)[0], 7.0);
     }
     
     @Test
@@ -109,7 +109,7 @@ public class TestPuzzleService {
         puzzles.add(new FifteenPuzzle(this.boards.get(3), 1));
         
         assertEquals(1, this.mockedService.benchmarkAStarPosition(puzzles)[1]);
-        assertEquals(1000.0, this.mockedService.benchmarkAStarPosition(puzzles)[0], 5.0);
+        assertEquals(1000.0, this.mockedService.benchmarkAStarPosition(puzzles)[0], 7.0);
     }
     
     @Test
@@ -120,7 +120,7 @@ public class TestPuzzleService {
         puzzles.add(new FifteenPuzzle(this.boards.get(4), 1));
         
         assertEquals(4, this.mockedService.benchmarkAStarManhattan(puzzles)[1]);
-        assertEquals(1000.0, this.mockedService.benchmarkAStarManhattan(puzzles)[0], 5.0);
+        assertEquals(1000.0, this.mockedService.benchmarkAStarManhattan(puzzles)[0], 7.0);
     }
     
     @Test
@@ -131,7 +131,7 @@ public class TestPuzzleService {
         puzzles.add(new FifteenPuzzle(this.boards.get(4), 1));
         
         assertEquals(1, this.mockedService.benchmarkAStarLinearCollision(puzzles)[1]);
-        assertEquals(1000.0, this.mockedService.benchmarkAStarLinearCollision(puzzles)[0], 5.0);
+        assertEquals(1000.0, this.mockedService.benchmarkAStarLinearCollision(puzzles)[0], 7.0);
     }
     
     @Test
@@ -140,7 +140,7 @@ public class TestPuzzleService {
         puzzles.add(new FifteenPuzzle(this.boards.get(2), 123));
         
         assertEquals(123, this.mockedService.benchmarkIDAStarPosition(puzzles)[1]);
-        assertEquals(1000.0, this.mockedService.benchmarkIDAStarPosition(puzzles)[0], 5.0);
+        assertEquals(1000.0, this.mockedService.benchmarkIDAStarPosition(puzzles)[0], 7.0);
     }
     
     @Test
@@ -152,7 +152,7 @@ public class TestPuzzleService {
         puzzles.add(new FifteenPuzzle(this.boards.get(4), 1));
         
         assertEquals(7, this.mockedService.benchmarkIDAStarManhattan(puzzles)[1]);
-        assertEquals(1000.0, this.mockedService.benchmarkIDAStarManhattan(puzzles)[0], 5.0);
+        assertEquals(1000.0, this.mockedService.benchmarkIDAStarManhattan(puzzles)[0], 7.0);
     }
     
     @Test
@@ -163,7 +163,13 @@ public class TestPuzzleService {
         puzzles.add(new FifteenPuzzle(this.boards.get(4), 2));
         
         assertEquals(2, this.mockedService.benchmarkIDAStarLinearCollision(puzzles)[1]);
-        assertEquals(1000.0, this.mockedService.benchmarkIDAStarLinearCollision(puzzles)[0], 5.0);
+        assertEquals(1000.0, this.mockedService.benchmarkIDAStarLinearCollision(puzzles)[0], 7.0);
+    }
+    
+    @Test
+    public void generatePuzzleWith80MovesIsFifteenPuzzle() {
+        Puzzle p1 = this.service.generate80movesPuzzle();
+        assertEquals(16, p1.getState().length);
     }
     
     @Test
@@ -179,11 +185,9 @@ public class TestPuzzleService {
         Puzzle p1 = this.service.generatePuzzleByMoves(5);
         Puzzle p2 = this.service.generatePuzzleByMoves(50);
         Puzzle p3 = this.service.generatePuzzleByMoves(500);
-        Puzzle p4 = this.service.generatePuzzleByMoves(1000);
         assertEquals(16, p1.getState().length);
         assertEquals(16, p2.getState().length);
         assertEquals(16, p3.getState().length);
-        assertEquals(16, p4.getState().length);
     }
     
     @Test
@@ -201,15 +205,17 @@ public class TestPuzzleService {
         Puzzle p1 = this.service.generatePuzzleByMoves(5);
         Puzzle p2 = this.service.generatePuzzleByMoves(50);
         Puzzle p3 = this.service.generatePuzzleByMoves(500);
-        Puzzle p4 = this.service.generatePuzzleByMoves(1000);
         int v1 = Arrays.stream(p1.getState()).sum();
         int v2 = Arrays.stream(p2.getState()).sum();
         int v3 = Arrays.stream(p3.getState()).sum();
-        int v4 = Arrays.stream(p4.getState()).sum();
         assertEquals(120, v1);
         assertEquals(120, v2);
         assertEquals(120, v3);
-        assertEquals(120, v4);
+    }
+    
+    @Test
+    public void puzzleWith80MovesIsSolvable() {
+        assertTrue(this.service.generate80movesPuzzle().isSolvable());
     }
     
     @Test
@@ -224,8 +230,6 @@ public class TestPuzzleService {
         assertTrue(this.service.generatePuzzleByMoves(50).isSolvable());
         assertTrue(this.service.generatePuzzleByMoves(100).isSolvable());
         assertTrue(this.service.generatePuzzleByMoves(256).isSolvable());
-        assertTrue(this.service.generatePuzzleByMoves(1000).isSolvable());
-        assertTrue(this.service.generatePuzzleByMoves(999).isSolvable());
     }
     
     @Test

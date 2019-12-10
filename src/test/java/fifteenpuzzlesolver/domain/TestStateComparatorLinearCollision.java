@@ -1,7 +1,9 @@
 
 package fifteenpuzzlesolver.domain;
 
+import fifteenpuzzlesolver.utils.PuzzleGenerator;
 import fifteenpuzzlesolver.utils.TestUtils;
+import java.util.Random;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -13,6 +15,8 @@ public class TestStateComparatorLinearCollision {
     
     private StateComparatorLinearCollision comparator;
     private TestUtils utils;
+    private PuzzleGenerator generator;
+    
     private FifteenPuzzle puzzle0;
     private FifteenPuzzle puzzle1;
     private FifteenPuzzle puzzle2;
@@ -24,7 +28,8 @@ public class TestStateComparatorLinearCollision {
     public TestStateComparatorLinearCollision() {
         this.comparator = new StateComparatorLinearCollision();
         this.utils = new TestUtils();
-        
+        this.generator = new PuzzleGenerator(new Random());
+         
         this.puzzle0 = new FifteenPuzzle(utils.boardList().get(0));
         this.puzzle1 = new FifteenPuzzle(utils.boardList().get(1));
         this.puzzle2 = new FifteenPuzzle(utils.boardList().get(2));
@@ -122,6 +127,20 @@ public class TestStateComparatorLinearCollision {
         assertEquals(11, comparator.heuristic(puzzle5));
         assertEquals(5, comparator.heuristic(puzzle6));
         assertEquals(36, comparator.heuristic(new FifteenPuzzle(utils.boardList().get(12))));
+    }
+    
+    @Test
+    public void heuristicDoesNotOverestimateCost() {
+        for (int i = 0; i < 100000; i++) {
+            Puzzle p = generator.generateRandomPuzzle(100);
+            assertTrue(comparator.heuristic(p) <= 80);
+        }
+    }
+    
+    @Test
+    public void heuristicDoesNotOverestimateCost80Moves() {
+        Puzzle p = generator.generate80movesPuzzle();
+        assertTrue(comparator.heuristic(p) <= 80);
     }
     
     @Test

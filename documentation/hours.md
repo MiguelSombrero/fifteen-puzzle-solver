@@ -24,7 +24,14 @@ Day | Hours
 29.11. | 3
 3.12. | 7
 4.12. | 4
-Total | 87
+10.12. | 2
+Total | 89
+
+## Week 7
+
+Day | Hours | Explanation
+----|-------|------------
+10.12. | 2 | Documenting, few tests
 
 ## Week 6
 

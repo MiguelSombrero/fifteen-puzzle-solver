@@ -16,7 +16,7 @@ Implemented A* -algorithm is basically Dijkstras -algorithm with heuristics. Let
 
 Time complexity of A* -algorithm depends a lot of heuristic used. Both of the manhattan and position based heuristics loop once trough the game board so time-complexity for both of them is O(n^2), where n is width of the game board (in 15-puzzle: n=4). Linear collision heuristic loops game board twice so the time-complexity for this is O(n^4).
 
-Heuristics adds only minor coefficient to time-complexity since width of the game board is constant (n = 4), so the overall time-complexity for A* is O(V * n^4 * V + E) = O(n^2 * V^2 + E) = O(V^2).
+Heuristics adds only minor coefficient to time-complexity since width of the game board is constant (n = 4), so the overall time-complexity for A* is O(V * n^4 * V + E) = O(n^4 * V^2 + E) = O(V^2).
 
 ## Space-complexity
 

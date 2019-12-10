@@ -12,11 +12,15 @@ I divided application into four (five if you count main package) packages: *ui* 
 
 ### A* algorithm
 
-Time-complexity of A* algorithm was after all O(lgV*V), where V is the set of game states, even if in design document is stated O(V^2). I implemented PriorityQueue with binary min-heap, which takes only O(lgV) time for adding and extracting elements. Algorithm loops trough game states visiting every vertex only one, taking O(V) time. With every vertex, algorithm extracts and possibly adds element to the queue, taking O(lgV) time. Algorithm also loops through neighbours of vertices, and the total number of neighbours is |E|. Therefore overall time-complexity for A* is O(lg(V) * V + E) = O(lg(V)*V).
+Time-complexity of A* algorithm was after all O(lgV*V), where V is the set of game states, even if in design document is stated O(V^2). I implemented PriorityQueue with binary min-heap, which takes O(lgV) for adding and extracting elements. Algorithm loops trough game states visiting every vertex only one, taking O(V) time. With every vertex, algorithm extracts and possibly adds element to the queue, taking O(lgV) time. Algorithm also loops through neighbours of vertices, and the total number of neighbours is |E|. Other operations take constant time.
+
+Therefore overall time-complexity for A* is O(lg(V) * V + E) = O(lg(V)*V).
 
 ### IDA* algorithm
 
-UNDER CONSTRUCTION
+Time-complexity of iterative deepening depth-first search (IDDFS) algorithm is O(b^d), where b is the branching factor and d is the deapth of the goal (Iterative Deepening depth-first search, Wikipedia). Since branching factor in 15-puzzle is 3 on average, and depth of the goal always <= 80, we have worst case time-complexity of O(3^80). However - with good heuristic - algorithm performs way better than this in practise. IDA* algorithm adds calculation of heuristic to IDDFS, but other operations take constant time. Calculation of heuristic takes maximum of n^4 operations, where n = 4. Note that b^d is just another way of stating possible game states, and is factually same as V in A* case.
+
+Therefore overall time-complexity for IDA* is O(n^4 * b^d) = O(b^d) = O(V).
 
 ## Space-complexity
 
@@ -26,7 +30,7 @@ Space-compexity of the A* algorithm stayed O(V + V) = O(V) as stated in the desi
 
 ### IDA* algorithm
 
-IDA* algorithm doesn't keep track of the visited nodes nor the nodes to be visited. Space-complexity of the IDA* algorithm is linear in the length of the solution that it constructs (Iterative Deepening A*, Wikipedia). Since I limited (pruned) search tree to 80 moves (constant), IDA* algorithms space-complexity is O(1).
+IDA* algorithm doesn't keep track of the visited nodes nor the nodes to be visited. It only tracks current search path, which is limited to 80 moves. Therefore space-complexity of the IDA* algorithm is linear in the length of the solution that it constructs (Iterative Deepening A*, Wikipedia). Since search path is limited to 80 moves (constant), IDA* algorithms space-complexity is O(80) = O(1).
 
 ## Possible improvements
 
@@ -45,3 +49,4 @@ PuzzleGenerator classes generateChildren() method loops sometimes for infinity. 
 - Cormen, Thomas H et al. (2009). Introduction to Algorithms. The MIT Press.
 - Laaksonen, Antti. (2018). Tietorakenteet ja algoritmit.
 - Iterative Deepening A*. (2018). Wikipedia. [cited: 22.11.2019]. https://en.wikipedia.org/wiki/Iterative_deepening_A*
+- Iterative Deepening depth-first search. (2019). Wikipedia. [cited: 10.12.2019]. https://en.wikipedia.org/wiki/Iterative_deepening_depth-first_search

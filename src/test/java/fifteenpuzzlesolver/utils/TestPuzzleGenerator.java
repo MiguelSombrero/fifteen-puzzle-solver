@@ -21,6 +21,12 @@ public class TestPuzzleGenerator {
     }
     
     @Test
+    public void puzzleWith80MovesIsZero() {
+        Puzzle p1 = generator.generate80movesPuzzle();
+        assertEquals(0, p1.getMoves());
+    }
+    
+    @Test
     public void randomPuzzleMovesIsZero() {
         Puzzle p1 = generator.generateRandomPuzzle(10);
         Puzzle p2 = generator.generateRandomPuzzle(100);
@@ -34,6 +40,12 @@ public class TestPuzzleGenerator {
         Puzzle p2 = generator.generatePuzzleByMoves(100);
         assertEquals(0, p1.getMoves());
         assertEquals(0, p2.getMoves());
+    }
+    
+    @Test
+    public void generatePuzzleWith80MovesIsFifteenPuzzle() {
+        Puzzle p1 = generator.generate80movesPuzzle();
+        assertEquals(16, p1.getState().length);
     }
     
     @Test
@@ -57,6 +69,13 @@ public class TestPuzzleGenerator {
     }
     
     @Test
+    public void generatePuzzleWith80MovesTilesSumUp() {
+        Puzzle p1 = generator.generate80movesPuzzle();
+        int s1 = Arrays.stream(p1.getState()).sum();
+        assertEquals(120, s1);
+    }
+    
+    @Test
     public void generateRandomPuzzleTilesSumUp() {
         Puzzle easyPuzzle = generator.generateRandomPuzzle(2);
         Puzzle hardPuzzle = generator.generateRandomPuzzle(100);
@@ -71,15 +90,17 @@ public class TestPuzzleGenerator {
         Puzzle p1 = generator.generatePuzzleByMoves(5);
         Puzzle p2 = generator.generatePuzzleByMoves(50);
         Puzzle p3 = generator.generatePuzzleByMoves(500);
-        Puzzle p4 = generator.generatePuzzleByMoves(1000);
         int v1 = Arrays.stream(p1.getState()).sum();
         int v2 = Arrays.stream(p2.getState()).sum();
         int v3 = Arrays.stream(p3.getState()).sum();
-        int v4 = Arrays.stream(p4.getState()).sum();
         assertEquals(120, v1);
         assertEquals(120, v2);
         assertEquals(120, v3);
-        assertEquals(120, v4);
+    }
+    
+    @Test
+    public void puzzleWith80MovesIsSolvable() {
+        assertTrue(generator.generate80movesPuzzle().isSolvable());
     }
     
     @Test
@@ -95,7 +116,5 @@ public class TestPuzzleGenerator {
         assertTrue(generator.generatePuzzleByMoves(50).isSolvable());
         assertTrue(generator.generatePuzzleByMoves(100).isSolvable());
         assertTrue(generator.generatePuzzleByMoves(256).isSolvable());
-        assertTrue(generator.generatePuzzleByMoves(1000).isSolvable());
-        assertTrue(generator.generatePuzzleByMoves(999).isSolvable());
     }
 }

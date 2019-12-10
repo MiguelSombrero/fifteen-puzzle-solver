@@ -8,6 +8,7 @@ import java.util.Comparator;
  * methods that are needed for this app
  * 
  * @author miika
+ * @param <T> Generic value type of elements. Is specified when PriorityQueue is created.
  */
 public class PriorityQueue<T> {
     

@@ -34,6 +34,10 @@ This is a laboratory work for University of Helsinki course Data structures and 
 
 ## Commands
 
+Clone project
+
+    git clone https://github.com/MiguelSombrero/fifteen-puzzle-solver.git
+
 Run tests
 
     mvn test
@@ -49,3 +53,7 @@ Test coverage report
 Create JavaDoc as HTML
 
     mvn javadoc:javadoc
+
+## Environment
+
+Application is developed and tested with MacOS and Java 1.8.0_161-b12 version.

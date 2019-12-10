@@ -6,6 +6,7 @@ package fifteenpuzzlesolver.utils;
  * methods that are needed for this app
  * 
  * @author miika
+ * @param <T> Generic value type of elements. Is specified when ArrayList is created.
  */
 public class ArrayList<T> {
     

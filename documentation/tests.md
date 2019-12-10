@@ -4,7 +4,7 @@ Applications correctness has been tested with automatic unit tests and manually 
 
 ## Test coverage
 
-Overall test coverage as of 29.11.2019:
+Overall test coverage as of 10.12.2019 is ~ 95-98%:
 
 ![Coverage](https://github.com/MiguelSombrero/fifteen-puzzle-solver/blob/master/documentation/pics/overall_coverage.png)
 
@@ -16,19 +16,19 @@ These packages contains main method and user interface and has left outside of t
 
 ### fifteenpuzzlesolver.domain
 
-This package contains classes for algorithms and puzzles. Test coverage is ~ 95%, although I'm not happy with the tests of AStar and IDAStar classes: I found it hard to test correctness of search() method. There could be also more tests about finding optimal solution.
+This package contains classes for algorithms and puzzles. Test coverage is ~ 93-97%, although I'm not happy with the tests of AStar and IDAStar classes: I found it hard to test correctness of search() method. There could be also more tests about finding optimal solution.
 
 ![Coverage](https://github.com/MiguelSombrero/fifteen-puzzle-solver/blob/master/documentation/pics/domain_coverage.png)
 
 ### fifteenpuzzlesolver.service
 
-Package contains only PuzzleService class, which provides methods for generating and solving puzzles. Test coverage is ~ 80-100%. I'm using mock classes for mocking PuzzleSolvers, so that I can tests benchmark methods correctly.
+Package contains only PuzzleService class, which provides methods for generating and solving puzzles. Test coverage is ~ 83-99%. There is basically one branch I'm not testing, which decreases test coverage. I'm using mock classes for mocking PuzzleSolvers, so that I can tests benchmark methods correctly.
 
 ![Coverage](https://github.com/MiguelSombrero/fifteen-puzzle-solver/blob/master/documentation/pics/service_coverage.png)
 
 ### fifteenpuzzlesolver.utils
 
-Package contains data structures and puzzle generator. Test coverage is near 100%. With PuzzleGenerator class I mainly tested that the returned puzzles are 'valid' puzzles.
+Package contains data structures and puzzle generator. Test coverage is 100%. With PuzzleGenerator class I mainly tested that the returned puzzles are 'valid' puzzles.
 
 ![Coverage](https://github.com/MiguelSombrero/fifteen-puzzle-solver/blob/master/documentation/pics/utils_coverage.png)
 
@@ -40,16 +40,16 @@ Manual tests are run mostly to check that user interface works correctly. Also m
 
 Explanation of table column names:
 
-- Hardness = Number of moves used to generate puzzle
+- Hardness = Number of moves used to generate puzzle. Puzzles are created with generatePuzzleByMoves() method, which traverses backwards from solved state by given moves
 - n = Number of puzzles solved when calculating averages
 - e = Application crashed due to a OutOfMemory error
-- "-" = Out of patience (solving took too long to wait)
+- "-" = Out of patience error (solving took too long to wait)
 - Time = Average time for solving puzzle
 - Moves = Average of used moves for solving puzzle
 - A* position = A* algorithm with position based heuristics
 - A* manhattan = A* algorithm with manhattan heuristics
 - A* collision = A* algorithm with manhattan + linear collision heuristics
-- IDA* collision = IDA* algorithm with manhattan + linear collision heuristics
+- IDA* = IDA* algorithm with mentioned heuristic
 
 ### Time
 
@@ -95,8 +95,11 @@ As performance tests clearly shows, position based heuristic is by far the worst
 
 Manhattan heuristic is clear improvement to position based heuristic. It performs as well as liner collision heuristic - some cases even better - with semi-hard (under 70 moves) puzzles. When it goes harder puzzles than that, linear collision is starting to get a head.
 
-It seems - according to the tests - that linear collision heuristics overestimates the cost of reaching the solved state; in some cases, path found with linear collision heuristic has more moves than other heuristics. This might also explain why manhattan heuristic performs some cases better than linear collision - it needs to traverse shorter path to find goal.
+It seems - according to the tests - that linear collision heuristics might overestimate the cost of reaching the solved state; in some cases, path found with linear collision heuristic has more moves than other heuristics. This might also explain why manhattan heuristic performs some cases better than linear collision - it needs to traverse shorter path to find goal. I have tested with 100K random puzzles, that heuristics never estimates the cost over 80 moves, but this doesn't prove that found solution is optimal.
 
 ### Analyzis of algorithms
 
-A* is almost as fast as IDA* algorithm with easy and semi-hard puzzles. A* algorithms clear downside is its memory consumption; solving hard puzzles usually leads to OutOfMemory error, because Java's heap space runs out. A* alforithm saves all the game states it is about to visit in priority queue, even though some of the states are clearly ones that it never traverses.
+A* is almost as fast as IDA* algorithm with easy puzzles. Harder the puzzle, greater the difference between A* and IDA* increases. A* algorithms clear downside is its memory consumption; solving hard puzzles usually leads to OutOfMemory error, because Java's heap space runs out. A* alforithm saves all the game states it is about to visit in priority queue, even though some of the states are clearly ones that it never traverses.
+
+As stated in the implementation document, time-complexity of A* is O(lg(V)*V) and IDA* is O(V). Difference comes from the extraction of nodes from min-heap, which takes approximately O(lg(V)) time. A* algorithm seems to be little slower than IDA* algorithm, which verifies in practise the difference between time-complexities. However, logarithm stays very small even with huge V, so difference between effectiviness of A* and IDA* might also be due to something else, memory consumption maybe.
+
