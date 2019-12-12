@@ -25,13 +25,15 @@ Day | Hours
 3.12. | 7
 4.12. | 4
 10.12. | 2
-Total | 89
+12.12. | 2
+Total | 91
 
 ## Week 7
 
 Day | Hours | Explanation
 ----|-------|------------
 10.12. | 2 | Documenting, few tests
+12.12. | 2 | Finalizing project
 
 ## Week 6
 

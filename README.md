@@ -56,4 +56,4 @@ Create JavaDoc as HTML
 
 ## Environment
 
-Application is developed and tested with MacOS and Java 1.8.0_161-b12 version.
+Application is developed and tested with MacOS and Java 8 (1.8.0_161-b12).

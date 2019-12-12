@@ -4,7 +4,7 @@ Applications correctness has been tested with automatic unit tests and manually 
 
 ## Test coverage
 
-Overall test coverage as of 10.12.2019 is ~ 95-98%:
+Overall test coverage is ~ 95-98%:
 
 ![Coverage](https://github.com/MiguelSombrero/fifteen-puzzle-solver/blob/master/documentation/pics/overall_coverage.png)
 
@@ -101,5 +101,5 @@ It seems - according to the tests - that linear collision heuristics might overe
 
 A* is almost as fast as IDA* algorithm with easy puzzles. Harder the puzzle, greater the difference between A* and IDA* increases. A* algorithms clear downside is its memory consumption; solving hard puzzles usually leads to OutOfMemory error, because Java's heap space runs out. A* alforithm saves all the game states it is about to visit in priority queue, even though some of the states are clearly ones that it never traverses.
 
-As stated in the implementation document, time-complexity of A* is O(lg(V)*V) and IDA* is O(V). Difference comes from the extraction of nodes from min-heap, which takes approximately O(lg(V)) time. A* algorithm seems to be little slower than IDA* algorithm, which verifies in practise the difference between time-complexities. However, logarithm stays very small even with huge V, so difference between effectiviness of A* and IDA* might also be due to something else, memory consumption maybe.
+As stated in the implementation document, time-complexity of A* is O(lgV*V) and IDA* is O(V). Difference comes from the extraction of nodes from min-heap, which takes approximately O(lgV) time. A* algorithm seems to be little slower than IDA* algorithm, which verifies in practise the difference between time-complexities. However, logarithm stays very small even with huge V, so difference between effectiviness of A* and IDA* might also be due to something else, memory consumption maybe.
 
