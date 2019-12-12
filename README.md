@@ -34,6 +34,10 @@ This is a laboratory work for University of Helsinki course Data structures and 
 
 - [Javadoc](https://github.com/MiguelSombrero/fifteen-puzzle-solver/tree/master/documentation/apidocs)
 
+## Releases
+
+- [Release 1.0](https://github.com/MiguelSombrero/fifteen-puzzle-solver/releases/tag/release1.0)
+
 ## Commands
 
 Clone project
